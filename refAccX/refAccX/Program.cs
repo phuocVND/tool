@@ -7,7 +7,7 @@ using System.Threading;
 using System.IO;
 using OpenQA.Selenium.Chrome;
 using AutoIt;
-
+using OpenQA.Selenium.DevTools;
 class Program
 {
     static void Main()
@@ -59,11 +59,12 @@ class Program
         options.AddArgument("--disable-features=WebRtcHideLocalIpsWithMdns");
         //options.AddArgument("--inprivate"); // Chế độ ẩn danh
 
-        string extensionFolderPath = "C:/Users/vongu/OneDrive/Desktop/learnToolC#/projectSelenium/BetaCaptcha";
+        string extensionFolderPath = "C:\\Users\\lit\\Desktop\\tool\\BetaCaptcha_FunCap";
         options.AddArgument($"--load-extension={extensionFolderPath}");
         
         IWebDriver driver = new EdgeDriver(options);
         Actions actions = new Actions(driver);
+
 
         WebDriverWait wait;
 
@@ -92,7 +93,7 @@ class Program
                 // Click vào nút "Đăng ký"
                 IWebElement signUpButton = driver.FindElement(By.XPath("//*[@id='react-root']/div/div/div[2]/main/div/div/div[1]/div/div/div[3]/a/div"));
                 signUpButton.Click();
-                Thread.Sleep(3000); // Chờ trang tải
+                Thread.Sleep(4000); // Chờ trang tải
 
                 // Nhập tên người dùng
                 IWebElement nameInput = driver.FindElement(By.XPath("//input[@name='name' and contains(@class, 'r-30o5oe')]"));
@@ -134,6 +135,17 @@ class Program
 
                 IWebElement authenticate = driver.FindElement(By.XPath("//*[@id='root']/div/div[1]/button"));
                 authenticate.Click();
+
+
+                // var devTools = (driver as ChromeDriver).GetDevToolsSession();
+                // devTools.Network.RequestWillBeSent += (sender, e) =>
+                // {
+                //     if (e.Request.Url.Contains(".jpg") || e.Request.Url.Contains(".png") || e.Request.Url.Contains(".gif"))
+                //     {
+                //         Console.WriteLine($"Ảnh được tải: {e.Request.Url}");
+                //         // Lấy URL của ảnh và thực hiện các hành động bạn muốn (tải ảnh xuống, lưu trữ, v.v.)
+                //     }
+                // };
             //}
             //else
             //{

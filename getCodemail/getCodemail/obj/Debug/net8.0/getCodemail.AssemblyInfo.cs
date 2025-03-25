@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("getCodemail")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e698c0858a99a116fdab94b6dcbc6d98bb5879b1")]
 [assembly: System.Reflection.AssemblyProductAttribute("getCodemail")]
 [assembly: System.Reflection.AssemblyTitleAttribute("getCodemail")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

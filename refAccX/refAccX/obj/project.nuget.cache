@@ -1,0 +1,30 @@
+{
+  "version": 2,
+  "dgSpecHash": "NNAZ/iGho1s=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\vongu\\OneDrive\\Desktop\\learnToolC#\\projectSelenium\\refAccX\\refAccX\\refAccX.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\vongu\\.nuget\\packages\\autoitx.dotnet\\3.3.14.5\\autoitx.dotnet.3.3.14.5.nupkg.sha512",
+    "C:\\Users\\vongu\\.nuget\\packages\\autoitx.netcore\\3.3.16.1\\autoitx.netcore.3.3.16.1.nupkg.sha512",
+    "C:\\Users\\vongu\\.nuget\\packages\\microsoft.dotnet.ilcompiler\\8.0.14\\microsoft.dotnet.ilcompiler.8.0.14.nupkg.sha512",
+    "C:\\Users\\vongu\\.nuget\\packages\\microsoft.edge.seleniumtools\\3.141.3\\microsoft.edge.seleniumtools.3.141.3.nupkg.sha512",
+    "C:\\Users\\vongu\\.nuget\\packages\\microsoft.net.illink.tasks\\8.0.14\\microsoft.net.illink.tasks.8.0.14.nupkg.sha512",
+    "C:\\Users\\vongu\\.nuget\\packages\\selenium.chrome.webdriver\\85.0.0\\selenium.chrome.webdriver.85.0.0.nupkg.sha512",
+    "C:\\Users\\vongu\\.nuget\\packages\\selenium.support\\4.30.0\\selenium.support.4.30.0.nupkg.sha512",
+    "C:\\Users\\vongu\\.nuget\\packages\\selenium.webdriver\\4.30.0\\selenium.webdriver.4.30.0.nupkg.sha512",
+    "C:\\Users\\vongu\\.nuget\\packages\\selenium.webdriver.chromedriver\\134.0.6998.16500\\selenium.webdriver.chromedriver.134.0.6998.16500.nupkg.sha512",
+    "C:\\Users\\vongu\\.nuget\\packages\\runtime.win-x64.microsoft.dotnet.ilcompiler\\8.0.14\\runtime.win-x64.microsoft.dotnet.ilcompiler.8.0.14.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "NU1608",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Detected package version outside of dependency constraint: Microsoft.Edge.SeleniumTools 3.141.3 requires Selenium.WebDriver (= 3.141.0) but version Selenium.WebDriver 4.30.0 was resolved.",
+      "libraryId": "Selenium.WebDriver",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    }
+  ]
+}

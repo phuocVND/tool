@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "dgSpecHash": "lAlEQYgysrI=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\vongu\\OneDrive\\Desktop\\learnToolC#\\projectSelenium\\projectSelenium\\projectSelenium\\projectSelenium.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\vongu\\.nuget\\packages\\microsoft.dotnet.ilcompiler\\8.0.14\\microsoft.dotnet.ilcompiler.8.0.14.nupkg.sha512",
+    "C:\\Users\\vongu\\.nuget\\packages\\microsoft.net.illink.tasks\\8.0.14\\microsoft.net.illink.tasks.8.0.14.nupkg.sha512",
+    "C:\\Users\\vongu\\.nuget\\packages\\selenium.support\\4.30.0\\selenium.support.4.30.0.nupkg.sha512",
+    "C:\\Users\\vongu\\.nuget\\packages\\selenium.webdriver\\4.30.0\\selenium.webdriver.4.30.0.nupkg.sha512",
+    "C:\\Users\\vongu\\.nuget\\packages\\selenium.webdriver.chromedriver\\134.0.6998.16500\\selenium.webdriver.chromedriver.134.0.6998.16500.nupkg.sha512",
+    "C:\\Users\\vongu\\.nuget\\packages\\selenium.webdriver.iedriver\\4.14.0\\selenium.webdriver.iedriver.4.14.0.nupkg.sha512",
+    "C:\\Users\\vongu\\.nuget\\packages\\runtime.win-x64.microsoft.dotnet.ilcompiler\\8.0.14\\runtime.win-x64.microsoft.dotnet.ilcompiler.8.0.14.nupkg.sha512"
+  ],
+  "logs": []
+}

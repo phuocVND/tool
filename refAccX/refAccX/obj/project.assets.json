@@ -1,0 +1,445 @@
+{
+  "version": 3,
+  "targets": {
+    "net8.0": {
+      "AutoItX.Dotnet/3.3.14.5": {
+        "type": "package",
+        "build": {
+          "build/AutoItX.Dotnet.targets": {}
+        }
+      },
+      "AutoItX.NetCore/3.3.16.1": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/AutoIt.dll": {
+            "related": ".xml"
+          },
+          "lib/netstandard2.0/AutoItX3.dll": {},
+          "lib/netstandard2.0/AutoItX3_x64.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/AutoIt.dll": {
+            "related": ".xml"
+          },
+          "lib/netstandard2.0/AutoItX3.dll": {},
+          "lib/netstandard2.0/AutoItX3_x64.dll": {}
+        }
+      },
+      "Microsoft.DotNet.ILCompiler/8.0.14": {
+        "type": "package",
+        "build": {
+          "build/Microsoft.DotNet.ILCompiler.props": {}
+        }
+      },
+      "Microsoft.Edge.SeleniumTools/3.141.3": {
+        "type": "package",
+        "dependencies": {
+          "Selenium.WebDriver": "[3.141.0]"
+        },
+        "compile": {
+          "lib/netstandard2.0/Microsoft.Edge.SeleniumTools.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.Edge.SeleniumTools.dll": {}
+        }
+      },
+      "Microsoft.NET.ILLink.Tasks/8.0.14": {
+        "type": "package",
+        "build": {
+          "build/Microsoft.NET.ILLink.Tasks.props": {}
+        }
+      },
+      "Selenium.Chrome.WebDriver/85.0.0": {
+        "type": "package",
+        "build": {
+          "build/Selenium.Chrome.WebDriver.targets": {}
+        }
+      },
+      "Selenium.Support/4.30.0": {
+        "type": "package",
+        "dependencies": {
+          "Selenium.WebDriver": "4.30.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/WebDriver.Support.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/WebDriver.Support.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Selenium.WebDriver/4.30.0": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/WebDriver.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/WebDriver.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/Selenium.WebDriver.targets": {}
+        }
+      },
+      "Selenium.WebDriver.ChromeDriver/134.0.6998.16500": {
+        "type": "package",
+        "build": {
+          "build/Selenium.WebDriver.ChromeDriver.targets": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "AutoItX.Dotnet/3.3.14.5": {
+      "sha512": "pobGb0PovHfJLH6tC2wsmafuZSI3u9ThqyHBebipVm9I/eDjzXZ6E6O84vUpE48lwTxPmtPm2HN/1tq0aLbM0Q==",
+      "type": "package",
+      "path": "autoitx.dotnet/3.3.14.5",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "autoitx.dotnet.3.3.14.5.nupkg.sha512",
+        "autoitx.dotnet.nuspec",
+        "build/AutoItX.Dotnet.targets",
+        "build/AutoItX3.dll",
+        "build/AutoItX3_x64.dll",
+        "lib/AutoItX3.Assembly.dll",
+        "lib/AutoItX3.Assembly.xml"
+      ]
+    },
+    "AutoItX.NetCore/3.3.16.1": {
+      "sha512": "8q4e9kb0PzUDnpSlNJO06vurI//plG1dwiZwHPLHoGISTwP5Yz2h1FyV8CqGNP1F5/pyw0UtvxbwJQE+wBAHVw==",
+      "type": "package",
+      "path": "autoitx.netcore/3.3.16.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.md",
+        "README.md",
+        "autoitx.netcore.3.3.16.1.nupkg.sha512",
+        "autoitx.netcore.nuspec",
+        "icon.png",
+        "lib/netstandard2.0/AutoIt.dll",
+        "lib/netstandard2.0/AutoIt.xml",
+        "lib/netstandard2.0/AutoItX3.dll",
+        "lib/netstandard2.0/AutoItX3_x64.dll"
+      ]
+    },
+    "Microsoft.DotNet.ILCompiler/8.0.14": {
+      "sha512": "lJvndCQZJxHBVoD8VxfSJ2MaURHENC63sbeAJNfedvXvscgjQSpfVdcTsv0iGeSu9X05G05TYMCWVbZGj4Z51Q==",
+      "type": "package",
+      "path": "microsoft.dotnet.ilcompiler/8.0.14",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "build/BuildFrameworkNativeObjects.proj",
+        "build/Microsoft.DotNet.ILCompiler.SingleEntry.targets",
+        "build/Microsoft.DotNet.ILCompiler.props",
+        "build/Microsoft.NETCore.Native.Publish.targets",
+        "build/Microsoft.NETCore.Native.Unix.targets",
+        "build/Microsoft.NETCore.Native.Windows.targets",
+        "build/Microsoft.NETCore.Native.targets",
+        "build/NativeAOT.natstepfilter",
+        "build/NativeAOT.natvis",
+        "build/WindowsAPIs.txt",
+        "build/findvcvarsall.bat",
+        "microsoft.dotnet.ilcompiler.8.0.14.nupkg.sha512",
+        "microsoft.dotnet.ilcompiler.nuspec",
+        "runtime.json",
+        "tools/netstandard/ILCompiler.Build.Tasks.deps.json",
+        "tools/netstandard/ILCompiler.Build.Tasks.dll",
+        "tools/netstandard/ILCompiler.Build.Tasks.pdb"
+      ]
+    },
+    "Microsoft.Edge.SeleniumTools/3.141.3": {
+      "sha512": "t20ScE4OHq7dTSU4NS4nhELJPppq7MI8bR8qvDkbfWw/bbh2BBLBBmAruJ0rARxYAT4xvBqud/ORauXfF3LpkQ==",
+      "type": "package",
+      "path": "microsoft.edge.seleniumtools/3.141.3",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net35/Microsoft.Edge.SeleniumTools.dll",
+        "lib/net40/Microsoft.Edge.SeleniumTools.dll",
+        "lib/net45/Microsoft.Edge.SeleniumTools.dll",
+        "lib/netstandard2.0/Microsoft.Edge.SeleniumTools.dll",
+        "microsoft.edge.seleniumtools.3.141.3.nupkg.sha512",
+        "microsoft.edge.seleniumtools.nuspec"
+      ]
+    },
+    "Microsoft.NET.ILLink.Tasks/8.0.14": {
+      "sha512": "4U2fd7PexNKrK5ZqfqIcXZj9/lRRjFsLgA/pxuFQTuGQuLYP/+7yACz/j7EmWbEj/fspOf4mafi/vHIy/rKDzQ==",
+      "type": "package",
+      "path": "microsoft.net.illink.tasks/8.0.14",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "LICENSE.TXT",
+        "Sdk/Sdk.props",
+        "THIRD-PARTY-NOTICES.TXT",
+        "analyzers/dotnet/cs/ILLink.CodeFixProvider.dll",
+        "analyzers/dotnet/cs/ILLink.RoslynAnalyzer.dll",
+        "build/Microsoft.NET.ILLink.Analyzers.props",
+        "build/Microsoft.NET.ILLink.Tasks.props",
+        "build/Microsoft.NET.ILLink.targets",
+        "microsoft.net.illink.tasks.8.0.14.nupkg.sha512",
+        "microsoft.net.illink.tasks.nuspec",
+        "tools/net472/ILLink.Tasks.dll",
+        "tools/net472/ILLink.Tasks.dll.config",
+        "tools/net472/Mono.Cecil.Mdb.dll",
+        "tools/net472/Mono.Cecil.Pdb.dll",
+        "tools/net472/Mono.Cecil.Rocks.dll",
+        "tools/net472/Mono.Cecil.dll",
+        "tools/net472/Sdk/Sdk.props",
+        "tools/net472/System.Buffers.dll",
+        "tools/net472/System.Collections.Immutable.dll",
+        "tools/net472/System.Memory.dll",
+        "tools/net472/System.Numerics.Vectors.dll",
+        "tools/net472/System.Reflection.Metadata.dll",
+        "tools/net472/System.Runtime.CompilerServices.Unsafe.dll",
+        "tools/net472/build/Microsoft.NET.ILLink.Analyzers.props",
+        "tools/net472/build/Microsoft.NET.ILLink.Tasks.props",
+        "tools/net472/build/Microsoft.NET.ILLink.targets",
+        "tools/net8.0/ILLink.Tasks.deps.json",
+        "tools/net8.0/ILLink.Tasks.dll",
+        "tools/net8.0/Mono.Cecil.Mdb.dll",
+        "tools/net8.0/Mono.Cecil.Pdb.dll",
+        "tools/net8.0/Mono.Cecil.Rocks.dll",
+        "tools/net8.0/Mono.Cecil.dll",
+        "tools/net8.0/Sdk/Sdk.props",
+        "tools/net8.0/build/Microsoft.NET.ILLink.Analyzers.props",
+        "tools/net8.0/build/Microsoft.NET.ILLink.Tasks.props",
+        "tools/net8.0/build/Microsoft.NET.ILLink.targets",
+        "tools/net8.0/illink.deps.json",
+        "tools/net8.0/illink.dll",
+        "tools/net8.0/illink.runtimeconfig.json",
+        "useSharedDesignerContext.txt"
+      ]
+    },
+    "Selenium.Chrome.WebDriver/85.0.0": {
+      "sha512": "wRg7it2bBMyYtOsarTy0bWtS2fCZI08KGTef2kH381DYpGP+wX8j6f/7ABv1nmrUj5CCVmTeDeYeXS5g00JXSw==",
+      "type": "package",
+      "path": "selenium.chrome.webdriver/85.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "build/Selenium.Chrome.WebDriver.targets",
+        "driver/chromedriver.exe",
+        "selenium.chrome.webdriver.85.0.0.nupkg.sha512",
+        "selenium.chrome.webdriver.nuspec"
+      ]
+    },
+    "Selenium.Support/4.30.0": {
+      "sha512": "mpUvloTX1Nj7JdCZUSlLRIxcVBoPFAirLoqAEfO246f0nuxp8ibtEHGTBfRvJGReO0nbvqfOKyVW3fU6a/z7kw==",
+      "type": "package",
+      "path": "selenium.support/4.30.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "icon.png",
+        "lib/netstandard2.0/WebDriver.Support.dll",
+        "lib/netstandard2.0/WebDriver.Support.xml",
+        "selenium.support.4.30.0.nupkg.sha512",
+        "selenium.support.nuspec"
+      ]
+    },
+    "Selenium.WebDriver/4.30.0": {
+      "sha512": "POEESh6f408SNst9kT+mf4g9zVahIWXjo+/8qkjUt8dNRllD+am2Fdj30j5b54kpRIx5Nz2b08AREYvaOyQQMA==",
+      "type": "package",
+      "path": "selenium.webdriver/4.30.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "build/Selenium.WebDriver.targets",
+        "buildTransitive/Selenium.WebDriver.targets",
+        "icon.png",
+        "lib/net8.0/WebDriver.dll",
+        "lib/net8.0/WebDriver.xml",
+        "lib/netstandard2.0/WebDriver.dll",
+        "lib/netstandard2.0/WebDriver.xml",
+        "manager/linux/selenium-manager",
+        "manager/macos/selenium-manager",
+        "manager/windows/selenium-manager.exe",
+        "selenium.webdriver.4.30.0.nupkg.sha512",
+        "selenium.webdriver.nuspec"
+      ]
+    },
+    "Selenium.WebDriver.ChromeDriver/134.0.6998.16500": {
+      "sha512": "Mb1ajy5zmY+yXDhpUtl90spvY/OWkDcPmnFqextFEudLPbp7sFcRoQFrhNSiPa5VmTFMh1rFTpx90aIpDXrSTw==",
+      "type": "package",
+      "path": "selenium.webdriver.chromedriver/134.0.6998.16500",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "README.md",
+        "build/DefinePropertiesChromeDriver.targets",
+        "build/Selenium.WebDriver.ChromeDriver.targets",
+        "driver/linux64/LICENSE.chromedriver",
+        "driver/linux64/chromedriver",
+        "driver/mac64/LICENSE.chromedriver",
+        "driver/mac64/chromedriver",
+        "driver/mac64arm/LICENSE.chromedriver",
+        "driver/mac64arm/chromedriver",
+        "driver/win32/LICENSE.chromedriver",
+        "driver/win32/chromedriver.exe",
+        "nupkg-icon.png",
+        "selenium.webdriver.chromedriver.134.0.6998.16500.nupkg.sha512",
+        "selenium.webdriver.chromedriver.nuspec"
+      ]
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net8.0": [
+      "AutoItX.Dotnet >= 3.3.14.5",
+      "AutoItX.NetCore >= 3.3.16.1",
+      "Microsoft.DotNet.ILCompiler >= 8.0.14",
+      "Microsoft.Edge.SeleniumTools >= 3.141.3",
+      "Microsoft.NET.ILLink.Tasks >= 8.0.14",
+      "Selenium.Chrome.WebDriver >= 85.0.0",
+      "Selenium.Support >= 4.30.0",
+      "Selenium.WebDriver >= 4.30.0",
+      "Selenium.WebDriver.ChromeDriver >= 134.0.6998.16500"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\vongu\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "C:\\Users\\vongu\\OneDrive\\Desktop\\learnToolC#\\projectSelenium\\refAccX\\refAccX\\refAccX.csproj",
+      "projectName": "refAccX",
+      "projectPath": "C:\\Users\\vongu\\OneDrive\\Desktop\\learnToolC#\\projectSelenium\\refAccX\\refAccX\\refAccX.csproj",
+      "packagesPath": "C:\\Users\\vongu\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\vongu\\OneDrive\\Desktop\\learnToolC#\\projectSelenium\\refAccX\\refAccX\\obj\\",
+      "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
+      "configFilePaths": [
+        "C:\\Users\\vongu\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "net8.0"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "projectReferences": {}
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
+      },
+      "SdkAnalysisLevel": "9.0.200"
+    },
+    "frameworks": {
+      "net8.0": {
+        "targetAlias": "net8.0",
+        "dependencies": {
+          "AutoItX.Dotnet": {
+            "target": "Package",
+            "version": "[3.3.14.5, )"
+          },
+          "AutoItX.NetCore": {
+            "target": "Package",
+            "version": "[3.3.16.1, )"
+          },
+          "Microsoft.DotNet.ILCompiler": {
+            "suppressParent": "All",
+            "target": "Package",
+            "version": "[8.0.14, )",
+            "autoReferenced": true
+          },
+          "Microsoft.Edge.SeleniumTools": {
+            "target": "Package",
+            "version": "[3.141.3, )"
+          },
+          "Microsoft.NET.ILLink.Tasks": {
+            "suppressParent": "All",
+            "target": "Package",
+            "version": "[8.0.14, )",
+            "autoReferenced": true
+          },
+          "Selenium.Chrome.WebDriver": {
+            "target": "Package",
+            "version": "[85.0.0, )"
+          },
+          "Selenium.Support": {
+            "target": "Package",
+            "version": "[4.30.0, )"
+          },
+          "Selenium.WebDriver": {
+            "target": "Package",
+            "version": "[4.30.0, )"
+          },
+          "Selenium.WebDriver.ChromeDriver": {
+            "target": "Package",
+            "version": "[134.0.6998.16500, )"
+          }
+        },
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "runtime.win-x64.Microsoft.DotNet.ILCompiler",
+            "version": "[8.0.14, 8.0.14]"
+          }
+        ],
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.201/PortableRuntimeIdentifierGraph.json"
+      }
+    }
+  },
+  "logs": [
+    {
+      "code": "NU1608",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Detected package version outside of dependency constraint: Microsoft.Edge.SeleniumTools 3.141.3 requires Selenium.WebDriver (= 3.141.0) but version Selenium.WebDriver 4.30.0 was resolved.",
+      "libraryId": "Selenium.WebDriver",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    }
+  ]
+}

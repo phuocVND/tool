@@ -1,0 +1,34 @@
+{
+    "manifest_version": 3,
+    "name": "BetaCaptcha Solve Funcaptcha",
+    "version": "1.0",
+    "permissions": [
+        "tabs",
+        "activeTab",
+        "scripting"
+    ],
+    "background": {
+        "service_worker": "js/background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["js/content.js"],
+            "all_frames": true
+        }
+    ],
+    "host_permissions": [
+        "*://*/*"
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": ["config.json"],
+            "matches": ["<all_urls>"]
+        }
+    ],
+    "icons": {
+        "16": "icon/logo.png",
+        "48": "icon/logo.png",
+        "128": "icon/logo.png"
+    }
+}

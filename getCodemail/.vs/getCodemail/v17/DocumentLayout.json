@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\vongu\\OneDrive\\Desktop\\learnToolC#\\projectSelenium\\getCodemail\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{60919B5C-1C30-42DB-99A7-8EEE52A89A0C}|getCodemail\\getCodemail.csproj|c:\\users\\vongu\\onedrive\\desktop\\learntoolc#\\projectselenium\\getcodemail\\getcodemail\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{60919B5C-1C30-42DB-99A7-8EEE52A89A0C}|getCodemail\\getCodemail.csproj|solutionrelative:getcodemail\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\vongu\\OneDrive\\Desktop\\learnToolC#\\projectSelenium\\getCodemail\\getCodemail\\Program.cs",
+              "RelativeDocumentMoniker": "getCodemail\\Program.cs",
+              "ToolTip": "C:\\Users\\vongu\\OneDrive\\Desktop\\learnToolC#\\projectSelenium\\getCodemail\\getCodemail\\Program.cs",
+              "RelativeToolTip": "getCodemail\\Program.cs",
+              "ViewState": "AgIAACIAAAAAAAAAAAAgwDEAAAA5AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-23T08:47:54.225Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

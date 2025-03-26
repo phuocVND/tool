@@ -25,14 +25,42 @@ class Program
             // signUpButton.Click();
             // // Nhập email
             // Thread.Sleep(1000); // Chờ trang tải
-            // IWebElement emailInput = driver.FindElement(By.XPath("/html/body/div[8]/div/div/div[1]/form/div[1]/div[2]/div/input"));
-            // emailInput.SendKeys(mail);
+            string username = "setkiqotgmdofmg";
+            IWebElement userInput = driver.FindElement(By.XPath("/html/body/div[1]/div[1]/div[2]/c-wiz/div/div[2]/div/div/div/form/span/section/div/div/div/div[1]/div[1]/div/div[1]/div/div[1]/input"));
+            userInput.SendKeys(username);
+            string lastname = "sdàasagsasgas";
+            IWebElement lastNameInput = driver.FindElement(By.XPath("/html/body/div[1]/div[1]/div[2]/c-wiz/div/div[2]/div/div/div/form/span/section/div/div/div/div[1]/div[2]/div/div[1]/div/div[1]/input"));
+            lastNameInput.SendKeys(lastname);
+
+            Thread.Sleep(1000);
+            // Click vào nút "next"
+            IWebElement nextButton = driver.FindElement(By.XPath("/html/body/div[1]/div[1]/div[2]/c-wiz/div/div[3]/div/div/div/div/button"));
+            nextButton.Click();
+
+            Thread.Sleep(1000);
+
+            string[] birthValues = { "12", "1", "2000" }; // Tháng, ngày, năm
+            //var selectElements = driver.FindElements(By.XPath("//*[@id=\"month\"]"));
+            //SelectElement select = new SelectElement(selectElements[0]);
+            //select.SelectByValue(birthValues[1]);
+            ////for (int i = 0; i < selectElements.Count; i++)
+            ////{
+            ////    SelectElement select = new SelectElement(selectElements[i]);
+            ////    select.SelectByValue(birthValues[i]); // Chọn giá trị tương ứng
+            ////}
+
+            IWebElement dayInput = driver.FindElement(By.XPath("/html/body/div[1]/div[1]/div[2]/c-wiz/div/div[2]/div/div/div/form/span/section/div/div/div[1]/div[2]/div/div/div[1]/div/div[1]/input"));
+            dayInput.SendKeys(birthValues[0]);
+
+            IWebElement yearInput = driver.FindElement(By.XPath("//*[@id=year]"));
+            yearInput.SendKeys(birthValues[2]);
+
             // Thread.Sleep(1000); // Chờ trang tải
-            // IWebElement passwordInput = driver.FindElement(By.XPath("/html/body/div[8]/div/div/div[1]/form/div[2]/div[2]/div/input"));
+            // IWebElement passwordInput = driver.FindElement(By.XPath("//*[@id="day"]"));
             // passwordInput.SendKeys(password);
             // Thread.Sleep(1000); // Chờ trang tải
             // // Click vào nút "Create"
-            // IWebElement createButton = driver.FindElement(By.XPath("/html/body/div[8]/div/div/div[2]/span[1]/button"));
+            // IWebElement createButton = driver.FindElement(By.XPath("/html/body/div[1]/div[1]/div[2]/c-wiz/div/div[3]/div/div/div/div/button"));
             // createButton.Click();
 
             // Console.WriteLine($"Tên tài khoản: {mail}@indigobook.com");
@@ -50,7 +78,7 @@ class Program
     }
     static void Main()
     {
-        string proxyfile = "proxyfile.txt";
+        string proxyfile = "C:\\Users\\vongu\\OneDrive\\Desktop\\tool\\createGmail\\proxyfile.txt";
         string[] linesProxyfile = File.ReadAllLines(proxyfile);
 
         for (int i = 0; i < 1; i++){

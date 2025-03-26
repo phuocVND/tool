@@ -1,0 +1,23 @@
+{
+  "version": 2,
+  "dgSpecHash": "IcyYjupT860=",
+  "success": true,
+  "projectFilePath": "/Users/admin/Desktop/phuoc/createGmail/createGmail.csproj",
+  "expectedPackageFiles": [
+    "/Users/admin/.nuget/packages/selenium.support/4.30.0/selenium.support.4.30.0.nupkg.sha512",
+    "/Users/admin/.nuget/packages/selenium.webdriver/4.30.0/selenium.webdriver.4.30.0.nupkg.sha512",
+    "/Users/admin/.nuget/packages/selenium.webdriver.chromedriver/134.0.6998.3500/selenium.webdriver.chromedriver.134.0.6998.3500.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "NU1603",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "createGmail depends on Selenium.WebDriver.ChromeDriver (>= 134.0.6998.166) but Selenium.WebDriver.ChromeDriver 134.0.6998.166 was not found. An approximate best match of Selenium.WebDriver.ChromeDriver 134.0.6998.3500 was resolved.",
+      "libraryId": "Selenium.WebDriver.ChromeDriver",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    }
+  ]
+}

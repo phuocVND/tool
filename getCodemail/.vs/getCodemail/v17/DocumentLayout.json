@@ -7,12 +7,16 @@
       "RelativeMoniker": "D:0:0:{60919B5C-1C30-42DB-99A7-8EEE52A89A0C}|getCodemail\\getCodemail.csproj|solutionrelative:getcodemail\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{60919B5C-1C30-42DB-99A7-8EEE52A89A0C}|getCodemail\\getCodemail.csproj|c:\\users\\lit\\desktop\\tool\\getcodemail\\getcodemail\\mailpass.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{60919B5C-1C30-42DB-99A7-8EEE52A89A0C}|getCodemail\\getCodemail.csproj|solutionrelative:getcodemail\\mailpass.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{60919B5C-1C30-42DB-99A7-8EEE52A89A0C}|getCodemail\\getCodemail.csproj|c:\\users\\lit\\desktop\\tool\\getcodemail\\getcodemail\\proxyfile.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{60919B5C-1C30-42DB-99A7-8EEE52A89A0C}|getCodemail\\getCodemail.csproj|solutionrelative:getcodemail\\proxyfile.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{60919B5C-1C30-42DB-99A7-8EEE52A89A0C}|getCodemail\\getCodemail.csproj|c:\\users\\lit\\desktop\\tool\\getcodemail\\getcodemail\\getcodemail.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{60919B5C-1C30-42DB-99A7-8EEE52A89A0C}|getCodemail\\getCodemail.csproj|solutionrelative:getcodemail\\getcodemail.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{60919B5C-1C30-42DB-99A7-8EEE52A89A0C}|getCodemail\\getCodemail.csproj|c:\\users\\lit\\desktop\\tool\\getcodemail\\getcodemail\\mailpass.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{60919B5C-1C30-42DB-99A7-8EEE52A89A0C}|getCodemail\\getCodemail.csproj|solutionrelative:getcodemail\\mailpass.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,11 +26,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "mailPass.txt",
               "DocumentMoniker": "C:\\Users\\lit\\Desktop\\tool\\getCodemail\\getCodemail\\mailPass.txt",
               "RelativeDocumentMoniker": "getCodemail\\mailPass.txt",
@@ -40,6 +44,19 @@
             {
               "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "getCodemail",
+              "DocumentMoniker": "C:\\Users\\lit\\Desktop\\tool\\getCodemail\\getCodemail\\getCodemail.csproj",
+              "RelativeDocumentMoniker": "getCodemail\\getCodemail.csproj",
+              "ToolTip": "C:\\Users\\lit\\Desktop\\tool\\getCodemail\\getCodemail\\getCodemail.csproj",
+              "RelativeToolTip": "getCodemail\\getCodemail.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-04-12T03:26:36.869Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "proxyfile.txt",
               "DocumentMoniker": "C:\\Users\\lit\\Desktop\\tool\\getCodemail\\getCodemail\\proxyfile.txt",
               "RelativeDocumentMoniker": "getCodemail\\proxyfile.txt",
@@ -47,7 +64,8 @@
               "RelativeToolTip": "getCodemail\\proxyfile.txt",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
-              "WhenOpened": "2025-03-25T13:27:27.018Z"
+              "WhenOpened": "2025-03-25T13:27:27.018Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -57,7 +75,7 @@
               "RelativeDocumentMoniker": "getCodemail\\Program.cs",
               "ToolTip": "C:\\Users\\lit\\Desktop\\tool\\getCodemail\\getCodemail\\Program.cs",
               "RelativeToolTip": "getCodemail\\Program.cs",
-              "ViewState": "AgIAADEAAAAAAAAAAAAgwFcAAAAsAAAAAAAAAA==",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAA8AAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-23T08:47:54.225Z",
               "EditorCaption": ""

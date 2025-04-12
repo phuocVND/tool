@@ -9,10 +9,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{6F66D154-E10C-43C4-8405-E423EBA11C8D}|refAccX\\refAccX.csproj|c:\\users\\lit\\desktop\\tool\\refaccx\\refaccx\\mailpass.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{6F66D154-E10C-43C4-8405-E423EBA11C8D}|refAccX\\refAccX.csproj|solutionrelative:refaccx\\mailpass.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6F66D154-E10C-43C4-8405-E423EBA11C8D}|refAccX\\refAccX.csproj|c:\\users\\lit\\desktop\\tool\\refaccx\\refaccx\\proxyfile.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{6F66D154-E10C-43C4-8405-E423EBA11C8D}|refAccX\\refAccX.csproj|solutionrelative:refaccx\\proxyfile.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,33 +18,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\lit\\Desktop\\tool\\refAccX\\refAccX\\Program.cs",
-              "RelativeDocumentMoniker": "refAccX\\Program.cs",
-              "ToolTip": "C:\\Users\\lit\\Desktop\\tool\\refAccX\\refAccX\\Program.cs",
-              "RelativeToolTip": "refAccX\\Program.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAABgAAABDAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-21T23:54:41.658Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "proxyfile.txt",
-              "DocumentMoniker": "C:\\Users\\lit\\Desktop\\tool\\refAccX\\refAccX\\proxyfile.txt",
-              "RelativeDocumentMoniker": "refAccX\\proxyfile.txt",
-              "ToolTip": "C:\\Users\\lit\\Desktop\\tool\\refAccX\\refAccX\\proxyfile.txt",
-              "RelativeToolTip": "refAccX\\proxyfile.txt",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
-              "WhenOpened": "2025-03-22T15:12:55.824Z"
-            },
             {
               "$type": "Document",
               "DocumentIndex": 1,
@@ -57,9 +28,23 @@
               "RelativeDocumentMoniker": "refAccX\\mailPass.txt",
               "ToolTip": "C:\\Users\\lit\\Desktop\\tool\\refAccX\\refAccX\\mailPass.txt",
               "RelativeToolTip": "refAccX\\mailPass.txt",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAnAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
-              "WhenOpened": "2025-03-22T15:12:24.142Z"
+              "WhenOpened": "2025-04-12T04:13:05.219Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\lit\\Desktop\\tool\\refAccX\\refAccX\\Program.cs",
+              "RelativeDocumentMoniker": "refAccX\\Program.cs",
+              "ToolTip": "C:\\Users\\lit\\Desktop\\tool\\refAccX\\refAccX\\Program.cs",
+              "RelativeToolTip": "refAccX\\Program.cs",
+              "ViewState": "AgIAABkAAAAAAAAAAAAgwCkAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-21T23:54:41.658Z",
+              "EditorCaption": ""
             }
           ]
         }

@@ -1,13 +1,21 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\lit\\Desktop\\tool\\refAccX\\",
+  "WorkspaceRootPath": "C:\\Users\\vongu\\OneDrive\\Desktop\\tool\\refAccX\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{6F66D154-E10C-43C4-8405-E423EBA11C8D}|refAccX\\refAccX.csproj|c:\\users\\lit\\desktop\\tool\\refaccx\\refaccx\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{6F66D154-E10C-43C4-8405-E423EBA11C8D}|refAccX\\refAccX.csproj|c:\\users\\vongu\\onedrive\\desktop\\tool\\refaccx\\refaccx\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{6F66D154-E10C-43C4-8405-E423EBA11C8D}|refAccX\\refAccX.csproj|solutionrelative:refaccx\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6F66D154-E10C-43C4-8405-E423EBA11C8D}|refAccX\\refAccX.csproj|c:\\users\\lit\\desktop\\tool\\refaccx\\refaccx\\mailpass.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "AbsoluteMoniker": "D:0:0:{6F66D154-E10C-43C4-8405-E423EBA11C8D}|refAccX\\refAccX.csproj|c:\\users\\vongu\\onedrive\\desktop\\tool\\refaccx\\refaccx\\useragent.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{6F66D154-E10C-43C4-8405-E423EBA11C8D}|refAccX\\refAccX.csproj|solutionrelative:refaccx\\useragent.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6F66D154-E10C-43C4-8405-E423EBA11C8D}|refAccX\\refAccX.csproj|c:\\users\\vongu\\onedrive\\desktop\\tool\\refaccx\\refaccx\\proxyfile.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{6F66D154-E10C-43C4-8405-E423EBA11C8D}|refAccX\\refAccX.csproj|solutionrelative:refaccx\\proxyfile.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6F66D154-E10C-43C4-8405-E423EBA11C8D}|refAccX\\refAccX.csproj|c:\\users\\vongu\\onedrive\\desktop\\tool\\refaccx\\refaccx\\mailpass.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{6F66D154-E10C-43C4-8405-E423EBA11C8D}|refAccX\\refAccX.csproj|solutionrelative:refaccx\\mailpass.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
     }
   ],
@@ -18,15 +26,41 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "userAgent.txt",
+              "DocumentMoniker": "C:\\Users\\vongu\\OneDrive\\Desktop\\tool\\refAccX\\refAccX\\userAgent.txt",
+              "RelativeDocumentMoniker": "refAccX\\userAgent.txt",
+              "ToolTip": "C:\\Users\\vongu\\OneDrive\\Desktop\\tool\\refAccX\\refAccX\\userAgent.txt",
+              "RelativeToolTip": "refAccX\\userAgent.txt",
+              "ViewState": "AgIAAD0AAAAAAAAAAAAYwGIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
+              "WhenOpened": "2025-04-13T01:05:24.767Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "proxyfile.txt",
+              "DocumentMoniker": "C:\\Users\\vongu\\OneDrive\\Desktop\\tool\\refAccX\\refAccX\\proxyfile.txt",
+              "RelativeDocumentMoniker": "refAccX\\proxyfile.txt",
+              "ToolTip": "C:\\Users\\vongu\\OneDrive\\Desktop\\tool\\refAccX\\refAccX\\proxyfile.txt",
+              "RelativeToolTip": "refAccX\\proxyfile.txt",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
+              "WhenOpened": "2025-04-13T00:34:30.757Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "mailPass.txt",
-              "DocumentMoniker": "C:\\Users\\lit\\Desktop\\tool\\refAccX\\refAccX\\mailPass.txt",
+              "DocumentMoniker": "C:\\Users\\vongu\\OneDrive\\Desktop\\tool\\refAccX\\refAccX\\mailPass.txt",
               "RelativeDocumentMoniker": "refAccX\\mailPass.txt",
-              "ToolTip": "C:\\Users\\lit\\Desktop\\tool\\refAccX\\refAccX\\mailPass.txt",
+              "ToolTip": "C:\\Users\\vongu\\OneDrive\\Desktop\\tool\\refAccX\\refAccX\\mailPass.txt",
               "RelativeToolTip": "refAccX\\mailPass.txt",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
@@ -37,11 +71,11 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\lit\\Desktop\\tool\\refAccX\\refAccX\\Program.cs",
+              "DocumentMoniker": "C:\\Users\\vongu\\OneDrive\\Desktop\\tool\\refAccX\\refAccX\\Program.cs",
               "RelativeDocumentMoniker": "refAccX\\Program.cs",
-              "ToolTip": "C:\\Users\\lit\\Desktop\\tool\\refAccX\\refAccX\\Program.cs",
+              "ToolTip": "C:\\Users\\vongu\\OneDrive\\Desktop\\tool\\refAccX\\refAccX\\Program.cs",
               "RelativeToolTip": "refAccX\\Program.cs",
-              "ViewState": "AgIAABkAAAAAAAAAAAAgwDMAAABKAAAAAAAAAA==",
+              "ViewState": "AgIAAHsBAAAAAAAAAAAuwI8BAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-21T23:54:41.658Z",
               "EditorCaption": ""

@@ -1,7 +1,0 @@
-{
-    "API_KEY": "093071eef1112a1cc0eeee84323dcc2a",
-    "funcaptcha_image": true,
-    "recaptcha_image": false,
-    "recaptcha_token": false,
-    "delay_solve": 2000
-}

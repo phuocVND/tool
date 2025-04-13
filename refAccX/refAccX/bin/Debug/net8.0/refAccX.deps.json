@@ -10,7 +10,7 @@
         "dependencies": {
           "AutoItX.Dotnet": "3.3.14.5",
           "AutoItX.NetCore": "3.3.16.1",
-          "Microsoft.DotNet.ILCompiler": "8.0.11",
+          "Microsoft.DotNet.ILCompiler": "8.0.14",
           "Microsoft.Edge.SeleniumTools": "3.141.3",
           "Microsoft.NET.ILLink.Tasks": "8.0.14",
           "Selenium.Chrome.WebDriver": "85.0.0",
@@ -37,7 +37,7 @@
           }
         }
       },
-      "Microsoft.DotNet.ILCompiler/8.0.11": {},
+      "Microsoft.DotNet.ILCompiler/8.0.14": {},
       "Microsoft.Edge.SeleniumTools/3.141.3": {
         "dependencies": {
           "Selenium.WebDriver": "4.30.0"
@@ -93,12 +93,12 @@
       "path": "autoitx.netcore/3.3.16.1",
       "hashPath": "autoitx.netcore.3.3.16.1.nupkg.sha512"
     },
-    "Microsoft.DotNet.ILCompiler/8.0.11": {
+    "Microsoft.DotNet.ILCompiler/8.0.14": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-9SWRKJzFrE07m77G/9jSR1lqdlPmKCsQX1UflZEFBGYzmOZ53sjLEEcAiWtnWY0QJ750h2ahciOPO8oVjztQ0g==",
-      "path": "microsoft.dotnet.ilcompiler/8.0.11",
-      "hashPath": "microsoft.dotnet.ilcompiler.8.0.11.nupkg.sha512"
+      "sha512": "sha512-lJvndCQZJxHBVoD8VxfSJ2MaURHENC63sbeAJNfedvXvscgjQSpfVdcTsv0iGeSu9X05G05TYMCWVbZGj4Z51Q==",
+      "path": "microsoft.dotnet.ilcompiler/8.0.14",
+      "hashPath": "microsoft.dotnet.ilcompiler.8.0.14.nupkg.sha512"
     },
     "Microsoft.Edge.SeleniumTools/3.141.3": {
       "type": "package",

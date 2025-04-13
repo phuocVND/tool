@@ -378,6 +378,7 @@ class Program
 
         IWebElement authenticate = driver.FindElement(By.XPath("//*[@id='root']/div/div[1]/button"));
         actions.MoveToElement(authenticate).Pause(TimeSpan.FromMilliseconds(random.Next(100, 300))).Click().Perform();
+
         RandomDelay(15000, 25000); // Đợi lâu hơn cho CAPTCHA
     }
 
@@ -412,7 +413,7 @@ class Program
     static void Main()
     {
         // Đường dẫn đến extension CAPTCHA
-        string extensionFolderPath = "C:\\Users\\vongu\\OneDrive\\Desktop\\tool\\Betacaptcha2";
+        string extensionFolderPath = "C:\\Users\\lit\\Desktop\\tool\\Betacaptcha2";
         int index = 2; // Chỉ số tài khoản trong file
 
         try

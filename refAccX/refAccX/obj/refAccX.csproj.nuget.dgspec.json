@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\vongu\\OneDrive\\Desktop\\tool\\refAccX\\refAccX\\refAccX.csproj": {}
+    "C:\\Users\\lit\\Desktop\\tool\\refAccX\\refAccX\\refAccX.csproj": {}
   },
   "projects": {
-    "C:\\Users\\vongu\\OneDrive\\Desktop\\tool\\refAccX\\refAccX\\refAccX.csproj": {
+    "C:\\Users\\lit\\Desktop\\tool\\refAccX\\refAccX\\refAccX.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\vongu\\OneDrive\\Desktop\\tool\\refAccX\\refAccX\\refAccX.csproj",
+        "projectUniqueName": "C:\\Users\\lit\\Desktop\\tool\\refAccX\\refAccX\\refAccX.csproj",
         "projectName": "refAccX",
-        "projectPath": "C:\\Users\\vongu\\OneDrive\\Desktop\\tool\\refAccX\\refAccX\\refAccX.csproj",
-        "packagesPath": "C:\\Users\\vongu\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\vongu\\OneDrive\\Desktop\\tool\\refAccX\\refAccX\\obj\\",
+        "projectPath": "C:\\Users\\lit\\Desktop\\tool\\refAccX\\refAccX\\refAccX.csproj",
+        "packagesPath": "C:\\Users\\lit\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\lit\\Desktop\\tool\\refAccX\\refAccX\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\vongu\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\lit\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -64,10 +64,6 @@
               "version": "[8.0.14, )",
               "autoReferenced": true
             },
-            "Microsoft.Edge.SeleniumTools": {
-              "target": "Package",
-              "version": "[3.141.3, )"
-            },
             "Microsoft.NET.ILLink.Tasks": {
               "suppressParent": "All",
               "target": "Package",
@@ -80,11 +76,11 @@
             },
             "Selenium.Support": {
               "target": "Package",
-              "version": "[4.30.0, )"
+              "version": "[4.31.0, )"
             },
             "Selenium.WebDriver": {
               "target": "Package",
-              "version": "[4.30.0, )"
+              "version": "[4.31.0, )"
             },
             "Selenium.WebDriver.ChromeDriver": {
               "target": "Package",

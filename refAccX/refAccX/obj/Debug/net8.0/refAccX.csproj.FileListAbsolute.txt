@@ -34,7 +34,6 @@ C:\Users\lit\Desktop\tool\refAccX\refAccX\bin\Debug\net8.0\refAccX.runtimeconfig
 C:\Users\lit\Desktop\tool\refAccX\refAccX\bin\Debug\net8.0\refAccX.dll
 C:\Users\lit\Desktop\tool\refAccX\refAccX\bin\Debug\net8.0\refAccX.pdb
 C:\Users\lit\Desktop\tool\refAccX\refAccX\bin\Debug\net8.0\AutoIt.dll
-C:\Users\lit\Desktop\tool\refAccX\refAccX\bin\Debug\net8.0\Microsoft.Edge.SeleniumTools.dll
 C:\Users\lit\Desktop\tool\refAccX\refAccX\bin\Debug\net8.0\WebDriver.Support.dll
 C:\Users\lit\Desktop\tool\refAccX\refAccX\bin\Debug\net8.0\WebDriver.dll
 C:\Users\lit\Desktop\tool\refAccX\refAccX\obj\Debug\net8.0\refAccX.csproj.AssemblyReference.cache

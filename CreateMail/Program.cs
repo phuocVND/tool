@@ -35,9 +35,12 @@ class Program
             IWebElement createButton = driver.FindElement(By.XPath("/html/body/div[8]/div/div/div[2]/span[1]/button"));
             createButton.Click();
 
-            Console.WriteLine($"Tên tài khoản: {mail}@indigobook.com");
+            IWebElement domain = driver.FindElement(By.XPath("/html/body/div[8]/div/div/div[1]/form/div[1]/div[2]/div/span[2]/button"));
+            
+
+            Console.WriteLine($"Tên tài khoản: {mail}@{domain.Text}");
             Console.WriteLine($"Mật khẩu: {password}");
-            SaveCredentialsToFile($"{mail}@indigobook.com|{password}");
+            SaveCredentialsToFile($"{mail}@{domain.Text}|{password}");
         }
         catch
         {

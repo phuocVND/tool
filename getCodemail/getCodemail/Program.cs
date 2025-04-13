@@ -1,5 +1,5 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Edge;
+using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium.Interactions;
 using System;
@@ -44,32 +44,45 @@ class Program
                 IWebElement nextButton = driver.FindElement(By.XPath("/html/body/div[1]/div/div[2]/main/div[2]/div[2]/ul/li[1]/a/div/div/div[2]/div[1]/div[2]"));
                 nextButton.Click();
                 Thread.Sleep(1000); // Chờ trang tải
-
-                IWebElement iframeElement = driver.FindElement(By.XPath("/html/body/div[1]/div/div[2]/main/div[2]/div[2]/div[2]/div/iframe"));
-                driver.SwitchTo().Frame(iframeElement);
-
-                IWebElement code = driver.FindElement(By.XPath("/html/body/table/tbody/tr[1]/td/table/tbody/tr[1]/td/table[1]/tbody/tr/td[2]/table/tbody/tr[10]/td"));
-                Console.WriteLine($"{code.Text}");
-
-                codeText = code.Text;
             }
             catch
             {
                 driver.Navigate().Refresh();
                 Thread.Sleep(2000); // Chờ trang tải
+
                 IWebElement nextButton = driver.FindElement(By.XPath("/html/body/div[1]/div/div[2]/main/div[2]/div[2]/ul/li[1]/a/div/div/div[2]/div[1]/div[2]"));
                 nextButton.Click();
                 Thread.Sleep(1000); // Chờ trang tải
-
-                IWebElement iframeElement = driver.FindElement(By.XPath("/html/body/div[1]/div/div[2]/main/div[2]/div[2]/div[2]/div/iframe"));
-                driver.SwitchTo().Frame(iframeElement);
-
-                IWebElement code = driver.FindElement(By.XPath("/html/body/table/tbody/tr[1]/td/table/tbody/tr[1]/td/table[1]/tbody/tr/td[2]/table/tbody/tr[10]/td"));
-                Console.WriteLine($"{code.Text}");
-
-                codeText = code.Text;
             }
 
+
+
+            try
+            {
+
+                IWebElement iframeElement = driver.FindElement(By.Id("iFrameResizer0"));
+                driver.SwitchTo().Frame(iframeElement);
+
+                IWebElement code = driver.FindElement(By.XPath("/html/body/table/tbody/tr[4]/td/span"));
+                codeText = code.Text;
+
+            }
+            catch
+            {
+                driver.Navigate().Refresh();
+                Thread.Sleep(2000); // Chờ trang tải
+                //IWebElement nextButton = driver.FindElement(By.XPath("/html/body/div[1]/div/div[2]/main/div[2]/div[2]/ul/li[1]/a/div/div/div[2]/div[1]/div[2]"));
+                //nextButton.Click();
+                //Thread.Sleep(1000); // Chờ trang tải
+
+                //IWebElement iframeElement = driver.FindElement(By.XPath("//*[@id=iFrameResizer0]"));
+                //driver.SwitchTo().Frame(iframeElement);
+
+                //IWebElement code = driver.FindElement(By.XPath("/html/body/table/tbody/tr[4]/td/span"));
+                //Console.WriteLine($"{code.Text}");
+
+                //codeText = code.Text;
+            }
             return codeText;
         }
         catch
@@ -90,7 +103,7 @@ class Program
         string[] linesMailPass = File.ReadAllLines(mailPass);
         string[] linesProxyfile = File.ReadAllLines(proxyfile);
 
-        int index = 9;
+        int index = 1;
 
         string[] mailPassParts = linesMailPass[index].Split('|');
         string[] proxyfileParts = linesProxyfile[index].Split(':');
@@ -101,7 +114,7 @@ class Program
         string proxyPass = proxyfileParts[3];
         string proxyAddress = proxyfileParts[0] + ':' + proxyfileParts[1];
 
-        EdgeOptions options = new EdgeOptions();
+        ChromeOptions options = new ChromeOptions();
 
         //options.AddArgument("--headless");
         options.AddArgument("--disable-webrtc");
@@ -109,10 +122,10 @@ class Program
         options.AddArgument("--inprivate"); // Chế độ ẩn danh
 
 
-        IWebDriver driver = new EdgeDriver(options);
+        IWebDriver driver = new ChromeDriver(options);
         Actions actions = new Actions(driver);
 
-        WebDriverWait wait;
+        //WebDriverWait wait;
 
         ((IJavaScriptExecutor)driver).ExecuteScript("window.open();");
         var windows = driver.WindowHandles;

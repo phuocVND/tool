@@ -1,21 +1,21 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\vongu\\OneDrive\\Desktop\\learnToolC#\\projectSelenium\\regMicro\\",
+  "WorkspaceRootPath": "C:\\Users\\vongu\\OneDrive\\Desktop\\tool\\regMicro\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{DE4A16F5-A6F8-47BF-A6CC-8F1F937C170D}|regMicro\\regMicro.csproj|c:\\users\\vongu\\onedrive\\desktop\\learntoolc#\\projectselenium\\regmicro\\regmicro\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{DE4A16F5-A6F8-47BF-A6CC-8F1F937C170D}|regMicro\\regMicro.csproj|c:\\users\\vongu\\onedrive\\desktop\\tool\\regmicro\\regmicro\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{DE4A16F5-A6F8-47BF-A6CC-8F1F937C170D}|regMicro\\regMicro.csproj|solutionrelative:regmicro\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DE4A16F5-A6F8-47BF-A6CC-8F1F937C170D}|regMicro\\regMicro.csproj|c:\\users\\vongu\\onedrive\\desktop\\learntoolc#\\projectselenium\\regmicro\\regmicro\\proxyfile.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "AbsoluteMoniker": "D:0:0:{DE4A16F5-A6F8-47BF-A6CC-8F1F937C170D}|regMicro\\regMicro.csproj|c:\\users\\vongu\\onedrive\\desktop\\tool\\regmicro\\regmicro\\proxyfile.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{DE4A16F5-A6F8-47BF-A6CC-8F1F937C170D}|regMicro\\regMicro.csproj|solutionrelative:regmicro\\proxyfile.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DE4A16F5-A6F8-47BF-A6CC-8F1F937C170D}|regMicro\\regMicro.csproj|c:\\users\\vongu\\onedrive\\desktop\\learntoolc#\\projectselenium\\regmicro\\regmicro\\mailpass.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "AbsoluteMoniker": "D:0:0:{DE4A16F5-A6F8-47BF-A6CC-8F1F937C170D}|regMicro\\regMicro.csproj|c:\\users\\vongu\\onedrive\\desktop\\tool\\regmicro\\regmicro\\mailpass.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{DE4A16F5-A6F8-47BF-A6CC-8F1F937C170D}|regMicro\\regMicro.csproj|solutionrelative:regmicro\\mailpass.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DE4A16F5-A6F8-47BF-A6CC-8F1F937C170D}|regMicro\\regMicro.csproj|c:\\users\\vongu\\onedrive\\desktop\\learntoolc#\\projectselenium\\regmicro\\regmicro\\regmicro.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "AbsoluteMoniker": "D:0:0:{DE4A16F5-A6F8-47BF-A6CC-8F1F937C170D}|regMicro\\regMicro.csproj|c:\\users\\vongu\\onedrive\\desktop\\tool\\regmicro\\regmicro\\regmicro.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
       "RelativeMoniker": "D:0:0:{DE4A16F5-A6F8-47BF-A6CC-8F1F937C170D}|regMicro\\regMicro.csproj|solutionrelative:regmicro\\regmicro.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     }
   ],
@@ -32,11 +32,11 @@
               "$type": "Document",
               "DocumentIndex": 1,
               "Title": "proxyfile.txt",
-              "DocumentMoniker": "C:\\Users\\vongu\\OneDrive\\Desktop\\learnToolC#\\projectSelenium\\regMicro\\regMicro\\proxyfile.txt",
+              "DocumentMoniker": "C:\\Users\\vongu\\OneDrive\\Desktop\\tool\\regMicro\\regMicro\\proxyfile.txt",
               "RelativeDocumentMoniker": "regMicro\\proxyfile.txt",
-              "ToolTip": "C:\\Users\\vongu\\OneDrive\\Desktop\\learnToolC#\\projectSelenium\\regMicro\\regMicro\\proxyfile.txt",
+              "ToolTip": "C:\\Users\\vongu\\OneDrive\\Desktop\\tool\\regMicro\\regMicro\\proxyfile.txt",
               "RelativeToolTip": "regMicro\\proxyfile.txt",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
               "WhenOpened": "2025-03-23T08:42:55.053Z",
               "EditorCaption": ""
@@ -45,11 +45,11 @@
               "$type": "Document",
               "DocumentIndex": 2,
               "Title": "mailPass.txt",
-              "DocumentMoniker": "C:\\Users\\vongu\\OneDrive\\Desktop\\learnToolC#\\projectSelenium\\regMicro\\regMicro\\mailPass.txt",
+              "DocumentMoniker": "C:\\Users\\vongu\\OneDrive\\Desktop\\tool\\regMicro\\regMicro\\mailPass.txt",
               "RelativeDocumentMoniker": "regMicro\\mailPass.txt",
-              "ToolTip": "C:\\Users\\vongu\\OneDrive\\Desktop\\learnToolC#\\projectSelenium\\regMicro\\regMicro\\mailPass.txt",
+              "ToolTip": "C:\\Users\\vongu\\OneDrive\\Desktop\\tool\\regMicro\\regMicro\\mailPass.txt",
               "RelativeToolTip": "regMicro\\mailPass.txt",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAnAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
               "WhenOpened": "2025-03-23T08:42:39.524Z",
               "EditorCaption": ""
@@ -57,12 +57,12 @@
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "regMicro",
-              "DocumentMoniker": "C:\\Users\\vongu\\OneDrive\\Desktop\\learnToolC#\\projectSelenium\\regMicro\\regMicro\\regMicro.csproj",
+              "Title": "regMicro.csproj",
+              "DocumentMoniker": "C:\\Users\\vongu\\OneDrive\\Desktop\\tool\\regMicro\\regMicro\\regMicro.csproj",
               "RelativeDocumentMoniker": "regMicro\\regMicro.csproj",
-              "ToolTip": "C:\\Users\\vongu\\OneDrive\\Desktop\\learnToolC#\\projectSelenium\\regMicro\\regMicro\\regMicro.csproj",
+              "ToolTip": "C:\\Users\\vongu\\OneDrive\\Desktop\\tool\\regMicro\\regMicro\\regMicro.csproj",
               "RelativeToolTip": "regMicro\\regMicro.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAzAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
               "WhenOpened": "2025-03-23T08:33:02.107Z",
               "EditorCaption": ""
@@ -71,11 +71,11 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\vongu\\OneDrive\\Desktop\\learnToolC#\\projectSelenium\\regMicro\\regMicro\\Program.cs",
+              "DocumentMoniker": "C:\\Users\\vongu\\OneDrive\\Desktop\\tool\\regMicro\\regMicro\\Program.cs",
               "RelativeDocumentMoniker": "regMicro\\Program.cs",
-              "ToolTip": "C:\\Users\\vongu\\OneDrive\\Desktop\\learnToolC#\\projectSelenium\\regMicro\\regMicro\\Program.cs",
+              "ToolTip": "C:\\Users\\vongu\\OneDrive\\Desktop\\tool\\regMicro\\regMicro\\Program.cs",
               "RelativeToolTip": "regMicro\\Program.cs",
-              "ViewState": "AgIAAHQAAAAAAAAAAAAQwJoAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAEkBAAAAAAAAAAAAAEkBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-23T08:32:51.515Z",
               "EditorCaption": ""

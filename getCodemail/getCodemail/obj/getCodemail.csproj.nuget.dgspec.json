@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\lit\\Desktop\\tool\\getCodemail\\getCodemail\\getCodemail.csproj": {}
+    "C:\\Users\\vongu\\OneDrive\\Desktop\\tool\\getCodemail\\getCodemail\\getCodemail.csproj": {}
   },
   "projects": {
-    "C:\\Users\\lit\\Desktop\\tool\\getCodemail\\getCodemail\\getCodemail.csproj": {
+    "C:\\Users\\vongu\\OneDrive\\Desktop\\tool\\getCodemail\\getCodemail\\getCodemail.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\lit\\Desktop\\tool\\getCodemail\\getCodemail\\getCodemail.csproj",
+        "projectUniqueName": "C:\\Users\\vongu\\OneDrive\\Desktop\\tool\\getCodemail\\getCodemail\\getCodemail.csproj",
         "projectName": "getCodemail",
-        "projectPath": "C:\\Users\\lit\\Desktop\\tool\\getCodemail\\getCodemail\\getCodemail.csproj",
-        "packagesPath": "C:\\Users\\lit\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\lit\\Desktop\\tool\\getCodemail\\getCodemail\\obj\\",
+        "projectPath": "C:\\Users\\vongu\\OneDrive\\Desktop\\tool\\getCodemail\\getCodemail\\getCodemail.csproj",
+        "packagesPath": "C:\\Users\\vongu\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\vongu\\OneDrive\\Desktop\\tool\\getCodemail\\getCodemail\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\lit\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\vongu\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -53,7 +53,7 @@
             "Microsoft.DotNet.ILCompiler": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[8.0.11, )",
+              "version": "[8.0.14, )",
               "autoReferenced": true
             },
             "Microsoft.Edge.SeleniumTools": {
@@ -105,7 +105,7 @@
           "downloadDependencies": [
             {
               "name": "runtime.win-x64.Microsoft.DotNet.ILCompiler",
-              "version": "[8.0.11, 8.0.11]"
+              "version": "[8.0.14, 8.0.14]"
             }
           ],
           "frameworkReferences": {

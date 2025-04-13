@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("regMicro")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2bed695bb72acd919f2af2487163862956fda16f")]
 [assembly: System.Reflection.AssemblyProductAttribute("regMicro")]
 [assembly: System.Reflection.AssemblyTitleAttribute("regMicro")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

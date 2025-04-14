@@ -1,151 +1,230 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
-using OpenQA.Selenium.Interactions;
+using SeleniumExtras.WaitHelpers;
 using System;
-using System.Threading;
 using System.IO;
 using System.Text;
-using OpenQA.Selenium.Chrome;
-
+using System.Threading;
+using OpenQA.Selenium.Interactions;
 
 class Program
 {
+    private static readonly Random random = new Random();
+
+    // Hàm tạo độ trễ ngẫu nhiên từ 0.2 đến 0.5 giây
+    private static void RandomDelay()
+    {
+        Thread.Sleep(random.Next(200, 501));
+    }
+
+    // Hàm click tự nhiên
+    private static void NaturalClick(IWebDriver driver, IWebElement element)
+    {
+        new Actions(driver)
+            .MoveToElement(element)
+            .Pause(TimeSpan.FromMilliseconds(random.Next(100, 300)))
+            .Click()
+            .Perform();
+        RandomDelay();
+    }
+
+    // Hàm nhập văn bản tự nhiên
+    private static void NaturalInput(IWebElement element, string text)
+    {
+        foreach (char c in text)
+        {
+            element.SendKeys(c.ToString());
+            Thread.Sleep(random.Next(50, 150));
+        }
+        RandomDelay();
+    }
+
+    // Hàm cuộn trang ngẫu nhiên
+    private static void RandomScroll(IWebDriver driver)
+    {
+        if (random.Next(0, 2) == 0) // 50% cơ hội cuộn
+        {
+            ((IJavaScriptExecutor)driver).ExecuteScript($"window.scrollBy(0, {random.Next(100, 300)});");
+            Thread.Sleep(random.Next(200, 500));
+        }
+    }
+
     static void createMailmt(IWebDriver driver, string mail, string password)
     {
-        driver.Navigate().GoToUrl("https://mail.tm");
-        Thread.Sleep(5000); // Chờ trang tải
-        WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-
+        WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
         try
         {
+            driver.Navigate().GoToUrl("https://mail.tm");
+            RandomScroll(driver);
+
             // Click vào nút "Mở"
-            IWebElement openButton = driver.FindElement(By.XPath("/html/body/div[1]/div/div[2]/div/div/div[2]/button[3]"));
-            openButton.Click();
-            Thread.Sleep(1000); // Chờ trang tải
+            IWebElement openButton = wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath("/html/body/div[1]/div/div[2]/div/div/div[2]/button[3]")));
+            NaturalClick(driver, openButton);
+            RandomScroll(driver);
+
             // Click vào nút "Đăng ký"
-            IWebElement signUpButton = driver.FindElement(By.XPath("/html/body/div[4]/div/div[2]/button[1]"));
-            signUpButton.Click();
+            IWebElement signUpButton = wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath("/html/body/div[4]/div/div[2]/button[1]")));
+            NaturalClick(driver, signUpButton);
+            RandomScroll(driver);
+
             // Nhập email
-            Thread.Sleep(1000); // Chờ trang tải
-            IWebElement emailInput = driver.FindElement(By.XPath("/html/body/div[8]/div/div/div[1]/form/div[1]/div[2]/div/input"));
-            emailInput.SendKeys(mail);
-            Thread.Sleep(1000); // Chờ trang tải
-            IWebElement passwordInput = driver.FindElement(By.XPath("/html/body/div[8]/div/div/div[1]/form/div[2]/div[2]/div/input"));
-            passwordInput.SendKeys(password);
-            Thread.Sleep(1000); // Chờ trang tải
+            IWebElement emailInput = wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("/html/body/div[8]/div/div/div[1]/form/div[1]/div[2]/div/input")));
+            NaturalInput(emailInput, mail);
 
-            IWebElement domain = driver.FindElement(By.XPath("/html/body/div[8]/div/div/div[1]/form/div[1]/div[2]/div/span[2]/button"));
-            string tentaikhoan = $"{mail}@{domain.Text}";
+            // Nhập password
+            IWebElement passwordInput = wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("/html/body/div[8]/div/div/div[1]/form/div[2]/div[2]/div/input")));
+            NaturalInput(passwordInput, password);
 
+            // Lấy domain
+            IWebElement domain = wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("/html/body/div[8]/div/div/div[1]/form/div[1]/div[2]/div/span[2]/button")));
+            string fullEmail = $"{mail}@{domain.Text}";
+            RandomDelay();
+
+            // Lặp kiểm tra emailFull và chỉ click "Create" nếu cần
             bool doneCreate = false;
-            do{
-                // Click vào nút "Create"
-                IWebElement createButton = driver.FindElement(By.XPath("/html/body/div[8]/div/div/div[2]/span[1]/button"));
-                createButton.Click();
-                Thread.Sleep(1000);
-                IWebElement emailFull = driver.FindElement(By.XPath("/html/body/div[1]/div/div[2]/div/div/div[1]/div/div/input"));
-                // Console.WriteLine($"Tên tài khoản: {tentaikhoan}");
-                // Console.WriteLine($"tài khoản: {emailFull.GetAttribute("value")}");
-                if (emailFull.GetAttribute("value") == tentaikhoan)
+            int maxAttempts = 10;
+            int attempt = 0;
+
+            do
+            {
+                try
                 {
-                    Console.WriteLine("Done");
-                    SaveCredentialsToFile($"{tentaikhoan}|{password}");
-                    doneCreate = true;
+                    // Kiểm tra emailFull
+                    try
+                    {
+                        IWebElement emailFull = wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("/html/body/div[1]/div/div[2]/div/div/div[1]/div/div/input")));
+                        string emailValue = emailFull.GetAttribute("value");
+                        if (emailValue == fullEmail)
+                        {
+                            Console.WriteLine($"Tên tài khoản: {fullEmail}");
+                            Console.WriteLine($"Mật khẩu: {password}");
+                            SaveCredentialsToFile($"{fullEmail}|{password}");
+                            doneCreate = true;
+                            Console.WriteLine("Done");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Chưa khớp, emailFull: {emailValue}");
+                            // Click nút "Create" nếu email không khớp
+                            IWebElement createButton = wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath("/html/body/div[8]/div/div/div[2]/span[1]/button")));
+                            NaturalClick(driver, createButton);
+                            Console.WriteLine($"Đã click nút Create (lần {attempt + 1})");
+                            Thread.Sleep(random.Next(1500, 2500));
+                        }
+                    }
+                    catch (WebDriverTimeoutException)
+                    {
+                        Console.WriteLine("Chưa tìm thấy emailFull, thử lại...");
+                        // Click nút "Create" nếu emailFull chưa xuất hiện
+                        IWebElement createButton = wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath("/html/body/div[8]/div/div/div[2]/span[1]/button")));
+                        NaturalClick(driver, createButton);
+                        Console.WriteLine($"Đã click nút Create (lần {attempt + 1})");
+                        Thread.Sleep(random.Next(1500, 2500));
+                    }
+
+                    attempt++;
+                    if (attempt >= maxAttempts)
+                    {
+                        Console.WriteLine("Đã vượt quá số lần thử tối đa!");
+                        break;
+                    }
                 }
-                else{
-                    Thread.Sleep(2000);
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Lỗi khi xử lý (lần {attempt + 1}): {ex.Message}");
+                    Thread.Sleep(random.Next(1500, 2500));
+                    attempt++;
+                    if (attempt >= maxAttempts)
+                    {
+                        Console.WriteLine("Đã vượt quá số lần thử tối đa!");
+                        break;
+                    }
                 }
-            }while(!doneCreate);
+            } while (!doneCreate);
         }
-        catch
+        catch (Exception ex)
         {
-            Console.WriteLine("Đã xảy ra lỗi");
+            Console.WriteLine($"Đã xảy ra lỗi: {ex.Message}");
         }
         finally
         {
             driver.Quit();
         }
     }
-    
+
     static string GenerateRandomUsername()
     {
-        // Ký tự có thể sử dụng cho tên tài khoản
         const string chars = "abcdefghijklmnopqrstuvwxyz0123456789";
-        
-        // Chọn độ dài ngẫu nhiên từ 8 đến 12 ký tự
-        Random random = new Random();
         int length = random.Next(12, 20);
-
-        // Tạo tên tài khoản ngẫu nhiên
-        StringBuilder username = new StringBuilder();
+        StringBuilder username = new StringBuilder(length);
         for (int i = 0; i < length; i++)
         {
             username.Append(chars[random.Next(chars.Length)]);
         }
-
         return username.ToString();
     }
 
-
-    // Hàm tạo mật khẩu ngẫu nhiên
     static string GenerateRandomPassword()
     {
-        // Ký tự có thể sử dụng trong mật khẩu
         const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*_+";
-        
-        // Chọn độ dài ngẫu nhiên từ 8 đến 12 ký tự
-        Random random = new Random();
         int length = random.Next(8, 14);
-
-        // Tạo mật khẩu ngẫu nhiên
-        StringBuilder password = new StringBuilder();
+        StringBuilder password = new StringBuilder(length);
         for (int i = 0; i < length; i++)
         {
             password.Append(chars[random.Next(chars.Length)]);
         }
         return password.ToString();
     }
+
     static void SaveCredentialsToFile(string credentials)
     {
         try
         {
-            using (StreamWriter writer = new StreamWriter("mailPass.txt", true))
-            {
-                writer.WriteLine(credentials);
-            }
+            File.AppendAllText("mailPass.txt", credentials + Environment.NewLine);
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Lỗi khi lưu thông tin: {ex.Message}");
         }
     }
+
     static void Main()
     {
-        string proxyfile = "proxyfile.txt";
-        string[] linesProxyfile = File.ReadAllLines(proxyfile);
+        // Danh sách user-agent ngẫu nhiên
+        string[] userAgents = new[]
+        {
+            "Mozilla/5.0 (iPhone; CPU iPhone OS 16_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.0 Mobile/15E148 Safari/604.1",
+            "Mozilla/5.0 (Linux; Android 12; SM-G998B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Mobile Safari/537.36",
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36",
+        };
 
-
-
-        for (int i = 0; i < 100; i++){
-            string[] proxyfileParts = linesProxyfile[i].Split(':');
-            string proxyUser = proxyfileParts[2];
-            string proxyPass = proxyfileParts[3];
-            string proxyAddress = proxyfileParts[0] + ':' + proxyfileParts[1];
-
+        // Giới hạn số lần lặp (tạm đặt 10 để tránh chạy quá lâu)
+        int maxIterations = 10;
+        for (int i = 0; i < maxIterations; i++)
+        {
             ChromeOptions options = new ChromeOptions();
-            options.AddArgument("--headless");
+            options.AddArgument("--headless"); // Tạm bỏ để debug
             options.AddArgument("--disable-webrtc");
             options.AddArgument("--disable-features=WebRtcHideLocalIpsWithMdns");
-            // options.AddArgument("--incognito"); // Chế độ ẩn danh
+            options.AddArgument("--incognito");
+            options.AddArgument("--window-size=414,896");
+            options.AddArgument($"--user-agent={userAgents[random.Next(userAgents.Length)]}");
 
+            // Tắt log ChromeDriver
+            var service = ChromeDriverService.CreateDefaultService();
+            service.SuppressInitialDiagnosticInformation = true;
+            service.HideCommandPromptWindow = true;
 
-            IWebDriver driver = new ChromeDriver(options);
-            Actions actions = new Actions(driver);
+            using (IWebDriver driver = new ChromeDriver(service, options))
+            {
+                string mail = GenerateRandomUsername();
+                string password = GenerateRandomPassword();
+                createMailmt(driver, mail, password);
+            }
 
-            string mail = GenerateRandomUsername();
-            string password = GenerateRandomPassword();
-            createMailmt(driver, mail, password);
+            // Đợi ngẫu nhiên giữa các lần lặp
+            Thread.Sleep(random.Next(1000, 3000));
         }
     }
-
 }

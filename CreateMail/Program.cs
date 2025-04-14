@@ -97,29 +97,29 @@ class Program
                         string emailValue = emailFull.GetAttribute("value");
                         if (emailValue == fullEmail)
                         {
-                            Console.WriteLine($"Tên tài khoản: {fullEmail}");
-                            Console.WriteLine($"Mật khẩu: {password}");
+                            // Console.WriteLine($"Tên tài khoản: {fullEmail}");
+                            // Console.WriteLine($"Mật khẩu: {password}");
                             SaveCredentialsToFile($"{fullEmail}|{password}");
                             doneCreate = true;
                             Console.WriteLine("Done");
                         }
                         else
                         {
-                            Console.WriteLine($"Chưa khớp, emailFull: {emailValue}");
+                            // Console.WriteLine($"Chưa khớp, emailFull: {emailValue}");
                             // Click nút "Create" nếu email không khớp
                             IWebElement createButton = wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath("/html/body/div[8]/div/div/div[2]/span[1]/button")));
                             NaturalClick(driver, createButton);
-                            Console.WriteLine($"Đã click nút Create (lần {attempt + 1})");
+                            // Console.WriteLine($"Đã click nút Create (lần {attempt + 1})");
                             Thread.Sleep(random.Next(1500, 2500));
                         }
                     }
                     catch (WebDriverTimeoutException)
                     {
-                        Console.WriteLine("Chưa tìm thấy emailFull, thử lại...");
+                        // Console.WriteLine("Chưa tìm thấy emailFull, thử lại...");
                         // Click nút "Create" nếu emailFull chưa xuất hiện
                         IWebElement createButton = wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath("/html/body/div[8]/div/div/div[2]/span[1]/button")));
                         NaturalClick(driver, createButton);
-                        Console.WriteLine($"Đã click nút Create (lần {attempt + 1})");
+                        // Console.WriteLine($"Đã click nút Create (lần {attempt + 1})");
                         Thread.Sleep(random.Next(1500, 2500));
                     }
 
@@ -132,7 +132,7 @@ class Program
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Lỗi khi xử lý (lần {attempt + 1}): {ex.Message}");
+                    // Console.WriteLine($"Lỗi khi xử lý (lần {attempt + 1}): {ex.Message}");
                     Thread.Sleep(random.Next(1500, 2500));
                     attempt++;
                     if (attempt >= maxAttempts)
@@ -200,7 +200,7 @@ class Program
         };
 
         // Giới hạn số lần lặp (tạm đặt 10 để tránh chạy quá lâu)
-        int maxIterations = 10;
+        int maxIterations = 100;
         for (int i = 0; i < maxIterations; i++)
         {
             ChromeOptions options = new ChromeOptions();
@@ -209,7 +209,7 @@ class Program
             options.AddArgument("--disable-features=WebRtcHideLocalIpsWithMdns");
             options.AddArgument("--incognito");
             options.AddArgument("--window-size=414,896");
-            options.AddArgument($"--user-agent={userAgents[random.Next(userAgents.Length)]}");
+            // options.AddArgument($"--user-agent={userAgents[random.Next(userAgents.Length)]}");
 
             // Tắt log ChromeDriver
             var service = ChromeDriverService.CreateDefaultService();

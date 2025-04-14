@@ -209,7 +209,7 @@ class Program
             options.AddArgument("--disable-features=WebRtcHideLocalIpsWithMdns");
             options.AddArgument("--incognito");
             options.AddArgument("--window-size=414,896");
-            // options.AddArgument($"--user-agent={userAgents[random.Next(userAgents.Length)]}");
+            options.AddArgument($"--user-agent={userAgents[random.Next(userAgents.Length)]}");
 
             // Tắt log ChromeDriver
             var service = ChromeDriverService.CreateDefaultService();

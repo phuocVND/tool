@@ -13,13 +13,17 @@ class Program
     static void createMailmt(IWebDriver driver, string mail, string password)
     {
         driver.Navigate().GoToUrl("https://mail.tm");
-        Thread.Sleep(3000); // Chờ trang tải
+        Thread.Sleep(5000); // Chờ trang tải
+        WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+
         try
         {
             // Click vào nút "Mở"
             IWebElement openButton = driver.FindElement(By.XPath("/html/body/div[1]/div/div[2]/div/div/div[2]/button[3]"));
             openButton.Click();
+
             Thread.Sleep(1000); // Chờ trang tải
+            
             // Click vào nút "Đăng ký"
             IWebElement signUpButton = driver.FindElement(By.XPath("/html/body/div[4]/div/div[2]/button[1]"));
             signUpButton.Click();
@@ -31,16 +35,29 @@ class Program
             IWebElement passwordInput = driver.FindElement(By.XPath("/html/body/div[8]/div/div/div[1]/form/div[2]/div[2]/div/input"));
             passwordInput.SendKeys(password);
             Thread.Sleep(1000); // Chờ trang tải
-            // Click vào nút "Create"
-            IWebElement createButton = driver.FindElement(By.XPath("/html/body/div[8]/div/div/div[2]/span[1]/button"));
-            createButton.Click();
 
             IWebElement domain = driver.FindElement(By.XPath("/html/body/div[8]/div/div/div[1]/form/div[1]/div[2]/div/span[2]/button"));
-            
+            string tentaikhoan = $"{mail}@{domain.Text}";
 
-            Console.WriteLine($"Tên tài khoản: {mail}@{domain.Text}");
-            Console.WriteLine($"Mật khẩu: {password}");
-            SaveCredentialsToFile($"{mail}@{domain.Text}|{password}");
+            bool doneCreate = false;
+            do{
+                // Click vào nút "Create"
+                IWebElement createButton = driver.FindElement(By.XPath("/html/body/div[8]/div/div/div[2]/span[1]/button"));
+                createButton.Click();
+                Thread.Sleep(1000);
+                IWebElement emailFull = driver.FindElement(By.XPath("/html/body/div[1]/div/div[2]/div/div/div[1]/div/div/input"));
+                // Console.WriteLine($"Tên tài khoản: {tentaikhoan}");
+                // Console.WriteLine($"tài khoản: {emailFull.GetAttribute("value")}");
+                if (emailFull.GetAttribute("value") == tentaikhoan)
+                {
+                    Console.WriteLine("Done");
+                    SaveCredentialsToFile($"{tentaikhoan}|{password}");
+                    doneCreate = true;
+                }
+                else{
+                    Thread.Sleep(2000);
+                }
+            }while(!doneCreate);
         }
         catch
         {
@@ -51,47 +68,7 @@ class Program
             driver.Quit();
         }
     }
-    static void Main()
-    {
-        string proxyfile = "proxyfile.txt";
-        string[] linesProxyfile = File.ReadAllLines(proxyfile);
-
-
-
-        for (int i = 0; i < 10; i++){
-            string[] proxyfileParts = linesProxyfile[i].Split(':');
-            string proxyUser = proxyfileParts[2];
-            string proxyPass = proxyfileParts[3];
-            string proxyAddress = proxyfileParts[0] + ':' + proxyfileParts[1];
-
-            ChromeOptions options = new ChromeOptions();
-            options.AddArgument("--headless");
-            options.AddArgument("--disable-webrtc");
-            options.AddArgument("--disable-features=WebRtcHideLocalIpsWithMdns");
-            options.AddArgument("--inprivate"); // Chế độ ẩn danh
-
-            IWebDriver driver = new ChromeDriver(options);
-            Actions actions = new Actions(driver);
-
-            string mail = GenerateRandomUsername();
-            string password = GenerateRandomPassword();
-            createMailmt(driver, mail, password);
-        }
-    }
-        static void SaveCredentialsToFile(string credentials)
-    {
-        try
-        {
-            using (StreamWriter writer = new StreamWriter("mailPass.txt", true))
-            {
-                writer.WriteLine(credentials);
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Lỗi khi lưu thông tin: {ex.Message}");
-        }
-    }
+    
     static string GenerateRandomUsername()
     {
         // Ký tự có thể sử dụng cho tên tài khoản
@@ -130,4 +107,47 @@ class Program
         }
         return password.ToString();
     }
+    static void SaveCredentialsToFile(string credentials)
+    {
+        try
+        {
+            using (StreamWriter writer = new StreamWriter("mailPass.txt", true))
+            {
+                writer.WriteLine(credentials);
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Lỗi khi lưu thông tin: {ex.Message}");
+        }
+    }
+    static void Main()
+    {
+        string proxyfile = "proxyfile.txt";
+        string[] linesProxyfile = File.ReadAllLines(proxyfile);
+
+
+
+        for (int i = 0; i < 100; i++){
+            string[] proxyfileParts = linesProxyfile[i].Split(':');
+            string proxyUser = proxyfileParts[2];
+            string proxyPass = proxyfileParts[3];
+            string proxyAddress = proxyfileParts[0] + ':' + proxyfileParts[1];
+
+            ChromeOptions options = new ChromeOptions();
+            options.AddArgument("--headless");
+            options.AddArgument("--disable-webrtc");
+            options.AddArgument("--disable-features=WebRtcHideLocalIpsWithMdns");
+            // options.AddArgument("--incognito"); // Chế độ ẩn danh
+
+
+            IWebDriver driver = new ChromeDriver(options);
+            Actions actions = new Actions(driver);
+
+            string mail = GenerateRandomUsername();
+            string password = GenerateRandomPassword();
+            createMailmt(driver, mail, password);
+        }
+    }
+
 }

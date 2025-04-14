@@ -21,9 +21,7 @@ class Program
             // Click vào nút "Mở"
             IWebElement openButton = driver.FindElement(By.XPath("/html/body/div[1]/div/div[2]/div/div/div[2]/button[3]"));
             openButton.Click();
-
             Thread.Sleep(1000); // Chờ trang tải
-            
             // Click vào nút "Đăng ký"
             IWebElement signUpButton = driver.FindElement(By.XPath("/html/body/div[4]/div/div[2]/button[1]"));
             signUpButton.Click();

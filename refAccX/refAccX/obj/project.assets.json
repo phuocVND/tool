@@ -286,31 +286,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\lit\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "/Users/admin/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\lit\\Desktop\\tool\\refAccX\\refAccX\\refAccX.csproj",
+      "projectUniqueName": "/Users/admin/Desktop/phuoc/tool/refAccX/refAccX/refAccX.csproj",
       "projectName": "refAccX",
-      "projectPath": "C:\\Users\\lit\\Desktop\\tool\\refAccX\\refAccX\\refAccX.csproj",
-      "packagesPath": "C:\\Users\\lit\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\lit\\Desktop\\tool\\refAccX\\refAccX\\obj\\",
+      "projectPath": "/Users/admin/Desktop/phuoc/tool/refAccX/refAccX/refAccX.csproj",
+      "packagesPath": "/Users/admin/.nuget/packages/",
+      "outputPath": "/Users/admin/Desktop/phuoc/tool/refAccX/refAccX/obj/",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\lit\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "/Users/admin/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -328,8 +321,7 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
-      },
-      "SdkAnalysisLevel": "9.0.200"
+      }
     },
     "frameworks": {
       "net8.0": {
@@ -385,7 +377,7 @@
         "warn": true,
         "downloadDependencies": [
           {
-            "name": "runtime.win-x64.Microsoft.DotNet.ILCompiler",
+            "name": "runtime.osx-arm64.Microsoft.DotNet.ILCompiler",
             "version": "[8.0.14, 8.0.14]"
           }
         ],
@@ -394,7 +386,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.201/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.407/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

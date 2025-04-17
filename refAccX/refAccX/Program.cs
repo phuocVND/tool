@@ -5,7 +5,7 @@ using OpenQA.Selenium.Interactions;
 using System;
 using System.Threading;
 using System.IO;
-using AutoIt;
+// using AutoIt;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
@@ -13,6 +13,83 @@ using System.Linq;
 
 class Program
 {
+    static string SetupProxy(string proxyHost, string proxyPort, string proxyUser, string proxyPass)
+    {
+        // Đường dẫn thư mục tạm cho extension
+        string proxyExtensionPath = Path.Combine(Directory.GetCurrentDirectory(), "proxy_auth_extension");
+
+        try
+        {
+            // Tạo thư mục cho extension nếu chưa tồn tại
+            if (!Directory.Exists(proxyExtensionPath))
+            {
+                Directory.CreateDirectory(proxyExtensionPath);
+            }
+
+            // Tạo manifest.json (Manifest V3)
+            string manifestJson = @"{
+                ""version"": ""1.0.0"",
+                ""manifest_version"": 3,
+                ""name"": ""Proxy Auto Auth"",
+                ""permissions"": [
+                    ""proxy"",
+                    ""storage"",
+                    ""webRequest"",
+                    ""webRequestAuthProvider""
+                ],
+                ""host_permissions"": [
+                    ""<all_urls>""
+                ],
+                ""background"": {
+                    ""service_worker"": ""background.js""
+                },
+                ""minimum_chrome_version"": ""88.0.0""
+            }";
+
+            // Tạo background.js
+            string backgroundJs = $@"var config = {{
+                mode: ""fixed_servers"",
+                rules: {{
+                    singleProxy: {{
+                        scheme: ""http"",
+                        host: ""{proxyHost}"",
+                        port: parseInt({proxyPort})
+                    }},
+                    bypassList: [""localhost""]
+                }}
+            }};
+
+            chrome.proxy.settings.set({{value: config, scope: ""regular""}}, function() {{}});
+
+            chrome.webRequest.onAuthRequired.addListener(
+                function(details, callbackFn) {{
+                    callbackFn({{
+                        authCredentials: {{
+                            username: ""{proxyUser}"",
+                            password: ""{proxyPass}""
+                        }}
+                    }});
+                }},
+                {{urls: [""<all_urls>""]}},
+                ['asyncBlocking']
+            );";
+
+            // Lưu manifest.json và background.js
+            File.WriteAllText(Path.Combine(proxyExtensionPath, "manifest.json"), manifestJson);
+            File.WriteAllText(Path.Combine(proxyExtensionPath, "background.js"), backgroundJs);
+
+            return proxyExtensionPath;
+        }
+        catch (Exception ex)
+        {
+            // Xóa thư mục tạm nếu có lỗi
+            if (Directory.Exists(proxyExtensionPath))
+            {
+                Directory.Delete(proxyExtensionPath, true);
+            }
+            throw new Exception($"Lỗi khi thiết lập proxy: {ex.Message}");
+        }
+    }
     // Hàm tạo độ trễ ngẫu nhiên để mô phỏng hành vi con người
     static void RandomDelay(int minMs, int maxMs)
     {
@@ -109,11 +186,13 @@ class Program
     static (string user, string mail, string password, string proxyUser, string proxyPass, string proxyAddress) LoadAccountInfo(int index)
     {
         // Đọc file chứa thông tin email và mật khẩu
-        string mailPass = "../../../mailPass.txt";
+        // string mailPass = "../../../mailPass.txt";
+        string mailPass = "mailPass.txt";
         string[] linesMailPass = File.ReadAllLines(mailPass);
 
         // Đọc file chứa thông tin proxy
-        string proxyfile = "../../../proxyfile.txt";
+        // string proxyfile = "../../../proxyfile.txt";
+        string proxyfile = "proxyfile.txt";
         string[] linesProxyfile = File.ReadAllLines(proxyfile);
 
         // Tách thông tin tài khoản
@@ -141,15 +220,14 @@ class Program
     }
 
     // Hàm cấu hình ChromeDriver với các tùy chọn tránh phát hiện
-    static (IWebDriver driver, Actions actions) ConfigureBrowser(string userAgent, string proxyAddress, string extensionFolderPath)
+    static (IWebDriver driver, Actions actions) ConfigureBrowser(string userAgent, string proxyAddress, string extensionFolderPath, string extensionProxyPath)
     {
-        // Cấu hình proxy
-        var proxy = new Proxy
-        {
-            HttpProxy = proxyAddress,
-            SslProxy = proxyAddress
-        };
-
+        // // Cấu hình proxy
+        // var proxy = new Proxy
+        // {
+        //     HttpProxy = proxyAddress,
+        //     SslProxy = proxyAddress
+        // };
         // Cấu hình ChromeOptions
         ChromeOptions options = new ChromeOptions();
         options.AddArgument($"--user-agent={userAgent}"); // Đặt User-Agent
@@ -161,12 +239,18 @@ class Program
         options.AddArgument("--disable-dev-shm-usage");
         options.AddArgument("--disable-notifications"); // Tắt thông báo bật lên
         options.AddArgument($"--load-extension={extensionFolderPath}"); // Tải extension CAPTCHA
-        options.Proxy = proxy;
+        options.AddArgument($"--load-extension={extensionProxyPath}"); // Tải extension Proxy
 
+        options.AddArgument("--disable-extensions-except=" + extensionProxyPath);
+        options.AddArgument("--ignore-certificate-errors");
+
+        // options.Proxy = proxy;
+        
         // Khởi tạo ChromeDriver
         IWebDriver driver = new ChromeDriver(options);
+        
         Actions actions = new Actions(driver);
-
+        
         // Ngẫu nhiên hóa kích thước cửa sổ để tránh dấu vân tay trình duyệt
         Random random = new Random();
         int[] widths = { 1920, 1366, 1440, 1600 };
@@ -189,7 +273,7 @@ class Program
         // Đóng cửa sổ thừa nếu có
         var windowHandles = driver.WindowHandles;
         Console.WriteLine($"Số lượng cửa sổ đang mở: {windowHandles.Count}");
-        if (windowHandles.Count > 2)
+        if (windowHandles.Count > 1)
         {
             string originalWindow = driver.CurrentWindowHandle;
             foreach (var handle in windowHandles)
@@ -208,11 +292,11 @@ class Program
         WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
         wait.Until(d => d.FindElement(By.TagName("body")));
 
-        AutoItX.WinWaitActive("Proxy Authentication", "", 1);
-        AutoItX.Send(proxyUser);
-        AutoItX.Send("{TAB}");
-        AutoItX.Send(proxyPass);
-        AutoItX.Send("{ENTER}");
+        // AutoItX.WinWaitActive("Proxy Authentication", "", 1);
+        // AutoItX.Send(proxyUser);
+        // AutoItX.Send("{TAB}");
+        // AutoItX.Send(proxyPass);
+        // AutoItX.Send("{ENTER}");
 
         RandomDelay(1000, 3000);
         Console.WriteLine("Proxy đang hoạt động.");
@@ -414,23 +498,29 @@ class Program
     {
         // Đường dẫn đến extension CAPTCHA
         string extensionFolderPath = "C:\\Users\\lit\\Desktop\\tool\\Betacaptcha2";
-        int index = 2; // Chỉ số tài khoản trong file
+        int index = 9; // Chỉ số tài khoản trong file
 
         try
         {
             // Bước 1: Đọc thông tin tài khoản
             var (user, mail, password, proxyUser, proxyPass, proxyAddress) = LoadAccountInfo(index);
-
+            // string userAgentFilePath = "../../../userAgent.txt";
+            string userAgentFilePath = "userAgent.txt";
             // Bước 2: Lấy User-Agent ngẫu nhiên
-            string userAgent = GetRandomUserAgent();
+            string userAgent = GetRandomUserAgent(userAgentFilePath);
             Console.WriteLine($"User-Agent: {userAgent}");
-
+            
             // Bước 3: Tạo ngày sinh ngẫu nhiên
             string[] birthValues = GenerateRandomBirthDate();
-
+            string[] proxyParts = proxyAddress.Split(':');
+            string proxyHost = proxyParts[0];
+            string proxyPort = proxyParts[1];
+           
+            string extensionProxyPath = SetupProxy(proxyHost, proxyPort, proxyUser, proxyPass);
             // Bước 4: Cấu hình trình duyệt
-            var (driver, actions) = ConfigureBrowser(userAgent, proxyAddress, extensionFolderPath);
-
+            
+            var (driver, actions) = ConfigureBrowser(userAgent, proxyAddress, extensionFolderPath, extensionProxyPath);
+            Console.WriteLine("lỗi");
             try
             {
                 // Xóa cookies để tăng tính riêng tư

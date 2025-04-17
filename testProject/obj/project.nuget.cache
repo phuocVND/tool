@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "fgUcxiKuv9c=",
+  "dgSpecHash": "2o/FO6EnyLE=",
   "success": true,
   "projectFilePath": "/Users/admin/Desktop/phuoc/tool/testProject/testProject.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "/Users/admin/.nuget/packages/selenium.webdriver/4.31.0/selenium.webdriver.4.31.0.nupkg.sha512",
+    "/Users/admin/.nuget/packages/selenium.webdriver.chromedriver/135.0.7049.9500/selenium.webdriver.chromedriver.135.0.7049.9500.nupkg.sha512"
+  ],
   "logs": []
 }

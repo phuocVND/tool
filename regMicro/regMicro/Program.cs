@@ -12,6 +12,12 @@ using System.Linq;
 
 class Program
 {
+    // Khai báo các đường dẫn toàn cục
+    private static readonly string UserAgentFilePath = "../../../userAgent.txt";
+    private static readonly string MailPassFilePath = "../../../mailPass.txt";
+    private static readonly string ProxyFilePath = "../../../proxyfile.txt";
+    private static readonly string ExtensionFolderPath = @"C:\Users\lit\Desktop\tool\Betacaptcha2";
+
     // Hàm thiết lập proxy bằng Chrome extension
     static string SetupProxy(string proxyHost, string proxyPort, string proxyUser, string proxyPass)
     {
@@ -151,11 +157,11 @@ class Program
     }
 
     // Hàm lấy User-Agent ngẫu nhiên
-    static string GetRandomUserAgent(string userAgentFilePath = "../../../userAgent.txt")
+    static string GetRandomUserAgent()
     {
         try
         {
-            string[] userAgents = File.ReadAllLines(userAgentFilePath);
+            string[] userAgents = File.ReadAllLines(UserAgentFilePath);
 
             if (userAgents.Length == 0)
             {
@@ -190,11 +196,8 @@ class Program
     // Hàm đọc thông tin tài khoản
     static (string user, string mail, string password, string proxyUser, string proxyPass, string proxyAddress) LoadAccountInfo(int index)
     {
-        string mailPass = "../../../mailPass.txt";
-        string[] linesMailPass = File.ReadAllLines(mailPass);
-
-        string proxyfile = "../../../proxyfile.txt";
-        string[] linesProxyfile = File.ReadAllLines(proxyfile);
+        string[] linesMailPass = File.ReadAllLines(MailPassFilePath);
+        string[] linesProxyfile = File.ReadAllLines(ProxyFilePath);
 
         string[] mailPassParts = linesMailPass[index].Split('|');
         string[] proxyfileParts = linesProxyfile[index].Split(':');
@@ -337,7 +340,7 @@ class Program
             {
                 driver.Navigate().Refresh();
                 RandomDelay(2000, 5000);
-                IWebElement nextButton = driver.FindElement(By.XPath("/html/body/div[1]/div/div[2]/main/div[2]/div[2]/ul/li[1]/embra/div/div/div[2]/div[1]/div[2]"));
+                IWebElement nextButton = driver.FindElement(By.XPath("/html/body/div[1]/div/div[2]/main/div[2]/div[2]/ul/li[1]/a/div/div/div[2]/div[1]/div[2]"));
                 new Actions(driver).MoveToElement(nextButton).Pause(TimeSpan.FromMilliseconds(new Random().Next(100, 300))).Click().Perform();
                 RandomDelay(1000, 3000);
 
@@ -345,7 +348,6 @@ class Program
                 driver.SwitchTo().Frame(iframeElement);
                 RandomDelay(1000, 2000);
 
-                //IWebElement code = driver.FindElement(By.XPath("/html/body/table/tbody/tr[1]/td/table/tbody/tr[1]/td/table[1]/tbody/tr/td[2]/table/tbody/tr[10]/td"));
                 IWebElement iframe = driver.FindElement(By.Id("iFrameResizer0"));
                 driver.SwitchTo().Frame(iframe);
                 IWebElement code = driver.FindElement(By.XPath("/html/body/table/tbody/tr[4]/td/span"));
@@ -414,7 +416,7 @@ class Program
             emailInput.SendKeys(c.ToString());
             RandomDelay(50, 100);
         }
-        RandomDelay(1000, 3000);
+        RandomDelay(1000, 3003);
 
         IWebElement nextUpButton = driver.FindElement(By.CssSelector("button[type='submit']"));
         actions.MoveToElement(nextUpButton).Pause(TimeSpan.FromMilliseconds(random.Next(100, 300))).Click().Perform();
@@ -516,7 +518,6 @@ class Program
     static void Main(int index)
     {
         int truonghop = 0;
-        string extensionFolderPath = "C:\\Users\\lit\\Desktop\\tool\\Betacaptcha2";
 
         try
         {
@@ -530,7 +531,7 @@ class Program
             string proxyPort = proxyParts[1];
 
             string extensionProxyPath = SetupProxy(proxyHost, proxyPort, proxyUser, proxyPass);
-            var (driver, actions) = ConfigureBrowser(userAgent, extensionFolderPath, extensionProxyPath);
+            var (driver, actions) = ConfigureBrowser(userAgent, ExtensionFolderPath, extensionProxyPath);
             string lastname = GetRandomLastName();
 
             try
@@ -574,8 +575,7 @@ class Program
     {
         try
         {
-            string proxyfile = "../../../proxyfile.txt";
-            int n = File.ReadAllLines(proxyfile).Length;
+            int n = File.ReadAllLines(ProxyFilePath).Length;
 
             for (int i = 0; i < n; i++)
             {

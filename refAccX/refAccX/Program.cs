@@ -356,7 +356,7 @@ class Program
         }
     }
 
-    static void RegisterAccount(IWebDriver driver, Actions actions, string user, string mail, string[] birthValues)
+    static void RegisterAccount(IWebDriver driver, Actions actions, string user, string mail, string[] birthValues, string password)
     {
         WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
         Random random = new Random();
@@ -429,6 +429,20 @@ class Program
                 RandomDelay(3000, 5000);
             }
         } while (!check);
+        ((IJavaScriptExecutor)driver).ExecuteScript("window.open();");
+        var windows = driver.WindowHandles;
+        driver.SwitchTo().Window(windows[1]);
+        string code = GetVerificationCode(driver, mail, password);
+
+        driver.SwitchTo().Window(windows[0]);
+        if (!string.IsNullOrEmpty(code))
+        {
+            CompleteRegistration(driver, actions, code);
+        }
+        else
+        {
+            Console.WriteLine("Không lấy được mã xác minh, bỏ qua bước hoàn tất.");
+        }
     }
 
     static void CompleteRegistration(IWebDriver driver, Actions actions, string code)
@@ -477,22 +491,7 @@ class Program
             {
                 driver.Manage().Cookies.DeleteAllCookies();
                 AuthenticateProxy(driver, proxyUser, proxyPass, proxyHost);
-                RegisterAccount(driver, actions, user, mail, birthValues);
-
-                ((IJavaScriptExecutor)driver).ExecuteScript("window.open();");
-                var windows = driver.WindowHandles;
-                driver.SwitchTo().Window(windows[1]);
-                string code = GetVerificationCode(driver, mail, password);
-
-                driver.SwitchTo().Window(windows[0]);
-                if (!string.IsNullOrEmpty(code))
-                {
-                    CompleteRegistration(driver, actions, code);
-                }
-                else
-                {
-                    Console.WriteLine("Không lấy được mã xác minh, bỏ qua bước hoàn tất.");
-                }
+                RegisterAccount(driver, actions, user, mail, birthValues, password);
             }
             catch (Exception ex)
             {

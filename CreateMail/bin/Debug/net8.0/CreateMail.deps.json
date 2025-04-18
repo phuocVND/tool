@@ -10,7 +10,8 @@
         "dependencies": {
           "Selenium.Support": "4.30.0",
           "Selenium.WebDriver": "4.30.0",
-          "Selenium.WebDriver.ChromeDriver": "134.0.6998.3500"
+          "Selenium.WebDriver.ChromeDriver": "134.0.6998.3500",
+          "SeleniumExtras.WaitHelpers": "1.0.2"
         },
         "runtime": {
           "CreateMail.dll": {}
@@ -35,7 +36,18 @@
           }
         }
       },
-      "Selenium.WebDriver.ChromeDriver/134.0.6998.3500": {}
+      "Selenium.WebDriver.ChromeDriver/134.0.6998.3500": {},
+      "SeleniumExtras.WaitHelpers/1.0.2": {
+        "dependencies": {
+          "Selenium.WebDriver": "4.30.0"
+        },
+        "runtime": {
+          "lib/netstandard2.1/SeleniumExtras.WaitHelpers.dll": {
+            "assemblyVersion": "1.0.2.0",
+            "fileVersion": "1.0.2.0"
+          }
+        }
+      }
     }
   },
   "libraries": {
@@ -64,6 +76,13 @@
       "sha512": "sha512-ms46NISAWpw69RFFN52jsTglxC3Ti06KBGD81AZzbpKKs6MFcyZd2XftKZ5rjC3ODRbi9+awlC6VsfFpbk2C0Q==",
       "path": "selenium.webdriver.chromedriver/134.0.6998.3500",
       "hashPath": "selenium.webdriver.chromedriver.134.0.6998.3500.nupkg.sha512"
+    },
+    "SeleniumExtras.WaitHelpers/1.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-de7m30nkZZLkfCncYBdluUpM27AR/Vkk4kiA4HRQbV+fZI3ps4qGIeJCuj8TAMXdMfQik5Rno8xPnFBIod+ebg==",
+      "path": "seleniumextras.waithelpers/1.0.2",
+      "hashPath": "seleniumextras.waithelpers.1.0.2.nupkg.sha512"
     }
   }
 }

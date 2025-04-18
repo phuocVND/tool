@@ -81,9 +81,9 @@ class Program
             string fullEmail = $"{mail}@{domain.Text}";
             RandomDelay();
             
-            // IWebElement create = wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath("/html/body/div[7]/div/div/div[2]/span[1]/button")));
-            // NaturalClick(driver, create);
-            // RandomScroll(driver);
+            IWebElement create = wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath("/html/body/div[8]/div/div/div[2]/span[1]/button")));
+            NaturalClick(driver, create);
+            RandomScroll(driver);
 
             // Lặp kiểm tra emailFull và chỉ click "Create" nếu cần
             bool doneCreate = false;
@@ -97,7 +97,7 @@ class Program
                     // Kiểm tra emailFull
                     try
                     {
-                        IWebElement emailFull = wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector("button.bg-indigo-600[text='Create']")));
+                        IWebElement emailFull = wait.Until(ExpectedConditions.ElementIsVisible(By.Id("Dont_use_WEB_use_API_OK")));
                         string emailValue = emailFull.GetAttribute("value");
                         if (emailValue == fullEmail)
                         {

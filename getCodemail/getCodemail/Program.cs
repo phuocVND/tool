@@ -40,15 +40,16 @@ class Program
 
             // Click nút mở menu
             By openButtonLocator = By.XPath("/html/body/div[1]/div/div[2]/div/div/div[2]/button[3]");
-            if (!WaitForElement(driver, openButtonLocator, 10))
-                throw new Exception("Không tìm thấy nút mở menu");
+            RandomDelay(2000, 3000);
+            // if (!WaitForElement(driver, openButtonLocator, 10))
+            //     throw new Exception("Không tìm thấy nút mở menu");
             IWebElement openButton = driver.FindElement(openButtonLocator);
             new Actions(driver).MoveToElement(openButton).Pause(TimeSpan.FromMilliseconds(new Random().Next(100, 300))).Click().Perform();
             RandomDelay(1000, 3000);
 
             // Click nút đăng nhập
             By loginButtonLocator = By.XPath("/html/body/div[4]/div/div[2]/button[2]");
-            if (!WaitForElement(driver, loginButtonLocator, 10))
+            if (!WaitForElement(driver, loginButtonLocator, 3))
                 throw new Exception("Không tìm thấy nút đăng nhập");
             IWebElement loginButton = driver.FindElement(loginButtonLocator);
             new Actions(driver).MoveToElement(loginButton).Pause(TimeSpan.FromMilliseconds(new Random().Next(100, 300))).Click().Perform();
@@ -56,7 +57,7 @@ class Program
 
             // Nhập email
             By emailInputLocator = By.Id("v-1-15");
-            if (!WaitForElement(driver, emailInputLocator, 10))
+            if (!WaitForElement(driver, emailInputLocator, 3))
                 throw new Exception("Không tìm thấy ô nhập email");
             IWebElement emailInput = driver.FindElement(emailInputLocator);
             new Actions(driver).MoveToElement(emailInput).Click().Perform();
@@ -69,7 +70,7 @@ class Program
 
             // Nhập mật khẩu
             By passwordInputLocator = By.Id("v-1-16");
-            if (!WaitForElement(driver, passwordInputLocator, 10))
+            if (!WaitForElement(driver, passwordInputLocator, 3))
                 throw new Exception("Không tìm thấy ô nhập mật khẩu");
             IWebElement passwordInput = driver.FindElement(passwordInputLocator);
             new Actions(driver).MoveToElement(passwordInput).Click().Perform();
@@ -82,7 +83,7 @@ class Program
 
             // Click nút đăng nhập
             By logButtonLocator = By.CssSelector("button[type='button'].bg-indigo-600");;
-            if (!WaitForElement(driver, logButtonLocator, 10))
+            if (!WaitForElement(driver, logButtonLocator, 3))
                 throw new Exception("Không tìm thấy nút đăng nhập");
             IWebElement logButton = driver.FindElement(logButtonLocator);
             new Actions(driver).MoveToElement(logButton).Pause(TimeSpan.FromMilliseconds(new Random().Next(100, 300))).Click().Perform();
@@ -107,20 +108,35 @@ class Program
                 driver.SwitchTo().Frame(iframeElement);
                 RandomDelay(1000, 2000);
 
-                // Lấy mã xác minh
-                By codeLocator = By.CssSelector("span[style*='font-weight:bold'][style*='font-size:14px']");
-                if (!WaitForElement(driver, codeLocator, 10))
-                    throw new Exception("Không tìm thấy mã xác minh");
-                IWebElement code = driver.FindElement(codeLocator);
-                Console.WriteLine($"Mã xác minh: {code.Text}");
-                codeText = code.Text;
+                try{
+
+                    // Lấy mã xác minh
+                    By codeLocator = By.CssSelector("span[style*='font-weight:bold'][style*='font-size:14px']");
+                    if (!WaitForElement(driver, codeLocator, 10))
+                        throw new Exception("Không tìm thấy mã xác minh");
+                    IWebElement code = driver.FindElement(codeLocator);
+                    Console.WriteLine($"Mã xác minh: {code.Text}");
+                    codeText = code.Text;
+                }
+                catch{
+                    // Lấy mã xác minh
+                    By codeLocator = By.CssSelector("td.h1.black[style*='font-size:32px']");
+                    if (!WaitForElement(driver, codeLocator, 10))
+                        throw new Exception("Không tìm thấy mã xác minh");
+                    IWebElement code = driver.FindElement(codeLocator);
+                    Console.WriteLine($"Mã xác minh: {code.Text}");
+                    codeText = code.Text;
+                }
+
+
             }
             catch
             {
                 // Thử lại nếu không lấy được mã
                 driver.Navigate().Refresh();
-                RandomDelay(2000, 5000);
+                RandomDelay(2000, 3000);
 
+                // Click vào email mới nhất
                 By nextButtonLocator = By.XPath("/html/body/div[1]/div/div[2]/main/div[2]/div[2]/ul/li[1]/a/div/div/div[2]/div[1]/div[2]");
                 if (!WaitForElement(driver, nextButtonLocator, 10))
                     throw new Exception("Không tìm thấy email mới nhất");
@@ -128,6 +144,7 @@ class Program
                 new Actions(driver).MoveToElement(nextButton).Pause(TimeSpan.FromMilliseconds(new Random().Next(100, 300))).Click().Perform();
                 RandomDelay(1000, 3000);
 
+                // Chuyển vào iframe
                 By iframeLocator = By.XPath("/html/body/div[1]/div/div[2]/main/div[2]/div[2]/div[2]/div/iframe");
                 if (!WaitForElement(driver, iframeLocator, 10))
                     throw new Exception("Không tìm thấy iframe");
@@ -135,12 +152,25 @@ class Program
                 driver.SwitchTo().Frame(iframeElement);
                 RandomDelay(1000, 2000);
 
-                By codeLocator = By.XPath("/html/body/table/tbody/tr[1]/td/table/tbody/tr[1]/td/table[1]/tbody/tr/td[2]/table/tbody/tr[10]/td");
-                if (!WaitForElement(driver, codeLocator, 10))
-                    throw new Exception("Không tìm thấy mã xác minh");
-                IWebElement code = driver.FindElement(codeLocator);
-                Console.WriteLine($"Mã xác minh: {code.Text}");
-                codeText = code.Text;
+                try{
+
+                    // Lấy mã xác minh
+                    By codeLocator = By.CssSelector("span[style*='font-weight:bold'][style*='font-size:14px']");
+                    if (!WaitForElement(driver, codeLocator, 10))
+                        throw new Exception("Không tìm thấy mã xác minh");
+                    IWebElement code = driver.FindElement(codeLocator);
+                    Console.WriteLine($"Mã xác minh: {code.Text}");
+                    codeText = code.Text;
+                }
+                catch{
+                    // Lấy mã xác minh
+                    By codeLocator = By.CssSelector("td.h1.black[style*='font-size:32px']");
+                    if (!WaitForElement(driver, codeLocator, 10))
+                        throw new Exception("Không tìm thấy mã xác minh");
+                    IWebElement code = driver.FindElement(codeLocator);
+                    Console.WriteLine($"Mã xác minh: {code.Text}");
+                    codeText = code.Text;
+                }
             }
 
             return codeText;
@@ -161,8 +191,12 @@ class Program
     {
         ChromeOptions options = new ChromeOptions();
         IWebDriver driver = new ChromeDriver(options);
+        string email = "ng39qp5ckjke@ptct.net|KS1XKfRz";
+        string a = email.Split("|")[0];
+        string b = email.Split("|")[1];
         // 05cpltw7oi6vau7@ptct.net|Fk4upWsBL5h
-        string code = GetVerificationCode(driver, "05cpltw7oi6vau7@ptct.net", "Fk4upWsBL5h");
+        // ng39qp5ckjke@ptct.net|KS1XKfRz
+        string code = GetVerificationCode(driver, a, b);
         Console.WriteLine(code);
     }
 }

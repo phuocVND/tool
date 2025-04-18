@@ -29,10 +29,10 @@
             "fileVersion": "3.3.16.1"
           },
           "lib/netstandard2.0/AutoItX3.dll": {
-            "fileVersion": "0.0.0.0"
+            "fileVersion": "3.3.16.1"
           },
           "lib/netstandard2.0/AutoItX3_x64.dll": {
-            "fileVersion": "0.0.0.0"
+            "fileVersion": "3.3.16.1"
           }
         }
       },

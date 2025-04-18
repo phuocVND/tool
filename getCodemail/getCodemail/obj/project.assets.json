@@ -54,7 +54,7 @@
           }
         }
       },
-      "Selenium.WebDriver/4.30.0": {
+      "Selenium.WebDriver/4.31.0": {
         "type": "package",
         "compile": {
           "lib/net8.0/WebDriver.dll": {
@@ -221,10 +221,10 @@
         "selenium.support.nuspec"
       ]
     },
-    "Selenium.WebDriver/4.30.0": {
-      "sha512": "POEESh6f408SNst9kT+mf4g9zVahIWXjo+/8qkjUt8dNRllD+am2Fdj30j5b54kpRIx5Nz2b08AREYvaOyQQMA==",
+    "Selenium.WebDriver/4.31.0": {
+      "sha512": "RT5Pg6UVyxe/+S/H808VAbfXX4kHQdvo/U28oViwUcCpC4WL7zHq2GgxY/b9zNLTcwJ8zfqu+WmHPifkTx+BCQ==",
       "type": "package",
-      "path": "selenium.webdriver/4.30.0",
+      "path": "selenium.webdriver/4.31.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -239,7 +239,7 @@
         "manager/linux/selenium-manager",
         "manager/macos/selenium-manager",
         "manager/windows/selenium-manager.exe",
-        "selenium.webdriver.4.30.0.nupkg.sha512",
+        "selenium.webdriver.4.31.0.nupkg.sha512",
         "selenium.webdriver.nuspec"
       ]
     },
@@ -292,29 +292,29 @@
       "Selenium.Chrome.WebDriver >= 85.0.0",
       "Selenium.Firefox.WebDriver >= 0.27.0",
       "Selenium.Support >= 4.30.0",
-      "Selenium.WebDriver >= 4.30.0",
+      "Selenium.WebDriver >= 4.31.0",
       "Selenium.WebDriver.ChromeDriver >= 134.0.6998.16500",
       "Selenium.WebDriver.IEDriver >= 4.14.0"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\lit\\.nuget\\packages\\": {},
+    "C:\\Users\\vongu\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\lit\\Desktop\\tool\\getCodemail\\getCodemail\\getCodemail.csproj",
+      "projectUniqueName": "C:\\Users\\vongu\\OneDrive\\Desktop\\tool\\getCodemail\\getCodemail\\getCodemail.csproj",
       "projectName": "getCodemail",
-      "projectPath": "C:\\Users\\lit\\Desktop\\tool\\getCodemail\\getCodemail\\getCodemail.csproj",
-      "packagesPath": "C:\\Users\\lit\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\lit\\Desktop\\tool\\getCodemail\\getCodemail\\obj\\",
+      "projectPath": "C:\\Users\\vongu\\OneDrive\\Desktop\\tool\\getCodemail\\getCodemail\\getCodemail.csproj",
+      "packagesPath": "C:\\Users\\vongu\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\vongu\\OneDrive\\Desktop\\tool\\getCodemail\\getCodemail\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\lit\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\vongu\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -377,7 +377,7 @@
           },
           "Selenium.WebDriver": {
             "target": "Package",
-            "version": "[4.30.0, )"
+            "version": "[4.31.0, )"
           },
           "Selenium.WebDriver.ChromeDriver": {
             "target": "Package",
@@ -419,7 +419,7 @@
       "code": "NU1608",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Detected package version outside of dependency constraint: Microsoft.Edge.SeleniumTools 3.141.3 requires Selenium.WebDriver (= 3.141.0) but version Selenium.WebDriver 4.30.0 was resolved.",
+      "message": "Detected package version outside of dependency constraint: Microsoft.Edge.SeleniumTools 3.141.3 requires Selenium.WebDriver (= 3.141.0) but version Selenium.WebDriver 4.31.0 was resolved.",
       "libraryId": "Selenium.WebDriver",
       "targetGraphs": [
         "net8.0"

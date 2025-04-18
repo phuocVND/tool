@@ -9,14 +9,13 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 using System.Linq;
-
 class Program
 {
     // Khai báo các đường dẫn toàn cục
-    private static readonly string UserAgentFilePath = "../../../userAgent.txt";
-    private static readonly string MailPassFilePath = "../../../mailPass.txt";
-    private static readonly string ProxyFilePath = "../../../proxyfile.txt";
-    private static readonly string ExtensionFolderPath = @"C:\Users\lit\Desktop\tool\Betacaptcha2";
+    private static readonly string UserAgentFilePath = "userAgent.txt";
+    private static readonly string MailPassFilePath = "mailPass.txt";
+    private static readonly string ProxyFilePath = "proxyfile.txt";
+    private static readonly string ExtensionFolderPath = @"../../Betacaptcha2";
 
     static string SetupProxy(string proxyHost, string proxyPort, string proxyUser, string proxyPass)
     {
@@ -256,8 +255,12 @@ class Program
             {
                 if (handle != originalWindow)
                 {
+                    
                     driver.SwitchTo().Window(handle);
                     driver.Close();
+                    // break;
+                }
+                else{
                     break;
                 }
             }
@@ -274,84 +277,177 @@ class Program
         }
     }
 
+    static bool WaitForElement(IWebDriver driver, By locator, int timeoutInSeconds)
+    {
+        int elapsed = 0;
+        while (elapsed < timeoutInSeconds * 1000)
+        {
+            try
+            {
+                driver.FindElement(locator);
+                return true;
+            }
+            catch (NoSuchElementException)
+            {
+                Thread.Sleep(500);
+                elapsed += 500;
+            }
+        }
+        return false;
+    }
+
     static string GetVerificationCode(IWebDriver driver, string mail, string password)
     {
         try
         {
             driver.Navigate().GoToUrl("https://mail.tm");
-            RandomDelay(2000, 5000);
+            RandomDelay(2000, 3000);
 
-            IWebElement openButton = driver.FindElement(By.XPath("/html/body/div[1]/div/div[2]/div/div/div[2]/button[3]"));
+            // Click nút mở menu
+            By openButtonLocator = By.XPath("/html/body/div[1]/div/div[2]/div/div/div[2]/button[3]");
+            RandomDelay(2000, 3000);
+            if (!WaitForElement(driver, openButtonLocator, 10))
+                throw new Exception("Không tìm thấy nút mở menu");
+            IWebElement openButton = driver.FindElement(openButtonLocator);
             new Actions(driver).MoveToElement(openButton).Pause(TimeSpan.FromMilliseconds(new Random().Next(100, 300))).Click().Perform();
             RandomDelay(1000, 3000);
 
-            IWebElement loginButton = driver.FindElement(By.XPath("/html/body/div[4]/div/div[2]/button[2]"));
+            // Click nút đăng nhập
+            By loginButtonLocator = By.XPath("/html/body/div[4]/div/div[2]/button[2]");
+            if (!WaitForElement(driver, loginButtonLocator, 3))
+                throw new Exception("Không tìm thấy nút đăng nhập");
+            IWebElement loginButton = driver.FindElement(loginButtonLocator);
             new Actions(driver).MoveToElement(loginButton).Pause(TimeSpan.FromMilliseconds(new Random().Next(100, 300))).Click().Perform();
             RandomDelay(1000, 3000);
 
-            IWebElement emailInput = driver.FindElement(By.XPath("/html/body/div[8]/div/div/div[1]/form/div[1]/div[2]/div/input"));
+            // Nhập email
+            By emailInputLocator = By.Id("v-1-15");
+            if (!WaitForElement(driver, emailInputLocator, 3))
+                throw new Exception("Không tìm thấy ô nhập email");
+            IWebElement emailInput = driver.FindElement(emailInputLocator);
             new Actions(driver).MoveToElement(emailInput).Click().Perform();
             foreach (char c in mail)
             {
                 emailInput.SendKeys(c.ToString());
-                RandomDelay(10, 50);
+                RandomDelay(50, 200);
             }
-            RandomDelay(1000, 3000);
+            // RandomDelay(1000, 3000);
 
-            IWebElement passwordInput = driver.FindElement(By.XPath("/html/body/div[8]/div/div/div[1]/form/div[2]/div[2]/div/input"));
+            // Nhập mật khẩu
+            By passwordInputLocator = By.Id("v-1-16");
+            if (!WaitForElement(driver, passwordInputLocator, 3))
+                throw new Exception("Không tìm thấy ô nhập mật khẩu");
+            IWebElement passwordInput = driver.FindElement(passwordInputLocator);
             new Actions(driver).MoveToElement(passwordInput).Click().Perform();
             foreach (char c in password)
             {
                 passwordInput.SendKeys(c.ToString());
-                RandomDelay(10, 50);
+                RandomDelay(50, 200);
             }
-            RandomDelay(1000, 3000);
+            // RandomDelay(1000, 3000);
 
-            IWebElement logButton = driver.FindElement(By.XPath("/html/body/div[8]/div/div/div[2]/span[1]/button"));
+            // Click nút đăng nhập
+            By logButtonLocator = By.CssSelector("button[type='button'].bg-indigo-600");;
+            if (!WaitForElement(driver, logButtonLocator, 3))
+                throw new Exception("Không tìm thấy nút đăng nhập");
+            IWebElement logButton = driver.FindElement(logButtonLocator);
             new Actions(driver).MoveToElement(logButton).Pause(TimeSpan.FromMilliseconds(new Random().Next(100, 300))).Click().Perform();
             RandomDelay(2000, 5000);
 
             string codeText = "";
             try
             {
-                IWebElement nextButton = driver.FindElement(By.XPath("/html/body/div[1]/div/div[2]/main/div[2]/div[2]/ul/li[1]/a/div/div/div[2]/div[1]/div[2]"));
+                // Click vào email mới nhất
+                By nextButtonLocator = By.XPath("/html/body/div[1]/div/div[2]/main/div[2]/div[2]/ul/li[1]/a/div/div/div[2]/div[1]/div[2]");
+                if (!WaitForElement(driver, nextButtonLocator, 10))
+                    throw new Exception("Không tìm thấy email mới nhất");
+                IWebElement nextButton = driver.FindElement(nextButtonLocator);
                 new Actions(driver).MoveToElement(nextButton).Pause(TimeSpan.FromMilliseconds(new Random().Next(100, 300))).Click().Perform();
                 RandomDelay(1000, 3000);
 
-                IWebElement iframeElement = driver.FindElement(By.XPath("/html/body/div[1]/div/div[2]/main/div[2]/div[2]/div[2]/div/iframe"));
+                // Chuyển vào iframe
+                By iframeLocator = By.XPath("/html/body/div[1]/div/div[2]/main/div[2]/div[2]/div[2]/div/iframe");
+                if (!WaitForElement(driver, iframeLocator, 10))
+                    throw new Exception("Không tìm thấy iframe");
+                IWebElement iframeElement = driver.FindElement(iframeLocator);
                 driver.SwitchTo().Frame(iframeElement);
                 RandomDelay(1000, 2000);
 
-                IWebElement code = driver.FindElement(By.XPath("/html/body/table/tbody/tr[1]/td/table/tbody/tr[1]/td/table[1]/tbody/tr/td[2]/table/tbody/tr[10]/td"));
-                Console.WriteLine($"Mã xác minh: {code.Text}");
-                codeText = code.Text;
+                try{
+
+                    // Lấy mã xác minh
+                    By codeLocator = By.CssSelector("span[style*='font-weight:bold'][style*='font-size:14px']");
+                    if (!WaitForElement(driver, codeLocator, 10))
+                        throw new Exception("Không tìm thấy mã xác minh");
+                    IWebElement code = driver.FindElement(codeLocator);
+                    Console.WriteLine($"Mã xác minh: {code.Text}");
+                    codeText = code.Text;
+                }
+                catch{
+                    // Lấy mã xác minh
+                    By codeLocator = By.CssSelector("td.h1.black[style*='font-size:32px']");
+                    if (!WaitForElement(driver, codeLocator, 10))
+                        throw new Exception("Không tìm thấy mã xác minh");
+                    IWebElement code = driver.FindElement(codeLocator);
+                    Console.WriteLine($"Mã xác minh: {code.Text}");
+                    codeText = code.Text;
+                }
+
+
             }
             catch
             {
+                // Thử lại nếu không lấy được mã
                 driver.Navigate().Refresh();
-                RandomDelay(2000, 5000);
-                IWebElement nextButton = driver.FindElement(By.XPath("/html/body/div[1]/div/div[2]/main/div[2]/div[2]/ul/li[1]/a/div/div/div[2]/div[1]/div[2]"));
+                RandomDelay(2000, 3000);
+
+                // Click vào email mới nhất
+                By nextButtonLocator = By.XPath("/html/body/div[1]/div/div[2]/main/div[2]/div[2]/ul/li[1]/a/div/div/div[2]/div[1]/div[2]");
+                if (!WaitForElement(driver, nextButtonLocator, 10))
+                    throw new Exception("Không tìm thấy email mới nhất");
+                IWebElement nextButton = driver.FindElement(nextButtonLocator);
                 new Actions(driver).MoveToElement(nextButton).Pause(TimeSpan.FromMilliseconds(new Random().Next(100, 300))).Click().Perform();
                 RandomDelay(1000, 3000);
 
-                IWebElement iframeElement = driver.FindElement(By.XPath("/html/body/div[1]/div/div[2]/main/div[2]/div[2]/div[2]/div/iframe"));
+                // Chuyển vào iframe
+                By iframeLocator = By.XPath("/html/body/div[1]/div/div[2]/main/div[2]/div[2]/div[2]/div/iframe");
+                if (!WaitForElement(driver, iframeLocator, 10))
+                    throw new Exception("Không tìm thấy iframe");
+                IWebElement iframeElement = driver.FindElement(iframeLocator);
                 driver.SwitchTo().Frame(iframeElement);
                 RandomDelay(1000, 2000);
 
-                IWebElement code = driver.FindElement(By.XPath("/html/body/table/tbody/tr[1]/td/table/tbody/tr[1]/td/table[1]/tbody/tr/td[2]/table/tbody/tr[10]/td"));
-                Console.WriteLine($"Mã xác minh: {code.Text}");
-                codeText = code.Text;
+                try{
+
+                    // Lấy mã xác minh
+                    By codeLocator = By.CssSelector("span[style*='font-weight:bold'][style*='font-size:14px']");
+                    if (!WaitForElement(driver, codeLocator, 10))
+                        throw new Exception("Không tìm thấy mã xác minh");
+                    IWebElement code = driver.FindElement(codeLocator);
+                    Console.WriteLine($"Mã xác minh: {code.Text}");
+                    codeText = code.Text;
+                }
+                catch{
+                    // Lấy mã xác minh
+                    By codeLocator = By.CssSelector("td.h1.black[style*='font-size:32px']");
+                    if (!WaitForElement(driver, codeLocator, 10))
+                        throw new Exception("Không tìm thấy mã xác minh");
+                    IWebElement code = driver.FindElement(codeLocator);
+                    Console.WriteLine($"Mã xác minh: {code.Text}");
+                    codeText = code.Text;
+                }
             }
 
             return codeText;
         }
-        catch
+        catch (Exception ex)
         {
-            Console.WriteLine("Lỗi khi lấy mã xác minh");
+            Console.WriteLine($"Lỗi khi lấy mã xác minh: {ex.Message}");
             return "";
         }
         finally
         {
+            driver.SwitchTo().DefaultContent();
             driver.Close();
         }
     }
@@ -366,9 +462,9 @@ class Program
 
         IWebElement signUpButton = driver.FindElement(By.XPath("//*[@id='react-root']/div/div/div[2]/main/div/div/div[1]/div/div/div[3]/a/div"));
         actions.MoveToElement(signUpButton).Pause(TimeSpan.FromMilliseconds(random.Next(100, 300))).Click().Perform();
-        RandomDelay(1000, 3000);
+        RandomDelay(2000, 3000);
 
-        IWebElement nameInput = driver.FindElement(By.XPath("//input[@name='name' and contains(@class, 'r-30o5oe')]"));
+        IWebElement nameInput = driver.FindElement(By.CssSelector("input[name='name']"));
         actions.MoveToElement(nameInput).Click().Perform();
         foreach (char c in user)
         {
@@ -376,8 +472,13 @@ class Program
             RandomDelay(10, 50);
         }
         RandomDelay(1000, 3000);
+        
+        IWebElement emailInput = wait.Until(d => 
+        {
+            IWebElement element = d.FindElement(By.XPath("//input[@name='email' and @type='email']"));
+            return element.Displayed ? element : null;
+        });
 
-        IWebElement emailInput = driver.FindElement(By.XPath("//input[@name='email' and @type='email']"));
         actions.MoveToElement(emailInput).Click().Perform();
         foreach (char c in mail)
         {
@@ -400,44 +501,36 @@ class Program
         actions.MoveToElement(nextButton).Pause(TimeSpan.FromMilliseconds(random.Next(100, 300))).Click().Perform();
         RandomDelay(3000, 6000);
 
-        IWebElement iframeElement = driver.FindElement(By.Id("arkoseFrame"));
-        actions.MoveToElement(iframeElement).Perform();
-        driver.SwitchTo().Frame(iframeElement);
-        RandomDelay(1000, 2000);
-
-        iframeElement = driver.FindElement(By.CssSelector("iframe[src*='client-api.arkoselabs.com'][data-e2e='enforcement-frame']"));
-        driver.SwitchTo().Frame(iframeElement);
-        RandomDelay(1000, 2000);
-
-        iframeElement = driver.FindElement(By.Id("game-core-frame"));
-        driver.SwitchTo().Frame(iframeElement);
-        RandomDelay(1000, 2000);
         bool check = false;
         do
         {
             try
             {
-                IWebElement checkMail = driver.FindElement(By.XPath("/html/body/div/div/div/div[1]/div[2]/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[1]/div/div[1]/div/div/div/div/span[2]/span"));
-                if (checkMail.Text != mail)
+                IWebElement checkMail = driver.FindElement(By.XPath("//span[contains(@class, 'css-1jxf684') and contains(text(), '@')]"));
+                if (checkMail.Text == mail)
                 {
-                    Console.WriteLine("Delay Check");
+                    Console.WriteLine($"{checkMail.Text}");
+
                     check = true;
+
                 }
             }
             catch (NoSuchElementException)
             {
+                Console.WriteLine("Delay Check ************");
                 RandomDelay(3000, 5000);
             }
         } while (!check);
         ((IJavaScriptExecutor)driver).ExecuteScript("window.open();");
         var windows = driver.WindowHandles;
         driver.SwitchTo().Window(windows[1]);
+
         string code = GetVerificationCode(driver, mail, password);
 
         driver.SwitchTo().Window(windows[0]);
         if (!string.IsNullOrEmpty(code))
         {
-            CompleteRegistration(driver, actions, code);
+            CompleteRegistration(driver, actions, code, password);
         }
         else
         {
@@ -445,7 +538,7 @@ class Program
         }
     }
 
-    static void CompleteRegistration(IWebDriver driver, Actions actions, string code)
+    static void CompleteRegistration(IWebDriver driver, Actions actions, string code, string password)
     {
         Random random = new Random();
         WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
@@ -466,45 +559,100 @@ class Program
 
         IWebElement nextButton = driver.FindElement(By.XPath("/html/body/div/div/div/div[1]/div[2]/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[2]/div/div/div/button/div"));
         actions.MoveToElement(nextButton).Pause(TimeSpan.FromMilliseconds(random.Next(100, 300))).Click().Perform();
-        RandomDelay(2000, 5000);
+        RandomDelay(2000, 3000);
+
+
+        IWebElement passINput = wait.Until(d => 
+        {
+            IWebElement element = d.FindElement(By.CssSelector("input[name='password'][type='password']"));
+            return element.Displayed ? element : null;
+        });
+
+        actions.MoveToElement(passINput).Click().Perform();
+        foreach (char c in password)
+        {
+            passINput.SendKeys(c.ToString());
+            RandomDelay(10, 50);
+        }
+        RandomDelay(1000, 3000);
+
+        IWebElement signup = driver.FindElement(By.XPath("//div[contains(@class, 'css-146c3p1')]//span[contains(text(), 'Sign up')]"));
+        actions.MoveToElement(signup).Pause(TimeSpan.FromMilliseconds(random.Next(100, 300))).Click().Perform();
+        RandomDelay(2000, 3000);
     }
 
     static void Main()
     {
-        int index = 1;
-
         try
         {
-            var (user, mail, password, proxyUser, proxyPass, proxyAddress) = LoadAccountInfo(index);
-            string userAgent = GetRandomUserAgent();
-            Console.WriteLine($"User-Agent: {userAgent}");
+            // Đọc tất cả các dòng từ proxyfile.txt và mailPass.txt
+            string[] proxyLines = File.ReadAllLines(ProxyFilePath);
+            string[] mailPassLines = File.ReadAllLines(MailPassFilePath);
 
-            string[] birthValues = GenerateRandomBirthDate();
-            string[] proxyParts = proxyAddress.Split(':');
-            string proxyHost = proxyParts[0];
-            string proxyPort = proxyParts[1];
+            // // Kiểm tra số lượng proxy và tài khoản có khớp nhau không
+            // if (proxyLines.Length != mailPassLines.Length)
+            // {
+            //     Console.WriteLine("Số lượng proxy và tài khoản không khớp!");
+            //     return;
+            // }
 
-            string extensionProxyPath = SetupProxy(proxyHost, proxyPort, proxyUser, proxyPass);
-            var (driver, actions) = ConfigureBrowser(userAgent, ExtensionFolderPath, extensionProxyPath);
+            // Lặp qua từng proxy
+            int n = proxyLines.Length;
+            n = 1;
+            for (int index = 0; index < n; index++)
+            {
+                index = 2;
+                Console.WriteLine($"Đang xử lý proxy thứ {index + 1}/{proxyLines.Length}");
 
-            try
-            {
-                driver.Manage().Cookies.DeleteAllCookies();
-                AuthenticateProxy(driver, proxyUser, proxyPass, proxyHost);
-                RegisterAccount(driver, actions, user, mail, birthValues, password);
+                try
+                {
+                    // Tải thông tin tài khoản và proxy
+                    var (user, mail, password, proxyUser, proxyPass, proxyAddress) = LoadAccountInfo(index);
+                    string userAgent = GetRandomUserAgent();
+                    Console.WriteLine($"User-Agent: {userAgent}");
+
+                    // Tạo ngày sinh ngẫu nhiên
+                    string[] birthValues = GenerateRandomBirthDate();
+                    string[] proxyParts = proxyAddress.Split(':');
+                    string proxyHost = proxyParts[0];
+                    string proxyPort = proxyParts[1];
+
+                    // Thiết lập proxy
+                    string extensionProxyPath = SetupProxy(proxyHost, proxyPort, proxyUser, proxyPass);
+
+                    // Cấu hình trình duyệt
+                    var (driver, actions) = ConfigureBrowser(userAgent, ExtensionFolderPath, extensionProxyPath);
+
+                    try
+                    {
+                        // Xóa cookies và xác thực proxy
+                        driver.Manage().Cookies.DeleteAllCookies();
+                        AuthenticateProxy(driver, proxyUser, proxyPass, proxyHost);
+
+                        // Đăng ký tài khoản
+                        RegisterAccount(driver, actions, user, mail, birthValues, password);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Lỗi trong quá trình đăng ký với proxy {proxyAddress}: {ex.Message}");
+                    }
+                    finally
+                    {
+                        // Đóng trình duyệt sau khi hoàn tất hoặc gặp lỗi
+                        // driver.Quit();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Lỗi khi xử lý proxy thứ {index + 1}: {ex.Message}");
+                }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Lỗi trong quá trình đăng ký: {ex.Message}");
-            }
-            finally
-            {
-                // driver.Quit();
-            }
+
+            Console.WriteLine("Hoàn tất xử lý tất cả các proxy.");
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Lỗi khi tải thông tin tài khoản: {ex.Message}");
+            Console.WriteLine($"Lỗi khi đọc file proxy hoặc mail/pass: {ex.Message}");
         }
     }
 }

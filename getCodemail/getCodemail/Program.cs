@@ -1,138 +1,168 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium.Interactions;
 using System;
 using System.Threading;
-using System.IO;
-using OpenQA.Selenium.Chrome;
-
 
 class Program
 {
-    static string getCode(IWebDriver driver, string mail, string password)
+    static void RandomDelay(int minMs, int maxMs)
+    {
+        Random random = new Random();
+        Thread.Sleep(random.Next(minMs, maxMs));
+    }
+
+    static bool WaitForElement(IWebDriver driver, By locator, int timeoutInSeconds)
+    {
+        int elapsed = 0;
+        while (elapsed < timeoutInSeconds * 1000)
+        {
+            try
+            {
+                driver.FindElement(locator);
+                return true;
+            }
+            catch (NoSuchElementException)
+            {
+                Thread.Sleep(500);
+                elapsed += 500;
+            }
+        }
+        return false;
+    }
+
+    static string GetVerificationCode(IWebDriver driver, string mail, string password)
     {
         try
         {
             driver.Navigate().GoToUrl("https://mail.tm");
-            //wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-            Thread.Sleep(3000); // Chờ trang tải
-            // Click vào nút "Mở"
-            IWebElement openButton = driver.FindElement(By.XPath("/html/body/div[1]/div/div[2]/div/div/div[2]/button[3]"));
-            openButton.Click();
-            // Click vào nút "Login"
-            IWebElement loginButton = driver.FindElement(By.XPath("/html/body/div[4]/div/div[2]/button[2]"));
-            loginButton.Click();
-            Thread.Sleep(1000); // Chờ trang tải
+            RandomDelay(2000, 5000);
+
+            // Click nút mở menu
+            By openButtonLocator = By.XPath("/html/body/div[1]/div/div[2]/div/div/div[2]/button[3]");
+            if (!WaitForElement(driver, openButtonLocator, 10))
+                throw new Exception("Không tìm thấy nút mở menu");
+            IWebElement openButton = driver.FindElement(openButtonLocator);
+            new Actions(driver).MoveToElement(openButton).Pause(TimeSpan.FromMilliseconds(new Random().Next(100, 300))).Click().Perform();
+            RandomDelay(1000, 3000);
+
+            // Click nút đăng nhập
+            By loginButtonLocator = By.XPath("/html/body/div[4]/div/div[2]/button[2]");
+            if (!WaitForElement(driver, loginButtonLocator, 10))
+                throw new Exception("Không tìm thấy nút đăng nhập");
+            IWebElement loginButton = driver.FindElement(loginButtonLocator);
+            new Actions(driver).MoveToElement(loginButton).Pause(TimeSpan.FromMilliseconds(new Random().Next(100, 300))).Click().Perform();
+            RandomDelay(1000, 3000);
+
             // Nhập email
-            IWebElement emailInput = driver.FindElement(By.XPath("/html/body/div[8]/div/div/div[1]/form/div[1]/div[2]/div/input"));
-            emailInput.SendKeys(mail);
-            // Nhập tên người dùng
-            IWebElement passwordInput = driver.FindElement(By.XPath("/html/body/div[8]/div/div/div[1]/form/div[2]/div[2]/div/input"));
-            passwordInput.SendKeys(password);
-            Thread.Sleep(1000); // Chờ trang tải
-            IWebElement logButton = driver.FindElement(By.XPath("/html/body/div[8]/div/div/div[2]/span[1]/button"));
-            logButton.Click();
+            By emailInputLocator = By.Id("v-1-15");
+            if (!WaitForElement(driver, emailInputLocator, 10))
+                throw new Exception("Không tìm thấy ô nhập email");
+            IWebElement emailInput = driver.FindElement(emailInputLocator);
+            new Actions(driver).MoveToElement(emailInput).Click().Perform();
+            foreach (char c in mail)
+            {
+                emailInput.SendKeys(c.ToString());
+                RandomDelay(50, 200);
+            }
+            // RandomDelay(1000, 3000);
+
+            // Nhập mật khẩu
+            By passwordInputLocator = By.Id("v-1-16");
+            if (!WaitForElement(driver, passwordInputLocator, 10))
+                throw new Exception("Không tìm thấy ô nhập mật khẩu");
+            IWebElement passwordInput = driver.FindElement(passwordInputLocator);
+            new Actions(driver).MoveToElement(passwordInput).Click().Perform();
+            foreach (char c in password)
+            {
+                passwordInput.SendKeys(c.ToString());
+                RandomDelay(50, 200);
+            }
+            // RandomDelay(1000, 3000);
+
+            // Click nút đăng nhập
+            By logButtonLocator = By.CssSelector("button[type='button'].bg-indigo-600");;
+            if (!WaitForElement(driver, logButtonLocator, 10))
+                throw new Exception("Không tìm thấy nút đăng nhập");
+            IWebElement logButton = driver.FindElement(logButtonLocator);
+            new Actions(driver).MoveToElement(logButton).Pause(TimeSpan.FromMilliseconds(new Random().Next(100, 300))).Click().Perform();
+            RandomDelay(2000, 5000);
 
             string codeText = "";
-
-
-            Thread.Sleep(2000); // Chờ trang tải
-
             try
             {
-                IWebElement nextButton = driver.FindElement(By.XPath("/html/body/div[1]/div/div[2]/main/div[2]/div[2]/ul/li[1]/a/div/div/div[2]/div[1]/div[2]"));
-                nextButton.Click();
-                Thread.Sleep(1000); // Chờ trang tải
-            }
-            catch
-            {
-                driver.Navigate().Refresh();
-                Thread.Sleep(2000); // Chờ trang tải
+                // Click vào email mới nhất
+                By nextButtonLocator = By.XPath("/html/body/div[1]/div/div[2]/main/div[2]/div[2]/ul/li[1]/a/div/div/div[2]/div[1]/div[2]");
+                if (!WaitForElement(driver, nextButtonLocator, 10))
+                    throw new Exception("Không tìm thấy email mới nhất");
+                IWebElement nextButton = driver.FindElement(nextButtonLocator);
+                new Actions(driver).MoveToElement(nextButton).Pause(TimeSpan.FromMilliseconds(new Random().Next(100, 300))).Click().Perform();
+                RandomDelay(1000, 3000);
 
-                IWebElement nextButton = driver.FindElement(By.XPath("/html/body/div[1]/div/div[2]/main/div[2]/div[2]/ul/li[1]/a/div/div/div[2]/div[1]/div[2]"));
-                nextButton.Click();
-                Thread.Sleep(1000); // Chờ trang tải
-            }
-
-
-
-            try
-            {
-
-                IWebElement iframeElement = driver.FindElement(By.Id("iFrameResizer0"));
+                // Chuyển vào iframe
+                By iframeLocator = By.XPath("/html/body/div[1]/div/div[2]/main/div[2]/div[2]/div[2]/div/iframe");
+                if (!WaitForElement(driver, iframeLocator, 10))
+                    throw new Exception("Không tìm thấy iframe");
+                IWebElement iframeElement = driver.FindElement(iframeLocator);
                 driver.SwitchTo().Frame(iframeElement);
+                RandomDelay(1000, 2000);
 
-                IWebElement code = driver.FindElement(By.XPath("/html/body/table/tbody/tr[4]/td/span"));
+                // Lấy mã xác minh
+                By codeLocator = By.CssSelector("span[style*='font-weight:bold'][style*='font-size:14px']");
+                if (!WaitForElement(driver, codeLocator, 10))
+                    throw new Exception("Không tìm thấy mã xác minh");
+                IWebElement code = driver.FindElement(codeLocator);
+                Console.WriteLine($"Mã xác minh: {code.Text}");
                 codeText = code.Text;
-
             }
             catch
             {
+                // Thử lại nếu không lấy được mã
                 driver.Navigate().Refresh();
-                Thread.Sleep(2000); // Chờ trang tải
-                //IWebElement nextButton = driver.FindElement(By.XPath("/html/body/div[1]/div/div[2]/main/div[2]/div[2]/ul/li[1]/a/div/div/div[2]/div[1]/div[2]"));
-                //nextButton.Click();
-                //Thread.Sleep(1000); // Chờ trang tải
+                RandomDelay(2000, 5000);
 
-                //IWebElement iframeElement = driver.FindElement(By.XPath("//*[@id=iFrameResizer0]"));
-                //driver.SwitchTo().Frame(iframeElement);
+                By nextButtonLocator = By.XPath("/html/body/div[1]/div/div[2]/main/div[2]/div[2]/ul/li[1]/a/div/div/div[2]/div[1]/div[2]");
+                if (!WaitForElement(driver, nextButtonLocator, 10))
+                    throw new Exception("Không tìm thấy email mới nhất");
+                IWebElement nextButton = driver.FindElement(nextButtonLocator);
+                new Actions(driver).MoveToElement(nextButton).Pause(TimeSpan.FromMilliseconds(new Random().Next(100, 300))).Click().Perform();
+                RandomDelay(1000, 3000);
 
-                //IWebElement code = driver.FindElement(By.XPath("/html/body/table/tbody/tr[4]/td/span"));
-                //Console.WriteLine($"{code.Text}");
+                By iframeLocator = By.XPath("/html/body/div[1]/div/div[2]/main/div[2]/div[2]/div[2]/div/iframe");
+                if (!WaitForElement(driver, iframeLocator, 10))
+                    throw new Exception("Không tìm thấy iframe");
+                IWebElement iframeElement = driver.FindElement(iframeLocator);
+                driver.SwitchTo().Frame(iframeElement);
+                RandomDelay(1000, 2000);
 
-                //codeText = code.Text;
+                By codeLocator = By.XPath("/html/body/table/tbody/tr[1]/td/table/tbody/tr[1]/td/table[1]/tbody/tr/td[2]/table/tbody/tr[10]/td");
+                if (!WaitForElement(driver, codeLocator, 10))
+                    throw new Exception("Không tìm thấy mã xác minh");
+                IWebElement code = driver.FindElement(codeLocator);
+                Console.WriteLine($"Mã xác minh: {code.Text}");
+                codeText = code.Text;
             }
+
             return codeText;
         }
-        catch
+        catch (Exception ex)
         {
-            driver.Navigate().Refresh();
-            Console.WriteLine("Đã xảy ra lỗi");
+            Console.WriteLine($"Lỗi khi lấy mã xác minh: {ex.Message}");
             return "";
         }
         finally
         {
+            driver.SwitchTo().DefaultContent();
             driver.Close();
         }
     }
+
     static void Main()
     {
-        string mailPass = "../../../mailPass.txt";
-        string proxyfile = "../../../proxyfile.txt";
-        string[] linesMailPass = File.ReadAllLines(mailPass);
-        string[] linesProxyfile = File.ReadAllLines(proxyfile);
-
-        int index = 1;
-
-        string[] mailPassParts = linesMailPass[index].Split('|');
-        string[] proxyfileParts = linesProxyfile[index].Split(':');
-
-        string mail = mailPassParts[0];
-        string password = mailPassParts[1];
-        string proxyUser = proxyfileParts[2];
-        string proxyPass = proxyfileParts[3];
-        string proxyAddress = proxyfileParts[0] + ':' + proxyfileParts[1];
-
         ChromeOptions options = new ChromeOptions();
-
-        //options.AddArgument("--headless");
-        options.AddArgument("--disable-webrtc");
-        options.AddArgument("--disable-features=WebRtcHideLocalIpsWithMdns");
-        options.AddArgument("--inprivate"); // Chế độ ẩn danh
-
-
         IWebDriver driver = new ChromeDriver(options);
-        Actions actions = new Actions(driver);
-
-        //WebDriverWait wait;
-
-        ((IJavaScriptExecutor)driver).ExecuteScript("window.open();");
-        var windows = driver.WindowHandles;
-        driver.Navigate().GoToUrl("https://x.com");
-        driver.SwitchTo().Window(windows[1]);
-        string code = getCode(driver, mail, password);
-        driver.SwitchTo().Window(windows[0]);
+        // 05cpltw7oi6vau7@ptct.net|Fk4upWsBL5h
+        string code = GetVerificationCode(driver, "05cpltw7oi6vau7@ptct.net", "Fk4upWsBL5h");
         Console.WriteLine(code);
     }
 }

@@ -153,17 +153,25 @@ class Program
         }
     }
 
-    static string GenerateRandomUsername()
+static string GenerateRandomUsername()
+{
+    const string letters = "abcdefghijklmnopqrstuvwxyz"; // Chỉ chữ cái cho ký tự đầu
+    const string chars = "abcdefghijklmnopqrstuvwxyz0123456789"; // Chữ cái và số cho các ký tự còn lại
+    Random random = new Random();
+    int length = random.Next(12, 20); // Độ dài ngẫu nhiên từ 12 đến 19
+    StringBuilder username = new StringBuilder(length);
+
+    // Ký tự đầu tiên là chữ cái
+    username.Append(letters[random.Next(letters.Length)]);
+
+    // Các ký tự còn lại có thể là chữ cái hoặc số
+    for (int i = 1; i < length; i++)
     {
-        const string chars = "abcdefghijklmnopqrstuvwxyz0123456789";
-        int length = random.Next(12, 20);
-        StringBuilder username = new StringBuilder(length);
-        for (int i = 0; i < length; i++)
-        {
-            username.Append(chars[random.Next(chars.Length)]);
-        }
-        return username.ToString();
+        username.Append(chars[random.Next(chars.Length)]);
     }
+
+    return username.ToString();
+}
 
     static string GenerateRandomPassword()
     {

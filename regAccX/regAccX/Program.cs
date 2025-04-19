@@ -781,8 +781,8 @@ class Program
                             {
                                 driver.SwitchTo().Window(windowHandles[i]);
                                 string title = driver.Title;
-                                Console.WriteLine($"{i}");
-                                Console.WriteLine($"{title}");
+                                // Console.WriteLine($"{i}");
+                                // Console.WriteLine($"{title}");
                                 RandomDelay(1000, 2000);
                                 // if(driver.Title == "Extensions - BetaCaptcha" || driver.Title == "BetaCaptcha Extension Settings")
                                 if(driver.Title == "Extensions - BetaCaptcha")

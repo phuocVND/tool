@@ -17,6 +17,8 @@ class Program
     private static readonly string MailPassFilePath = "mailPass.txt";
     private static readonly string ProxyFilePath = "proxyfile.txt";
     private static readonly string ExtensionFolderPath = @"../../Betacaptcha2";
+    private const string AccountXFilePath = "accountX.txt";
+
 
     static string SetupProxy(string proxyHost, string proxyPort, string proxyUser, string proxyPass)
     {
@@ -689,35 +691,30 @@ class Program
 
             // Kiểm tra accountX.txt để xác định điểm bắt đầu
             int startIndex = 0; // Chỉ số bắt đầu cho vòng for
-            string accountXFilePath = "accountX.txt"; // Đường dẫn đến file accountX.txt
+            // string accountXFilePath = "accountX.txt"; // Đường dẫn đến file accountX.txt
             try
             {
-                if (File.Exists(accountXFilePath))
+                if (File.Exists(AccountXFilePath))
                 {
-                    string[] accountXLines = File.ReadAllLines(accountXFilePath);
+                    string[] accountXLines = File.ReadAllLines(AccountXFilePath);
                     if (accountXLines.Length > 0)
                     {
                         // Lấy dòng cuối cùng của accountX.txt
-                        string lastAccountLine = accountXLines[accountXLines.Length - 1];
-                        // Lấy email từ dòng cuối (giả sử email là một phần của dòng)
-                        string lastEmail = lastAccountLine.Contains(":") ? lastAccountLine.Split(':')[1] : lastAccountLine.Trim();
-
-                        // Tìm email này trong mailPass.txt
-                        for (int i = 0; i < mailPassLines.Length; i++)
+                        string lastAccountLine = accountXLines[accountXLines.Length - 1].Trim();
+                        string lastEmail = lastAccountLine.Split("|")[0];
+                        if (!string.IsNullOrEmpty(lastEmail))
                         {
-                            // Sử dụng LoadAccountInfo để lấy thông tin email từ dòng i
-                            var (user, mail, password, proxyUser, proxyPass, proxyAddress) = LoadAccountInfo(i);
-                            if (mail == lastEmail)
+                            for (int i = 0; i < mailPassLines.Length; i++)
                             {
-                                startIndex = i + 1; // Bắt đầu từ dòng tiếp theo
-                                break;
+                                var (user, mail, password, proxyUser, proxyPass, proxyAddress) = LoadAccountInfo(i);
+                                if (mail == lastEmail)
+                                {
+                                    startIndex = i + 1; // Bắt đầu từ dòng tiếp theo
+                                    break;
+                                }
                             }
                         }
                     }
-                }
-                else
-                {
-                    Console.WriteLine("File accountX.txt không tồn tại, bắt đầu từ dòng đầu tiên.");
                 }
             }
             catch (Exception ex)

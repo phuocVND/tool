@@ -219,7 +219,7 @@ class Program
     {
         ChromeOptions options = new ChromeOptions();
         
-        options.AddArgument("--headless"); // Tạm bỏ để debug
+        // options.AddArgument("--headless"); // Tạm bỏ để debug
         options.AddArgument($"--user-agent={userAgent}");
         options.AddArgument("--disable-webrtc");
         options.AddArgument("--disable-features=WebRtcHideLocalIpsWithMdns");
@@ -513,11 +513,47 @@ class Program
             RandomDelay(10, 50);
         }
         RandomDelay(1000, 3000);
-
         IWebElement nextButton = driver.FindElement(By.XPath("//div[@class='css-175oi2r r-b9tw7p']/button"));
         actions.MoveToElement(nextButton).Pause(TimeSpan.FromMilliseconds(random.Next(100, 300))).Click().Perform();
-        RandomDelay(3000, 6000);
+        RandomDelay(6000, 8000);
+        try{
+            // Tìm tất cả các iframe trên trang
+            var iframes = driver.FindElements(By.TagName("iframe"));
 
+            // Kiểm tra nếu có ít nhất một iframe
+            if (iframes.Count > 0)
+            {
+                // Chuyển vào iframe đầu tiên
+                driver.SwitchTo().Frame(iframes[0]);
+            }
+
+            iframes = driver.FindElements(By.TagName("iframe"));
+
+            // Kiểm tra nếu có ít nhất một iframe
+            if (iframes.Count > 0)
+            {
+                // Chuyển vào iframe đầu tiên
+                driver.SwitchTo().Frame(iframes[0]);
+            }
+
+            iframes = driver.FindElements(By.TagName("iframe"));
+
+            // Kiểm tra nếu có ít nhất một iframe
+            if (iframes.Count > 0)
+            {
+                // Chuyển vào iframe đầu tiên
+                driver.SwitchTo().Frame(iframes[0]);
+            }
+            IWebElement auth = driver.FindElement(By.XPath("/html/body/div/div/div[1]/button"));
+            actions.MoveToElement(auth).Pause(TimeSpan.FromMilliseconds(random.Next(100, 300))).Click().Perform();
+            RandomDelay(1000, 3000);
+        }
+        catch
+        {
+            // Nếu không click được trong 6 giây, thoát trình duyệt
+            Console.WriteLine("mail đã đăng kí");
+            driver.Quit();
+        }
         bool check = false;
         Stopwatch stopwatch = Stopwatch.StartNew(); // Bắt đầu đếm thời gian
 
@@ -525,15 +561,15 @@ class Program
         {
             try
             {
-                IWebElement checkMail = driver.FindElement(By.XPath("//span[contains(@class, 'css-1jxf684') and contains(text(), '@')]"));
+                IWebElement checkMail = driver.FindElement(By.XPath("/html/body/div/div/div/div[1]/div[2]/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[1]/div/div[1]/div/div/div/div/span[2]/span"));
                 if (checkMail.Text == mail)
                 {
-                    // Console.WriteLine($"{checkMail.Text}");
+                    Console.WriteLine($"{checkMail.Text}");
                     check = true;
                 }
                 else{
                     // Kiểm tra nếu thời gian vượt quá 2 phút (120000ms)
-                    if (stopwatch.ElapsedMilliseconds > 80000)
+                    if (stopwatch.ElapsedMilliseconds > 120000)
                     {
                         Console.WriteLine("Timeout after 2 minutes. Cancelling...");
                         
@@ -548,7 +584,7 @@ class Program
             {
                 // Console.WriteLine("Delay Check ************");
                                     // Kiểm tra nếu thời gian vượt quá 2 phút (120000ms)
-                if (stopwatch.ElapsedMilliseconds > 120000)
+                if (stopwatch.ElapsedMilliseconds > 150000)
                 {
                     Console.WriteLine("Timeout after 2 minutes. Cancelling...");
                     

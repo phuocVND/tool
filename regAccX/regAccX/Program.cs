@@ -515,7 +515,7 @@ class Program
         RandomDelay(1000, 3000);
         IWebElement nextButton = driver.FindElement(By.XPath("//div[@class='css-175oi2r r-b9tw7p']/button"));
         actions.MoveToElement(nextButton).Pause(TimeSpan.FromMilliseconds(random.Next(100, 300))).Click().Perform();
-        RandomDelay(6000, 8000);
+        RandomDelay(3000, 5000);
         try{
             // Tìm tất cả các iframe trên trang
             var iframes = driver.FindElements(By.TagName("iframe"));
@@ -550,7 +550,6 @@ class Program
         }
         catch
         {
-            // Nếu không click được trong 6 giây, thoát trình duyệt
             Console.WriteLine("mail đã đăng kí");
             driver.Quit();
         }
@@ -561,7 +560,9 @@ class Program
         {
             try
             {
-                IWebElement checkMail = driver.FindElement(By.XPath("/html/body/div/div/div/div[1]/div[2]/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[1]/div/div[1]/div/div/div/div/span[2]/span"));
+                
+
+                IWebElement checkMail = driver.FindElement(By.XPath("/html/body/div/div/div/div[1]/div[2]/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[1]/div/div[1]/div/div/div/div/span[2]/span[1]"));
                 if (checkMail.Text == mail)
                 {
                     Console.WriteLine($"{checkMail.Text}");
@@ -809,26 +810,29 @@ class Program
 
                         // AuthenticateProxy(driver, proxyUser, proxyPass, proxyHost, actions, user, mail, birthValues, password);
                         driver.Navigate().GoToUrl("https://api.ipify.org");
-                        var windowHandles = driver.WindowHandles;
+                        RandomDelay(1000, 2000);
+                        // var windowHandles = driver.WindowHandles;
                         // Console.WriteLine($"Số lượng cửa sổ đang mở: {windowHandles.Count}");
-                        if (windowHandles.Count > 1)
-                        {
-                            for (int i = 0; i < windowHandles.Count - 1 ; i++)
-                            {
-                                driver.SwitchTo().Window(windowHandles[i]);
-                                string title = driver.Title;
-                                // Console.WriteLine($"{i}");
-                                // Console.WriteLine($"{title}");
-                                RandomDelay(1000, 2000);
-                                // if(driver.Title == "Extensions - BetaCaptcha" || driver.Title == "BetaCaptcha Extension Settings")
-                                if(driver.Title == "Extensions - BetaCaptcha")
-                                {
-                                    driver.Close();
-                                }
-                            }
-                        }
-                        windowHandles = driver.WindowHandles;
-                        Console.WriteLine($"Số lượng cửa sổ đang mở: {windowHandles.Count}");
+                        // if (windowHandles.Count > 1)
+                        // {
+                        //     for (int i = 0; i < windowHandles.Count ; i++)
+                        //     {
+                                
+                        //         string title = driver.Title;
+                        //         // Console.WriteLine($"{i}");
+                        //         // Console.WriteLine($"{title}");
+                        //         RandomDelay(1000, 2000);
+                        //         driver.SwitchTo().Window(windowHandles[i]);
+                        //         // if(driver.Title == "Extensions - BetaCaptcha" || driver.Title == "BetaCaptcha Extension Settings")
+                        //         if(driver.Title == "BetaCaptcha Extension Settings");
+                        //         {
+                        //             driver.Close();
+                        //             // driver.SwitchTo().Window(windowHandles[i]);
+                        //         }
+                        //     }
+                        // }
+                        // windowHandles = driver.WindowHandles;
+                        // Console.WriteLine($"Số lượng cửa sổ đang mở: {windowHandles.Count}");
 
                         WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
                         IWebElement body = wait.Until(d => d.FindElement(By.TagName("body")));

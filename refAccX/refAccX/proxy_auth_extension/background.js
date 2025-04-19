@@ -3,8 +3,8 @@ var config = {
                 rules: {
                     singleProxy: {
                         scheme: "http",
-                        host: "160.250.166.169",
-                        port: parseInt(27434)
+                        host: "203.175.96.9",
+                        port: parseInt(29795)
                     },
                     bypassList: ["localhost"]
                 }
@@ -16,8 +16,8 @@ var config = {
                 function(details, callbackFn) {
                     callbackFn({
                         authCredentials: {
-                            username: "emgaixy1",
-                            password: "emgaixy1"
+                            username: "emgai38",
+                            password: "emgai38"
                         }
                     });
                 },

@@ -230,6 +230,7 @@ class Program
         options.AddArgument($"--disable-extensions-except={Path.GetFullPath(extensionFolderPath)},{Path.GetFullPath(extensionProxyPath)}");
         options.AddArgument("--ignore-certificate-errors");
 
+
         IWebDriver driver = new ChromeDriver(options);
         Actions actions = new Actions(driver);
 
@@ -528,7 +529,7 @@ class Program
                 }
                 else{
                     // Kiểm tra nếu thời gian vượt quá 2 phút (120000ms)
-                    if (stopwatch.ElapsedMilliseconds > 120000)
+                    if (stopwatch.ElapsedMilliseconds > 80000)
                     {
                         Console.WriteLine("Timeout after 2 minutes. Cancelling...");
                         driver.Close();

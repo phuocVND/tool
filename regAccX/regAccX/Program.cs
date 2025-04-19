@@ -264,7 +264,7 @@ class Program
         RandomDelay(500, 2000);
 
         var windowHandles = driver.WindowHandles;
-        // Console.WriteLine($"Số lượng cửa sổ đang mở: {windowHandles.Count}");
+        
         if (windowHandles.Count > 1)
         {
             string originalWindow = driver.CurrentWindowHandle;
@@ -274,6 +274,7 @@ class Program
                 {
                     
                     driver.SwitchTo().Window(handle);
+                    RandomDelay(500, 2000);
                     driver.Close();
                     // break;
                 }
@@ -283,6 +284,8 @@ class Program
             }
             driver.SwitchTo().Window(originalWindow);
         }
+
+        Console.WriteLine($"Số lượng cửa sổ đang mở: {windowHandles.Count}");
 
         WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
         IWebElement body = wait.Until(d => d.FindElement(By.TagName("body")));

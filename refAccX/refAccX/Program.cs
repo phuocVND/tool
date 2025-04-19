@@ -12,6 +12,7 @@ using System.Linq;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+
 class Program
 {
     // Khai báo các đường dẫn toàn cục
@@ -19,6 +20,8 @@ class Program
     private static readonly string MailPassFilePath = "mailPass.txt";
     private static readonly string ProxyFilePath = "proxyfile.txt";
     private static readonly string ExtensionFolderPath = @"../../Betacaptcha2";
+    private const string AccountXFilePath = "accountX.txt";
+
 
     static string SetupProxy(string proxyHost, string proxyPort, string proxyUser, string proxyPass)
     {
@@ -204,13 +207,13 @@ class Program
         string proxyPass = proxyfileParts[3];
         string proxyAddress = proxyfileParts[0] + ':' + proxyfileParts[1];
 
-        Console.WriteLine("Thông tin tài khoản:");
-        Console.WriteLine($"Username: {user}");
-        Console.WriteLine($"Email: {mail}");
-        Console.WriteLine($"Mật khẩu: {password}");
-        Console.WriteLine($"Proxy: {proxyAddress}");
-        Console.WriteLine($"Proxy User: {proxyUser}");
-        Console.WriteLine($"Proxy Pass: {proxyPass}");
+        // Console.WriteLine("Thông tin tài khoản:");
+        // Console.WriteLine($"Username: {user}");
+        // Console.WriteLine($"Email: {mail}");
+        // Console.WriteLine($"Mật khẩu: {password}");
+        // Console.WriteLine($"Proxy: {proxyAddress}");
+        // Console.WriteLine($"Proxy User: {proxyUser}");
+        // Console.WriteLine($"Proxy Pass: {proxyPass}");
 
         return (user, mail, password, proxyUser, proxyPass, proxyAddress);
     }
@@ -218,6 +221,8 @@ class Program
     static (IWebDriver driver, Actions actions) ConfigureBrowser(string userAgent, string extensionFolderPath, string extensionProxyPath)
     {
         ChromeOptions options = new ChromeOptions();
+        
+        // options.AddArgument("--headless"); // Tạm bỏ để debug
         options.AddArgument($"--user-agent={userAgent}");
         options.AddArgument("--disable-webrtc");
         options.AddArgument("--disable-features=WebRtcHideLocalIpsWithMdns");
@@ -226,9 +231,10 @@ class Program
         options.AddArgument("--no-sandbox");
         options.AddArgument("--disable-dev-shm-usage");
         options.AddArgument("--disable-notifications");
-        // options.AddArgument($"--load-extension={Path.GetFullPath(extensionFolderPath)},{Path.GetFullPath(extensionProxyPath)}");
-        // options.AddArgument($"--disable-extensions-except={Path.GetFullPath(extensionFolderPath)},{Path.GetFullPath(extensionProxyPath)}");
+        options.AddArgument($"--load-extension={Path.GetFullPath(extensionFolderPath)},{Path.GetFullPath(extensionProxyPath)}");
+        options.AddArgument($"--disable-extensions-except={Path.GetFullPath(extensionFolderPath)},{Path.GetFullPath(extensionProxyPath)}");
         options.AddArgument("--ignore-certificate-errors");
+
 
         IWebDriver driver = new ChromeDriver(options);
         Actions actions = new Actions(driver);
@@ -261,16 +267,19 @@ class Program
         RandomDelay(500, 2000);
 
         var windowHandles = driver.WindowHandles;
-        Console.WriteLine($"Số lượng cửa sổ đang mở: {windowHandles.Count}");
+        
         if (windowHandles.Count > 1)
         {
+            
             string originalWindow = driver.CurrentWindowHandle;
+
             foreach (var handle in windowHandles)
             {
                 if (handle != originalWindow)
                 {
                     
                     driver.SwitchTo().Window(handle);
+                    RandomDelay(500, 2000);
                     driver.Close();
                     // break;
                 }
@@ -281,10 +290,12 @@ class Program
             driver.SwitchTo().Window(originalWindow);
         }
 
+        Console.WriteLine($"Số lượng cửa sổ đang mở: {windowHandles.Count}");
+
         WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
         IWebElement body = wait.Until(d => d.FindElement(By.TagName("body")));
 
-        Console.WriteLine(body.Text);
+        // Console.WriteLine(body.Text);
         if (body.Text == proxyHost)
         {
             Console.WriteLine("Proxy đang hoạt động.");
@@ -309,7 +320,7 @@ class Program
         }
         return false;
     }
-    
+
     static string GetVerificationCode(IWebDriver driver, string mail, string password)
     {
         try
@@ -463,54 +474,8 @@ class Program
             driver.Close();
         }
     }
-public static async Task<string> GetBlobAsBase64(IWebDriver driver, string blobUrl)
-{
-    try
-    {
-        // JavaScript để lấy dữ liệu blob và chuyển thành Base64
-        string script = @"
-            return new Promise((resolve, reject) => {
-                fetch(arguments[0])
-                    .then(response => response.blob())
-                    .then(blob => {
-                        const reader = new FileReader();
-                        reader.onloadend = function() {
-                            resolve(reader.result.split(',')[1]);  // Return only the base64 part (without 'data:image/png;base64,')
-                        };
-                        reader.onerror = reject;
-                        reader.readAsDataURL(blob);
-                    })
-                    .catch(reject);
-            });
-        ";
 
-        IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)driver;
-        var result = await jsExecutor.ExecuteAsyncScript(script, blobUrl);  // Execute the JS async script
-        return result?.ToString();
-    }
-    catch (Exception ex)
-    {
-        Console.WriteLine($"Lỗi khi lấy dữ liệu blob: {ex.Message}");
-        return null;
-    }
-}
-
-    private static void SaveBase64Image(string base64String, string filePath)
-    {
-        try
-        {
-            // Chuyển Base64 thành mảng byte
-            byte[] imageBytes = Convert.FromBase64String(base64String);
-
-            // Lưu thành tệp
-            File.WriteAllBytes(filePath, imageBytes);
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error saving image: {ex.Message}");
-        }
-    }
-    static async Task RegisterAccount(IWebDriver driver, Actions actions, string user, string mail, string[] birthValues, string password)
+    static void RegisterAccount(IWebDriver driver, Actions actions, string user, string mail, string[] birthValues, string password)
     {
         WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
         Random random = new Random();
@@ -559,7 +524,7 @@ public static async Task<string> GetBlobAsBase64(IWebDriver driver, string blobU
         actions.MoveToElement(nextButton).Pause(TimeSpan.FromMilliseconds(random.Next(100, 300))).Click().Perform();
         RandomDelay(3000, 6000);
 
-    // Tìm tất cả các iframe trên trang
+        // Tìm tất cả các iframe trên trang
         var iframes = driver.FindElements(By.TagName("iframe"));
 
         // Kiểm tra nếu có ít nhất một iframe
@@ -592,48 +557,86 @@ public static async Task<string> GetBlobAsBase64(IWebDriver driver, string blobU
         actions.MoveToElement(auth).Pause(TimeSpan.FromMilliseconds(random.Next(100, 300))).Click().Perform();
         RandomDelay(1000, 3000);
 
-        // Lấy ảnh từ thẻ <img>
-        try
+// Đường dẫn thư mục lưu ảnh
+    string imageFolder = "image";
+    if (!Directory.Exists(imageFolder))
+    {
+        Directory.CreateDirectory(imageFolder);
+    }
+
+    try
+    {
+        // Tìm thẻ <img>
+        IWebElement imgElement = wait.Until(d => d.FindElement(By.CssSelector("img.sc-7csxyx-1.blHsFq")));
+
+        // Lấy thuộc tính style
+        string style = imgElement.GetAttribute("style");
+
+        // Trích xuất blob URL từ background-image
+        var match = Regex.Match(style, @"url\(""([^""]+)""\)");
+        if (!match.Success)
         {
-            // Đợi và tìm thẻ <img>
-            IWebElement imgElement = wait.Until(d => d.FindElement(By.XPath("/html/body/div/div/div[1]/div/div/div[2]/div[1]/img")));
-
-            // Lấy thuộc tính style
-            string styleAttribute = imgElement.GetAttribute("style");
-
-            // Trích xuất URL từ background-image
-            string pattern = @"url\(""?(.*?)\)?""\)";
-            Match match = Regex.Match(styleAttribute, pattern);
-
-            if (!match.Success)
-            {
-                Console.WriteLine("Không thể trích xuất URL từ thuộc tính style.");
-                return;
-            }
-
-            string imgUrl = match.Groups[1].Value; // Ví dụ: blob:https://client-api.arkoselabs.com/...
-            Console.WriteLine("Image URL: " + imgUrl);
-
-            // Lấy dữ liệu blob dưới dạng Base64
-
-            // Thành:
-            string base64String = await GetBlobAsBase64(driver, imgUrl);
-
-            if (string.IsNullOrEmpty(base64String))
-            {
-                Console.WriteLine("Không thể lấy dữ liệu ảnh.");
-                return;
-            }
-
-            // Lưu ảnh từ Base64
-            string filePath = $"image/downloaded_image_{DateTime.Now.Ticks}.png"; // Đặt tên tệp duy nhất
-            SaveBase64Image(base64String, filePath);
-            Console.WriteLine($"Ảnh đã được lưu tại: {filePath}");
+            throw new Exception("Không tìm thấy URL trong background-image");
         }
-        catch (Exception ex)
+
+        string blobUrl = match.Groups[1].Value;
+
+        // Lưu cửa sổ hiện tại
+        string originalWindow = driver.CurrentWindowHandle;
+
+        // Mở blob URL trong tab mới
+        IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
+        js.ExecuteScript($"window.open('{blobUrl}');");
+    
+
+        // Chuyển sang tab mới
+        var windows = driver.WindowHandles;
+
+
+       if (windows.Count > 1)
         {
-            Console.WriteLine($"Lỗi khi lấy hoặc lưu ảnh: {ex.Message}");
+            foreach (var handle in windows)
+            {
+                if (handle != originalWindow)
+                {
+                    
+                    driver.SwitchTo().Window(handle);
+                    driver.Close();
+                    // break;
+                }
+                else{
+                    break;
+                }
+            }
+            driver.SwitchTo().Window(originalWindow);
         }
+
+        string newWindow = windows.FirstOrDefault(w => w != originalWindow);
+        if (newWindow == null)
+        {
+            throw new Exception("Không mở được tab mới");
+        }
+        driver.SwitchTo().Window(newWindow);
+
+        // Chờ ảnh tải trong tab mới
+        RandomDelay(2000, 4000);
+
+        // Chụp ảnh màn hình tab mới
+        Screenshot screenshot = ((ITakesScreenshot)driver).GetScreenshot();
+        string imagePath = Path.Combine(imageFolder, $"image_{DateTime.Now.Ticks}.png");
+        // Lưu ảnh từ mảng byte thay vì dùng ScreenshotImageFormat
+        File.WriteAllBytes(imagePath, screenshot.AsByteArray);
+        Console.WriteLine($"Ảnh đã được lưu tại: {imagePath}");
+
+        // Đóng tab mới và quay lại tab gốc
+        driver.Close();
+        driver.SwitchTo().Window(originalWindow);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Lỗi khi xử lý ảnh: {ex.Message}");
+    }
+
         // bool check = false;
         // Stopwatch stopwatch = Stopwatch.StartNew(); // Bắt đầu đếm thời gian
 
@@ -644,12 +647,12 @@ public static async Task<string> GetBlobAsBase64(IWebDriver driver, string blobU
         //         IWebElement checkMail = driver.FindElement(By.XPath("//span[contains(@class, 'css-1jxf684') and contains(text(), '@')]"));
         //         if (checkMail.Text == mail)
         //         {
-        //             Console.WriteLine($"{checkMail.Text}");
+        //             // Console.WriteLine($"{checkMail.Text}");
         //             check = true;
         //         }
         //         else{
         //             // Kiểm tra nếu thời gian vượt quá 2 phút (120000ms)
-        //             if (stopwatch.ElapsedMilliseconds > 120000)
+        //             if (stopwatch.ElapsedMilliseconds > 80000)
         //             {
         //                 Console.WriteLine("Timeout after 2 minutes. Cancelling...");
         //                 driver.Close();
@@ -659,7 +662,7 @@ public static async Task<string> GetBlobAsBase64(IWebDriver driver, string blobU
         //     }
         //     catch (NoSuchElementException)
         //     {
-        //         Console.WriteLine("Delay Check ************");
+        //         // Console.WriteLine("Delay Check ************");
         //         RandomDelay(3000, 5000);
         //     }
 
@@ -763,19 +766,19 @@ public static async Task<string> GetBlobAsBase64(IWebDriver driver, string blobU
         try {
             IWebElement follow = driver.FindElement(By.XPath("/html/body/div[1]/div/div/div[1]/div[2]/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[1]/div/section/div/div/div[3]/div/div/button/div/div[2]/div/div[2]/button"));
             actions.MoveToElement(follow).Pause(TimeSpan.FromMilliseconds(random.Next(100, 300))).Click().Perform();
-            RandomDelay(2000, 3000);
+            RandomDelay(50, 500);
 
             follow = driver.FindElement(By.XPath("/html/body/div[1]/div/div/div[1]/div[2]/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[1]/div/section/div/div/div[4]/div/div/button/div/div[2]/div[1]/div[2]/button"));
             actions.MoveToElement(follow).Pause(TimeSpan.FromMilliseconds(random.Next(100, 300))).Click().Perform();
-            RandomDelay(2000, 3000);
+            RandomDelay(50, 500);
 
             follow = driver.FindElement(By.XPath("/html/body/div[1]/div/div/div[1]/div[2]/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[1]/div/section/div/div/div[5]/div/div/button/div/div[2]/div[1]/div[2]/button"));
             actions.MoveToElement(follow).Pause(TimeSpan.FromMilliseconds(random.Next(100, 300))).Click().Perform();
-            RandomDelay(2000, 3000);
+            RandomDelay(50, 500);
 
             follow = driver.FindElement(By.XPath("/html/body/div[1]/div/div/div[1]/div[2]/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[1]/div/section/div/div/div[6]/div/div/button/div/div[2]/div/div[2]/button"));
             actions.MoveToElement(follow).Pause(TimeSpan.FromMilliseconds(random.Next(100, 300))).Click().Perform();
-            RandomDelay(2000, 3000);
+            RandomDelay(50, 500);
         }
         catch{
             Console.WriteLine("ko follow");
@@ -795,27 +798,68 @@ public static async Task<string> GetBlobAsBase64(IWebDriver driver, string blobU
             string[] proxyLines = File.ReadAllLines(ProxyFilePath);
             string[] mailPassLines = File.ReadAllLines(MailPassFilePath);
 
-            // // Kiểm tra số lượng proxy và tài khoản có khớp nhau không
-            // if (proxyLines.Length != mailPassLines.Length)
-            // {
-            //     Console.WriteLine("Số lượng proxy và tài khoản không khớp!");
-            //     return;
-            // }
-
-            // Lặp qua từng proxy
-            int n = proxyLines.Length;
-            n = 1;
-            for (int index = 0; index < n; index++)
+            // Kiểm tra nếu không có email hoặc proxy
+            if (mailPassLines.Length == 0)
             {
-                index = 9;
-                Console.WriteLine($"Đang xử lý proxy thứ {index + 1}/{proxyLines.Length}");
+                Console.WriteLine("File mailPass.txt rỗng!");
+                return;
+            }
+            if (proxyLines.Length == 0)
+            {
+                Console.WriteLine("File proxyfile.txt rỗng!");
+                return;
+            }
+
+            // Kiểm tra accountX.txt để xác định điểm bắt đầu
+            int startIndex = 0; // Chỉ số bắt đầu cho vòng for
+            // string accountXFilePath = "accountX.txt"; // Đường dẫn đến file accountX.txt
+            try
+            {
+                if (File.Exists(AccountXFilePath))
+                {
+                    string[] accountXLines = File.ReadAllLines(AccountXFilePath);
+                    if (accountXLines.Length > 0)
+                    {
+                        // Lấy dòng cuối cùng của accountX.txt
+                        string lastAccountLine = accountXLines[accountXLines.Length - 1].Trim();
+                        string lastEmail = lastAccountLine.Split("|")[0];
+                        if (!string.IsNullOrEmpty(lastEmail))
+                        {
+                            for (int i = 0; i < mailPassLines.Length; i++)
+                            {
+                                var (user, mail, password, proxyUser, proxyPass, proxyAddress) = LoadAccountInfo(i);
+                                if (mail == lastEmail)
+                                {
+                                    startIndex = i + 1; // Bắt đầu từ dòng tiếp theo
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Lỗi khi đọc hoặc xử lý accountX.txt: {ex.Message}. Bắt đầu từ dòng đầu tiên.");
+            }
+
+            // Số vòng lặp dựa trên số email
+            int n = mailPassLines.Length;
+            Console.WriteLine($"Tổng số email: {n}, Tổng số proxy: {proxyLines.Length}");
+            Console.WriteLine($"Bắt đầu xử lý từ email thứ {startIndex + 1}");
+
+            // Lặp qua từng email, bắt đầu từ startIndex
+            for (int index = startIndex; index < n; index++)
+            {
+                // Chọn proxy theo chỉ số quay vòng: index % proxyLines.Length
+                int proxyIndex = index % proxyLines.Length;
+                Console.WriteLine($"Đang xử lý email thứ {index + 1}/{n} với proxy thứ {proxyIndex + 1}/{proxyLines.Length}");
 
                 try
                 {
                     // Tải thông tin tài khoản và proxy
                     var (user, mail, password, proxyUser, proxyPass, proxyAddress) = LoadAccountInfo(index);
                     string userAgent = GetRandomUserAgent();
-                    Console.WriteLine($"User-Agent: {userAgent}");
 
                     // Tạo ngày sinh ngẫu nhiên
                     string[] birthValues = GenerateRandomBirthDate();
@@ -840,21 +884,30 @@ public static async Task<string> GetBlobAsBase64(IWebDriver driver, string blobU
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine($"Lỗi trong quá trình đăng ký với proxy {proxyAddress}: {ex.Message}");
+                        Console.WriteLine($"Lỗi trong quá trình đăng ký với email {mail} và proxy {proxyAddress}: {ex.Message}");
+                        // Tiếp tục với email tiếp theo
                     }
                     finally
                     {
                         // Đóng trình duyệt sau khi hoàn tất hoặc gặp lỗi
-                        // driver.Quit();
+                        try
+                        {
+                            driver.Quit();
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"Lỗi khi đóng trình duyệt: {ex.Message}");
+                        }
                     }
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Lỗi khi xử lý proxy thứ {index + 1}: {ex.Message}");
+                    Console.WriteLine($"Lỗi khi xử lý email thứ {index + 1}: {ex.Message}");
+                    // Tiếp tục với email tiếp theo
                 }
             }
 
-            Console.WriteLine("Hoàn tất xử lý tất cả các proxy.");
+            Console.WriteLine("Hoàn tất xử lý tất cả các email.");
         }
         catch (Exception ex)
         {

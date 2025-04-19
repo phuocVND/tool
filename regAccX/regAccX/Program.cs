@@ -257,35 +257,29 @@ class Program
             Console.WriteLine($"Lỗi khi lưu thông tin: {ex.Message}");
         }
     }
-    static void AuthenticateProxy(IWebDriver driver, string proxyUser, string proxyPass, string proxyHost)
+    static void AuthenticateProxy(IWebDriver driver, string proxyUser, string proxyPass, string proxyHost, Actions actions, string user, string mail, string[] birthValues, string password)
     {
         RandomDelay(500, 2000);
         driver.Navigate().GoToUrl("https://api.ipify.org");
-        RandomDelay(500, 2000);
-
-        var windowHandles = driver.WindowHandles;
         
+        // RandomDelay(1000, 2000);
+        var windowHandles = driver.WindowHandles;
+        Console.WriteLine($"Số lượng cửa sổ đang mở: {windowHandles.Count}");
         if (windowHandles.Count > 1)
         {
-            string originalWindow = driver.CurrentWindowHandle;
-            foreach (var handle in windowHandles)
+            for (int i = 0; i < windowHandles.Count - 1 ; i++)
             {
-                if (handle != originalWindow)
+                driver.SwitchTo().Window(windowHandles[i]);
+                string title = driver.Title;
+                Console.WriteLine($"{i}");
+                Console.WriteLine($"{title}");
+                RandomDelay(1000, 2000);
+                if(driver.Title == "Extensions - BetaCaptcha" || driver.Title == "BetaCaptcha Extension Settings")
                 {
-                    
-                    driver.SwitchTo().Window(handle);
-                    RandomDelay(500, 2000);
                     driver.Close();
-                    // break;
-                }
-                else{
-                    break;
                 }
             }
-            driver.SwitchTo().Window(originalWindow);
         }
-
-        Console.WriteLine($"Số lượng cửa sổ đang mở: {windowHandles.Count}");
 
         WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
         IWebElement body = wait.Until(d => d.FindElement(By.TagName("body")));
@@ -294,7 +288,9 @@ class Program
         if (body.Text == proxyHost)
         {
             Console.WriteLine("Proxy đang hoạt động.");
+            // RegisterAccount(driver, actions, user, mail, birthValues, password);
         }
+        
     }
 
     static bool WaitForElement(IWebDriver driver, By locator, int timeoutInSeconds)
@@ -537,7 +533,10 @@ class Program
                     if (stopwatch.ElapsedMilliseconds > 80000)
                     {
                         Console.WriteLine("Timeout after 2 minutes. Cancelling...");
+                        
                         driver.Close();
+
+                        break;
                     }
                 }
 
@@ -759,10 +758,8 @@ class Program
                     {
                         // Xóa cookies và xác thực proxy
                         driver.Manage().Cookies.DeleteAllCookies();
-                        AuthenticateProxy(driver, proxyUser, proxyPass, proxyHost);
-
-                        // Đăng ký tài khoản
-                        RegisterAccount(driver, actions, user, mail, birthValues, password);
+                        AuthenticateProxy(driver, proxyUser, proxyPass, proxyHost, actions, user, mail, birthValues, password);
+                        // RegisterAccount(driver, actions, user, mail, birthValues, password);
                     }
                     catch (Exception ex)
                     {

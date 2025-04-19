@@ -217,7 +217,7 @@ class Program
     {
         ChromeOptions options = new ChromeOptions();
         
-        options.AddArgument("--headless"); // Tạm bỏ để debug
+        // options.AddArgument("--headless"); // Tạm bỏ để debug
         options.AddArgument($"--user-agent={userAgent}");
         options.AddArgument("--disable-webrtc");
         options.AddArgument("--disable-features=WebRtcHideLocalIpsWithMdns");
@@ -674,27 +674,34 @@ class Program
             string[] proxyLines = File.ReadAllLines(ProxyFilePath);
             string[] mailPassLines = File.ReadAllLines(MailPassFilePath);
 
-            // // Kiểm tra số lượng proxy và tài khoản có khớp nhau không
-            // if (proxyLines.Length != mailPassLines.Length)
-            // {
-            //     Console.WriteLine("Số lượng proxy và tài khoản không khớp!");
-            //     return;
-            // }
+            // Kiểm tra nếu không có email hoặc proxy
+            if (mailPassLines.Length == 0)
+            {
+                Console.WriteLine("File mailPass.txt rỗng!");
+                return;
+            }
+            if (proxyLines.Length == 0)
+            {
+                Console.WriteLine("File proxyfile.txt rỗng!");
+                return;
+            }
 
-            // Lặp qua từng proxy
-            int n = proxyLines.Length;
-            // n = 1;
+            // Số vòng lặp dựa trên số email
+            int n = mailPassLines.Length;
+            Console.WriteLine($"Tổng số email: {n}, Tổng số proxy: {proxyLines.Length}");
+
+            // Lặp qua từng email
             for (int index = 0; index < n; index++)
             {
-                // index = 10;
-                Console.WriteLine($"Đang xử lý proxy thứ {index + 1}/{proxyLines.Length}");
+                // Chọn proxy theo chỉ số quay vòng: index % proxyLines.Length
+                int proxyIndex = index % proxyLines.Length;
+                Console.WriteLine($"Đang xử lý email thứ {index + 1}/{n} với proxy thứ {proxyIndex + 1}/{proxyLines.Length}");
 
                 try
                 {
                     // Tải thông tin tài khoản và proxy
                     var (user, mail, password, proxyUser, proxyPass, proxyAddress) = LoadAccountInfo(index);
                     string userAgent = GetRandomUserAgent();
-                    // Console.WriteLine($"User-Agent: {userAgent}");
 
                     // Tạo ngày sinh ngẫu nhiên
                     string[] birthValues = GenerateRandomBirthDate();
@@ -719,21 +726,30 @@ class Program
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine($"Lỗi trong quá trình đăng ký với proxy {proxyAddress}: {ex.Message}");
+                        Console.WriteLine($"Lỗi trong quá trình đăng ký với email {mail} và proxy {proxyAddress}: {ex.Message}");
+                        // Tiếp tục với email tiếp theo
                     }
                     finally
                     {
                         // Đóng trình duyệt sau khi hoàn tất hoặc gặp lỗi
-                        driver.Quit();
+                        try
+                        {
+                            driver.Quit();
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"Lỗi khi đóng trình duyệt: {ex.Message}");
+                        }
                     }
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Lỗi khi xử lý proxy thứ {index + 1}: {ex.Message}");
+                    Console.WriteLine($"Lỗi khi xử lý email thứ {index + 1}: {ex.Message}");
+                    // Tiếp tục với email tiếp theo
                 }
             }
 
-            // Console.WriteLine("Hoàn tất xử lý tất cả các proxy.");
+            Console.WriteLine("Hoàn tất xử lý tất cả các email.");
         }
         catch (Exception ex)
         {

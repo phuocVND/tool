@@ -202,13 +202,13 @@ class Program
         string proxyPass = proxyfileParts[3];
         string proxyAddress = proxyfileParts[0] + ':' + proxyfileParts[1];
 
-        Console.WriteLine("Thông tin tài khoản:");
-        Console.WriteLine($"Username: {user}");
-        Console.WriteLine($"Email: {mail}");
-        Console.WriteLine($"Mật khẩu: {password}");
-        Console.WriteLine($"Proxy: {proxyAddress}");
-        Console.WriteLine($"Proxy User: {proxyUser}");
-        Console.WriteLine($"Proxy Pass: {proxyPass}");
+        // Console.WriteLine("Thông tin tài khoản:");
+        // Console.WriteLine($"Username: {user}");
+        // Console.WriteLine($"Email: {mail}");
+        // Console.WriteLine($"Mật khẩu: {password}");
+        // Console.WriteLine($"Proxy: {proxyAddress}");
+        // Console.WriteLine($"Proxy User: {proxyUser}");
+        // Console.WriteLine($"Proxy Pass: {proxyPass}");
 
         return (user, mail, password, proxyUser, proxyPass, proxyAddress);
     }
@@ -216,6 +216,8 @@ class Program
     static (IWebDriver driver, Actions actions) ConfigureBrowser(string userAgent, string extensionFolderPath, string extensionProxyPath)
     {
         ChromeOptions options = new ChromeOptions();
+        
+        options.AddArgument("--headless"); // Tạm bỏ để debug
         options.AddArgument($"--user-agent={userAgent}");
         options.AddArgument("--disable-webrtc");
         options.AddArgument("--disable-features=WebRtcHideLocalIpsWithMdns");
@@ -259,7 +261,7 @@ class Program
         RandomDelay(500, 2000);
 
         var windowHandles = driver.WindowHandles;
-        Console.WriteLine($"Số lượng cửa sổ đang mở: {windowHandles.Count}");
+        // Console.WriteLine($"Số lượng cửa sổ đang mở: {windowHandles.Count}");
         if (windowHandles.Count > 1)
         {
             string originalWindow = driver.CurrentWindowHandle;
@@ -282,7 +284,7 @@ class Program
         WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
         IWebElement body = wait.Until(d => d.FindElement(By.TagName("body")));
 
-        Console.WriteLine(body.Text);
+        // Console.WriteLine(body.Text);
         if (body.Text == proxyHost)
         {
             Console.WriteLine("Proxy đang hoạt động.");
@@ -521,7 +523,7 @@ class Program
                 IWebElement checkMail = driver.FindElement(By.XPath("//span[contains(@class, 'css-1jxf684') and contains(text(), '@')]"));
                 if (checkMail.Text == mail)
                 {
-                    Console.WriteLine($"{checkMail.Text}");
+                    // Console.WriteLine($"{checkMail.Text}");
                     check = true;
                 }
                 else{
@@ -536,7 +538,7 @@ class Program
             }
             catch (NoSuchElementException)
             {
-                Console.WriteLine("Delay Check ************");
+                // Console.WriteLine("Delay Check ************");
                 RandomDelay(3000, 5000);
             }
 
@@ -692,7 +694,7 @@ class Program
                     // Tải thông tin tài khoản và proxy
                     var (user, mail, password, proxyUser, proxyPass, proxyAddress) = LoadAccountInfo(index);
                     string userAgent = GetRandomUserAgent();
-                    Console.WriteLine($"User-Agent: {userAgent}");
+                    // Console.WriteLine($"User-Agent: {userAgent}");
 
                     // Tạo ngày sinh ngẫu nhiên
                     string[] birthValues = GenerateRandomBirthDate();
@@ -731,7 +733,7 @@ class Program
                 }
             }
 
-            Console.WriteLine("Hoàn tất xử lý tất cả các proxy.");
+            // Console.WriteLine("Hoàn tất xử lý tất cả các proxy.");
         }
         catch (Exception ex)
         {

@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 using System.Linq;
+using System.Diagnostics;
 class Program
 {
     // Khai báo các đường dẫn toàn cục
@@ -240,6 +241,17 @@ class Program
         return (driver, actions);
     }
 
+    static void SaveCredentialsToFile(string credentials)
+    {
+        try
+        {
+            File.AppendAllText("accountX.txt", credentials + Environment.NewLine);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Lỗi khi lưu thông tin: {ex.Message}");
+        }
+    }
     static void AuthenticateProxy(IWebDriver driver, string proxyUser, string proxyPass, string proxyHost)
     {
         RandomDelay(500, 2000);
@@ -371,7 +383,7 @@ class Program
                     throw new Exception("Không tìm thấy iframe");
                 IWebElement iframeElement = driver.FindElement(iframeLocator);
                 driver.SwitchTo().Frame(iframeElement);
-                RandomDelay(1000, 2000);
+                // RandomDelay(1000, 2000);
 
                 try{
 
@@ -392,8 +404,6 @@ class Program
                     Console.WriteLine($"Mã xác minh: {code.Text}");
                     codeText = code.Text;
                 }
-
-
             }
             catch
             {
@@ -415,7 +425,7 @@ class Program
                     throw new Exception("Không tìm thấy iframe");
                 IWebElement iframeElement = driver.FindElement(iframeLocator);
                 driver.SwitchTo().Frame(iframeElement);
-                RandomDelay(1000, 2000);
+                // RandomDelay(1000, 2000);
 
                 try{
 
@@ -502,6 +512,8 @@ class Program
         RandomDelay(3000, 6000);
 
         bool check = false;
+        Stopwatch stopwatch = Stopwatch.StartNew(); // Bắt đầu đếm thời gian
+
         do
         {
             try
@@ -510,17 +522,28 @@ class Program
                 if (checkMail.Text == mail)
                 {
                     Console.WriteLine($"{checkMail.Text}");
-
                     check = true;
-
                 }
+                else{
+                    // Kiểm tra nếu thời gian vượt quá 2 phút (120000ms)
+                    if (stopwatch.ElapsedMilliseconds > 120000)
+                    {
+                        Console.WriteLine("Timeout after 2 minutes. Cancelling...");
+                        driver.Close();
+                    }
+                }
+
             }
             catch (NoSuchElementException)
             {
                 Console.WriteLine("Delay Check ************");
                 RandomDelay(3000, 5000);
             }
+
         } while (!check);
+
+        stopwatch.Stop(); // Dừng đếm thời gian
+
         ((IJavaScriptExecutor)driver).ExecuteScript("window.open();");
         var windows = driver.WindowHandles;
         driver.SwitchTo().Window(windows[1]);
@@ -530,7 +553,7 @@ class Program
         driver.SwitchTo().Window(windows[0]);
         if (!string.IsNullOrEmpty(code))
         {
-            CompleteRegistration(driver, actions, code, password);
+            CompleteRegistration(driver, actions, code, password, mail);
         }
         else
         {
@@ -538,7 +561,7 @@ class Program
         }
     }
 
-    static void CompleteRegistration(IWebDriver driver, Actions actions, string code, string password)
+    static void CompleteRegistration(IWebDriver driver, Actions actions, string code, string password, string mail)
     {
         Random random = new Random();
         WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
@@ -579,6 +602,66 @@ class Program
         IWebElement signup = driver.FindElement(By.XPath("//div[contains(@class, 'css-146c3p1')]//span[contains(text(), 'Sign up')]"));
         actions.MoveToElement(signup).Pause(TimeSpan.FromMilliseconds(random.Next(100, 300))).Click().Perform();
         RandomDelay(2000, 3000);
+
+        IWebElement skip = driver.FindElement(By.XPath("/html/body/div[1]/div/div/div[1]/div[2]/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[2]/div/div/div/button/div/span/span"));
+        actions.MoveToElement(skip).Pause(TimeSpan.FromMilliseconds(random.Next(100, 300))).Click().Perform();
+        RandomDelay(2000, 3000);
+
+        // IWebElement nameInput = driver.FindElement(By.CssSelector("input[name='username']"));
+        // actions.MoveToElement(nameInput).Click().Perform();
+        // foreach (char c in user)
+        // {
+        //     nameInput.SendKeys(c.ToString());
+        //     RandomDelay(10, 50);
+        // }
+        // RandomDelay(1000, 3000);
+
+        
+        skip = driver.FindElement(By.XPath("/html/body/div[1]/div/div/div[1]/div[2]/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[2]/div/div/div/button/div"));
+        actions.MoveToElement(skip).Pause(TimeSpan.FromMilliseconds(random.Next(100, 300))).Click().Perform();
+        RandomDelay(2000, 3000);
+
+        IWebElement clicked = driver.FindElement(By.XPath("/html/body/div[1]/div/div/div[1]/div[2]/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[1]/div/div[2]/section/div/div/div[3]/div/div/div/li[1]/div/div/div/button/div/div/div"));
+        actions.MoveToElement(clicked).Pause(TimeSpan.FromMilliseconds(random.Next(100, 300))).Click().Perform();
+        RandomDelay(2000, 3000);
+        clicked = driver.FindElement(By.XPath("/html/body/div[1]/div/div/div[1]/div[2]/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[1]/div/div[2]/section/div/div/div[4]/div/div/div/li[1]/div/div/div/button/div/div/div"));
+        actions.MoveToElement(clicked).Pause(TimeSpan.FromMilliseconds(random.Next(100, 300))).Click().Perform();
+        RandomDelay(2000, 3000);
+        clicked = driver.FindElement(By.XPath("/html/body/div[1]/div/div/div[1]/div[2]/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[1]/div/div[2]/section/div/div/div[3]/div/div/div/li[3]/div/div/div/button/div/div/div"));
+        actions.MoveToElement(clicked).Pause(TimeSpan.FromMilliseconds(random.Next(100, 300))).Click().Perform();
+        RandomDelay(2000, 3000);
+
+
+        nextButton = driver.FindElement(By.XPath("/html/body/div[1]/div/div/div[1]/div[2]/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[2]/div/div/button"));
+        actions.MoveToElement(nextButton).Pause(TimeSpan.FromMilliseconds(random.Next(100, 300))).Click().Perform();
+        RandomDelay(2000, 3000);
+        Console.WriteLine("Done");
+        SaveCredentialsToFile($"{mail}|{password}");
+        try {
+            IWebElement follow = driver.FindElement(By.XPath("/html/body/div[1]/div/div/div[1]/div[2]/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[1]/div/section/div/div/div[3]/div/div/button/div/div[2]/div/div[2]/button"));
+            actions.MoveToElement(follow).Pause(TimeSpan.FromMilliseconds(random.Next(100, 300))).Click().Perform();
+            RandomDelay(2000, 3000);
+
+            follow = driver.FindElement(By.XPath("/html/body/div[1]/div/div/div[1]/div[2]/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[1]/div/section/div/div/div[4]/div/div/button/div/div[2]/div[1]/div[2]/button"));
+            actions.MoveToElement(follow).Pause(TimeSpan.FromMilliseconds(random.Next(100, 300))).Click().Perform();
+            RandomDelay(2000, 3000);
+
+            follow = driver.FindElement(By.XPath("/html/body/div[1]/div/div/div[1]/div[2]/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[1]/div/section/div/div/div[5]/div/div/button/div/div[2]/div[1]/div[2]/button"));
+            actions.MoveToElement(follow).Pause(TimeSpan.FromMilliseconds(random.Next(100, 300))).Click().Perform();
+            RandomDelay(2000, 3000);
+
+            follow = driver.FindElement(By.XPath("/html/body/div[1]/div/div/div[1]/div[2]/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[1]/div/section/div/div/div[6]/div/div/button/div/div[2]/div/div[2]/button"));
+            actions.MoveToElement(follow).Pause(TimeSpan.FromMilliseconds(random.Next(100, 300))).Click().Perform();
+            RandomDelay(2000, 3000);
+        }
+        catch{
+            Console.WriteLine("ko follow");
+
+        }
+
+        nextButton = driver.FindElement(By.XPath("/html/body/div[1]/div/div/div[1]/div[2]/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[2]/div/div/div/button"));
+        actions.MoveToElement(nextButton).Pause(TimeSpan.FromMilliseconds(random.Next(100, 300))).Click().Perform();
+        RandomDelay(2000, 3000);
     }
 
     static void Main()
@@ -598,10 +681,10 @@ class Program
 
             // Lặp qua từng proxy
             int n = proxyLines.Length;
-            n = 1;
+            // n = 1;
             for (int index = 0; index < n; index++)
             {
-                index = 2;
+                // index = 10;
                 Console.WriteLine($"Đang xử lý proxy thứ {index + 1}/{proxyLines.Length}");
 
                 try
@@ -639,7 +722,7 @@ class Program
                     finally
                     {
                         // Đóng trình duyệt sau khi hoàn tất hoặc gặp lỗi
-                        // driver.Quit();
+                        driver.Quit();
                     }
                 }
                 catch (Exception ex)

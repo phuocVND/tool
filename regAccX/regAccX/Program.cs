@@ -399,7 +399,7 @@ class Program
                     if (!WaitForElement(driver, codeLocator, 10))
                         throw new Exception("Không tìm thấy mã xác minh");
                     IWebElement code = driver.FindElement(codeLocator);
-                    Console.WriteLine($"Mã xác minh: {code.Text}");
+                    // Console.WriteLine($"Mã xác minh: {code.Text}");
                     codeText = code.Text;
                 }
                 catch{
@@ -408,7 +408,7 @@ class Program
                     if (!WaitForElement(driver, codeLocator, 10))
                         throw new Exception("Không tìm thấy mã xác minh");
                     IWebElement code = driver.FindElement(codeLocator);
-                    Console.WriteLine($"Mã xác minh: {code.Text}");
+                    // Console.WriteLine($"Mã xác minh: {code.Text}");
                     codeText = code.Text;
                 }
             }
@@ -441,7 +441,7 @@ class Program
                     if (!WaitForElement(driver, codeLocator, 10))
                         throw new Exception("Không tìm thấy mã xác minh");
                     IWebElement code = driver.FindElement(codeLocator);
-                    Console.WriteLine($"Mã xác minh: {code.Text}");
+                    // Console.WriteLine($"Mã xác minh: {code.Text}");
                     codeText = code.Text;
                 }
                 catch{
@@ -450,7 +450,7 @@ class Program
                     if (!WaitForElement(driver, codeLocator, 10))
                         throw new Exception("Không tìm thấy mã xác minh");
                     IWebElement code = driver.FindElement(codeLocator);
-                    Console.WriteLine($"Mã xác minh: {code.Text}");
+                    // Console.WriteLine($"Mã xác minh: {code.Text}");
                     codeText = code.Text;
                 }
             }
@@ -595,7 +595,7 @@ class Program
                 codeVeri.SendKeys(c.ToString());
                 RandomDelay(50, 200);
             }
-            Console.WriteLine("Đã nhập mã xác minh thành công.");
+            // Console.WriteLine("Đã nhập mã xác minh thành công.");
             RandomDelay(1000, 3000);
         }
 
@@ -833,7 +833,7 @@ class Program
                 }
             }
 
-            Console.WriteLine("Hoàn tất xử lý tất cả các email.");
+            // Console.WriteLine("Hoàn tất xử lý tất cả các email.");
         }
         catch (Exception ex)
         {

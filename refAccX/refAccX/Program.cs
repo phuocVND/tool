@@ -12,7 +12,8 @@ using System.Linq;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-
+using System.Drawing; // Đã có nếu bạn dùng Bitmap
+using System.Drawing.Imaging; // Thêm dòng này
 class Program
 {
     // Khai báo các đường dẫn toàn cục
@@ -231,8 +232,8 @@ class Program
         options.AddArgument("--no-sandbox");
         options.AddArgument("--disable-dev-shm-usage");
         options.AddArgument("--disable-notifications");
-        options.AddArgument($"--load-extension={Path.GetFullPath(extensionFolderPath)},{Path.GetFullPath(extensionProxyPath)}");
-        options.AddArgument($"--disable-extensions-except={Path.GetFullPath(extensionFolderPath)},{Path.GetFullPath(extensionProxyPath)}");
+        // options.AddArgument($"--load-extension={Path.GetFullPath(extensionFolderPath)},{Path.GetFullPath(extensionProxyPath)}");
+        // options.AddArgument($"--disable-extensions-except={Path.GetFullPath(extensionFolderPath)},{Path.GetFullPath(extensionProxyPath)}");
         options.AddArgument("--ignore-certificate-errors");
 
 
@@ -557,81 +558,80 @@ class Program
         actions.MoveToElement(auth).Pause(TimeSpan.FromMilliseconds(random.Next(100, 300))).Click().Perform();
         RandomDelay(1000, 3000);
 
-// Đường dẫn thư mục lưu ảnh
-    string imageFolder = "image";
-    if (!Directory.Exists(imageFolder))
-    {
-        Directory.CreateDirectory(imageFolder);
-    }
-
-    try
-    {
-        // Tìm thẻ <img>
-        IWebElement imgElement = wait.Until(d => d.FindElement(By.CssSelector("img.sc-7csxyx-1.blHsFq")));
-
-        // Lấy thuộc tính style
-        string style = imgElement.GetAttribute("style");
-
-        // Trích xuất blob URL từ background-image
-        var match = Regex.Match(style, @"url\(""([^""]+)""\)");
-        if (!match.Success)
+        // Đường dẫn thư mục lưu ảnh
+        string imageFolder = "image";
+        if (!Directory.Exists(imageFolder))
         {
-            throw new Exception("Không tìm thấy URL trong background-image");
+            Directory.CreateDirectory(imageFolder);
         }
-
-        string blobUrl = match.Groups[1].Value;
-
-        // Lưu cửa sổ hiện tại
-        string originalWindow = driver.CurrentWindowHandle;
-
-        // Mở blob URL trong tab mới
-        IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
-        js.ExecuteScript($"window.open('{blobUrl}');");
-    
-
-        // Chuyển sang tab mới
-        var windows = driver.WindowHandles;
-
-
-       if (windows.Count > 1)
+        
+        try
         {
-            foreach (var handle in windows)
+            // Tìm thẻ <img>
+            IWebElement imgElement = wait.Until(d => d.FindElement(By.CssSelector("img.sc-7csxyx-1.blHsFq")));
+
+            // Lấy thuộc tính style
+            string style = imgElement.GetAttribute("style");
+
+            // Trích xuất blob URL từ background-image
+            var match = Regex.Match(style, @"url\(""([^""]+)""\)");
+            if (!match.Success)
             {
-                if (handle != originalWindow)
+                throw new Exception("Không tìm thấy URL trong background-image");
+            }
+
+            string blobUrl = match.Groups[1].Value;
+
+            // Lưu cửa sổ hiện tại
+            string originalWindow = driver.CurrentWindowHandle;
+
+            // Mở blob URL trong tab mới
+            IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
+            js.ExecuteScript($"window.open('{blobUrl}');");
+
+            // Chuyển sang tab mới
+            var windows = driver.WindowHandles;
+
+            string newWindow = windows.FirstOrDefault(w => w != originalWindow);
+            if (newWindow == null)
+            {
+                throw new Exception("Không mở được tab mới");
+            }
+            driver.SwitchTo().Window(newWindow);
+
+            // Chờ ảnh tải trong tab mới
+            RandomDelay(2000, 4000);
+
+            // Chụp ảnh chỉ phần tử <img> trong tab mới
+            IWebElement newImgElement = wait.Until(d => d.FindElement(By.TagName("img"))); // Tìm <img> trong tab mới
+            Point location = newImgElement.Location;
+            Size size = newImgElement.Size;
+
+            Screenshot screenshot = ((ITakesScreenshot)driver).GetScreenshot();
+            string imagePath = Path.Combine(imageFolder, $"image_{DateTime.Now.Ticks}.png");
+
+            // Chuyển dữ liệu ảnh thành MemoryStream và cắt phần tử
+            using (MemoryStream memoryStream = new MemoryStream(screenshot.AsByteArray))
+            {
+                using (Bitmap fullImage = new Bitmap(memoryStream))
                 {
-                    
-                    driver.SwitchTo().Window(handle);
-                    driver.Close();
-                    // break;
-                }
-                else{
-                    break;
+                    // Xác định khu vực cần cắt
+                    Rectangle cropArea = new Rectangle(location.X, location.Y, size.Width, size.Height);
+
+                    // Tạo ảnh mới với khu vực đã cắt
+                    using (Bitmap croppedImage = fullImage.Clone(cropArea, fullImage.PixelFormat))
+                    {
+                        // Lưu ảnh đã cắt
+                        croppedImage.Save(imagePath, ImageFormat.Png);
+                        Console.WriteLine($"Ảnh phần tử đã được lưu tại: {imagePath}");
+                    }
                 }
             }
+
+            // Đóng tab mới và quay lại tab gốc
+            driver.Close();
             driver.SwitchTo().Window(originalWindow);
         }
-
-        string newWindow = windows.FirstOrDefault(w => w != originalWindow);
-        if (newWindow == null)
-        {
-            throw new Exception("Không mở được tab mới");
-        }
-        driver.SwitchTo().Window(newWindow);
-
-        // Chờ ảnh tải trong tab mới
-        RandomDelay(2000, 4000);
-
-        // Chụp ảnh màn hình tab mới
-        Screenshot screenshot = ((ITakesScreenshot)driver).GetScreenshot();
-        string imagePath = Path.Combine(imageFolder, $"image_{DateTime.Now.Ticks}.png");
-        // Lưu ảnh từ mảng byte thay vì dùng ScreenshotImageFormat
-        File.WriteAllBytes(imagePath, screenshot.AsByteArray);
-        Console.WriteLine($"Ảnh đã được lưu tại: {imagePath}");
-
-        // Đóng tab mới và quay lại tab gốc
-        driver.Close();
-        driver.SwitchTo().Window(originalWindow);
-    }
     catch (Exception ex)
     {
         Console.WriteLine($"Lỗi khi xử lý ảnh: {ex.Message}");
@@ -847,7 +847,7 @@ class Program
             int n = mailPassLines.Length;
             Console.WriteLine($"Tổng số email: {n}, Tổng số proxy: {proxyLines.Length}");
             Console.WriteLine($"Bắt đầu xử lý từ email thứ {startIndex + 1}");
-
+            n = 1;
             // Lặp qua từng email, bắt đầu từ startIndex
             for (int index = startIndex; index < n; index++)
             {
@@ -877,8 +877,38 @@ class Program
                     {
                         // Xóa cookies và xác thực proxy
                         driver.Manage().Cookies.DeleteAllCookies();
-                        AuthenticateProxy(driver, proxyUser, proxyPass, proxyHost);
+                        // AuthenticateProxy(driver, proxyUser, proxyPass, proxyHost);
+                        driver.Navigate().GoToUrl("https://api.ipify.org");
+                        var windowHandles = driver.WindowHandles;
+                        // Console.WriteLine($"Số lượng cửa sổ đang mở: {windowHandles.Count}");
+                        if (windowHandles.Count > 1)
+                        {
+                            for (int i = 0; i < windowHandles.Count - 1 ; i++)
+                            {
+                                driver.SwitchTo().Window(windowHandles[i]);
+                                string title = driver.Title;
+                                Console.WriteLine($"{i}");
+                                Console.WriteLine($"{title}");
+                                RandomDelay(1000, 2000);
+                                // if(driver.Title == "Extensions - BetaCaptcha" || driver.Title == "BetaCaptcha Extension Settings")
+                                if(driver.Title == "Extensions - BetaCaptcha")
+                                {
+                                    driver.Close();
+                                }
+                            }
+                        }
+                        windowHandles = driver.WindowHandles;
+                        Console.WriteLine($"Số lượng cửa sổ đang mở: {windowHandles.Count}");
 
+                        WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
+                        IWebElement body = wait.Until(d => d.FindElement(By.TagName("body")));
+
+                        // Console.WriteLine(body.Text);
+                        if (body.Text == proxyHost)
+                        {
+                            Console.WriteLine("Proxy đang hoạt động.");
+                            // RegisterAccount(driver, actions, user, mail, birthValues, password);
+                        }
                         // Đăng ký tài khoản
                         RegisterAccount(driver, actions, user, mail, birthValues, password);
                     }
@@ -892,7 +922,7 @@ class Program
                         // Đóng trình duyệt sau khi hoàn tất hoặc gặp lỗi
                         try
                         {
-                            driver.Quit();
+                            // driver.Quit();
                         }
                         catch (Exception ex)
                         {

@@ -148,3 +148,7 @@ C:\Users\lit\Desktop\tool\refAccX\refAccX\bin\Debug\net8.0\WebDriver.dll
 C:\Users\lit\Desktop\tool\refAccX\refAccX\obj\Debug\net8.0\refAccX.csproj.Up2Date
 C:\Users\lit\Desktop\tool\refAccX\refAccX\obj\Debug\net8.0\refAccX.genruntimeconfig.cache
 C:\Users\lit\Desktop\tool\refAccX\refAccX\obj\Debug\net8.0\ref\refAccX.dll
+C:\Users\vongu\OneDrive\Desktop\tool\refAccX\refAccX\bin\Debug\net8.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\vongu\OneDrive\Desktop\tool\refAccX\refAccX\bin\Debug\net8.0\System.Drawing.Common.dll
+C:\Users\vongu\OneDrive\Desktop\tool\refAccX\refAccX\bin\Debug\net8.0\System.Private.Windows.Core.dll
+C:\Users\vongu\OneDrive\Desktop\tool\refAccX\refAccX\bin\Debug\net8.0\runtimes\win\lib\net8.0\Microsoft.Win32.SystemEvents.dll

@@ -687,12 +687,51 @@ class Program
                 return;
             }
 
+            // Kiểm tra accountX.txt để xác định điểm bắt đầu
+            int startIndex = 0; // Chỉ số bắt đầu cho vòng for
+            string accountXFilePath = "accountX.txt"; // Đường dẫn đến file accountX.txt
+            try
+            {
+                if (File.Exists(accountXFilePath))
+                {
+                    string[] accountXLines = File.ReadAllLines(accountXFilePath);
+                    if (accountXLines.Length > 0)
+                    {
+                        // Lấy dòng cuối cùng của accountX.txt
+                        string lastAccountLine = accountXLines[accountXLines.Length - 1];
+                        // Lấy email từ dòng cuối (giả sử email là một phần của dòng)
+                        string lastEmail = lastAccountLine.Contains(":") ? lastAccountLine.Split(':')[1] : lastAccountLine.Trim();
+
+                        // Tìm email này trong mailPass.txt
+                        for (int i = 0; i < mailPassLines.Length; i++)
+                        {
+                            // Sử dụng LoadAccountInfo để lấy thông tin email từ dòng i
+                            var (user, mail, password, proxyUser, proxyPass, proxyAddress) = LoadAccountInfo(i);
+                            if (mail == lastEmail)
+                            {
+                                startIndex = i + 1; // Bắt đầu từ dòng tiếp theo
+                                break;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("File accountX.txt không tồn tại, bắt đầu từ dòng đầu tiên.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Lỗi khi đọc hoặc xử lý accountX.txt: {ex.Message}. Bắt đầu từ dòng đầu tiên.");
+            }
+
             // Số vòng lặp dựa trên số email
             int n = mailPassLines.Length;
             Console.WriteLine($"Tổng số email: {n}, Tổng số proxy: {proxyLines.Length}");
+            Console.WriteLine($"Bắt đầu xử lý từ email thứ {startIndex + 1}");
 
-            // Lặp qua từng email
-            for (int index = 0; index < n; index++)
+            // Lặp qua từng email, bắt đầu từ startIndex
+            for (int index = startIndex; index < n; index++)
             {
                 // Chọn proxy theo chỉ số quay vòng: index % proxyLines.Length
                 int proxyIndex = index % proxyLines.Length;

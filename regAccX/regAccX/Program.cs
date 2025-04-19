@@ -219,7 +219,7 @@ class Program
     {
         ChromeOptions options = new ChromeOptions();
         
-        // options.AddArgument("--headless"); // Tạm bỏ để debug
+        options.AddArgument("--headless"); // Tạm bỏ để debug
         options.AddArgument($"--user-agent={userAgent}");
         options.AddArgument("--disable-webrtc");
         options.AddArgument("--disable-features=WebRtcHideLocalIpsWithMdns");
@@ -264,22 +264,25 @@ class Program
         
         // RandomDelay(1000, 2000);
         var windowHandles = driver.WindowHandles;
-        Console.WriteLine($"Số lượng cửa sổ đang mở: {windowHandles.Count}");
+        // Console.WriteLine($"Số lượng cửa sổ đang mở: {windowHandles.Count}");
         if (windowHandles.Count > 1)
         {
             for (int i = 0; i < windowHandles.Count - 1 ; i++)
             {
                 driver.SwitchTo().Window(windowHandles[i]);
                 string title = driver.Title;
-                Console.WriteLine($"{i}");
-                Console.WriteLine($"{title}");
-                RandomDelay(1000, 2000);
-                if(driver.Title == "Extensions - BetaCaptcha" || driver.Title == "BetaCaptcha Extension Settings")
+                // Console.WriteLine($"{i}");
+                // Console.WriteLine($"{title}");
+                RandomDelay(500, 1000);
+                // if(driver.Title == "Extensions - BetaCaptcha" || driver.Title == "BetaCaptcha Extension Settings")
+                if(driver.Title == "Extensions - BetaCaptcha")
                 {
                     driver.Close();
                 }
             }
         }
+        windowHandles = driver.WindowHandles;
+        Console.WriteLine($"Số lượng cửa sổ đang mở: {windowHandles.Count}");
 
         WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
         IWebElement body = wait.Until(d => d.FindElement(By.TagName("body")));
@@ -476,7 +479,7 @@ class Program
 
         IWebElement signUpButton = driver.FindElement(By.XPath("//*[@id='react-root']/div/div/div[2]/main/div/div/div[1]/div/div/div[3]/a/div"));
         actions.MoveToElement(signUpButton).Pause(TimeSpan.FromMilliseconds(random.Next(100, 300))).Click().Perform();
-        RandomDelay(2000, 3000);
+        RandomDelay(3000, 4000);
 
         IWebElement nameInput = driver.FindElement(By.CssSelector("input[name='name']"));
         actions.MoveToElement(nameInput).Click().Perform();
@@ -544,7 +547,16 @@ class Program
             catch (NoSuchElementException)
             {
                 // Console.WriteLine("Delay Check ************");
-                RandomDelay(3000, 5000);
+                                    // Kiểm tra nếu thời gian vượt quá 2 phút (120000ms)
+                if (stopwatch.ElapsedMilliseconds > 120000)
+                {
+                    Console.WriteLine("Timeout after 2 minutes. Cancelling...");
+                    
+                    driver.Close();
+
+                    break;
+                }
+                // RandomDelay(3000, 5000);
             }
 
         } while (!check);
@@ -629,14 +641,14 @@ class Program
         RandomDelay(2000, 3000);
 
         IWebElement clicked = driver.FindElement(By.XPath("/html/body/div[1]/div/div/div[1]/div[2]/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[1]/div/div[2]/section/div/div/div[3]/div/div/div/li[1]/div/div/div/button/div/div/div"));
-        actions.MoveToElement(clicked).Pause(TimeSpan.FromMilliseconds(random.Next(100, 300))).Click().Perform();
-        RandomDelay(2000, 3000);
+        actions.MoveToElement(clicked).Pause(TimeSpan.FromMilliseconds(random.Next(20, 50))).Click().Perform();
+        RandomDelay(50, 100);
         clicked = driver.FindElement(By.XPath("/html/body/div[1]/div/div/div[1]/div[2]/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[1]/div/div[2]/section/div/div/div[4]/div/div/div/li[1]/div/div/div/button/div/div/div"));
-        actions.MoveToElement(clicked).Pause(TimeSpan.FromMilliseconds(random.Next(100, 300))).Click().Perform();
-        RandomDelay(2000, 3000);
+        actions.MoveToElement(clicked).Pause(TimeSpan.FromMilliseconds(random.Next(20, 50))).Click().Perform();
+        RandomDelay(50, 100);
         clicked = driver.FindElement(By.XPath("/html/body/div[1]/div/div/div[1]/div[2]/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[1]/div/div[2]/section/div/div/div[3]/div/div/div/li[3]/div/div/div/button/div/div/div"));
-        actions.MoveToElement(clicked).Pause(TimeSpan.FromMilliseconds(random.Next(100, 300))).Click().Perform();
-        RandomDelay(2000, 3000);
+        actions.MoveToElement(clicked).Pause(TimeSpan.FromMilliseconds(random.Next(20, 50))).Click().Perform();
+        RandomDelay(1000, 3000);
 
 
         nextButton = driver.FindElement(By.XPath("/html/body/div[1]/div/div/div[1]/div[2]/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[2]/div/div/button"));
@@ -758,8 +770,43 @@ class Program
                     {
                         // Xóa cookies và xác thực proxy
                         driver.Manage().Cookies.DeleteAllCookies();
-                        AuthenticateProxy(driver, proxyUser, proxyPass, proxyHost, actions, user, mail, birthValues, password);
-                        // RegisterAccount(driver, actions, user, mail, birthValues, password);
+
+                        // AuthenticateProxy(driver, proxyUser, proxyPass, proxyHost, actions, user, mail, birthValues, password);
+                        driver.Navigate().GoToUrl("https://api.ipify.org");
+                        var windowHandles = driver.WindowHandles;
+                        // Console.WriteLine($"Số lượng cửa sổ đang mở: {windowHandles.Count}");
+                        if (windowHandles.Count > 1)
+                        {
+                            for (int i = 0; i < windowHandles.Count - 1 ; i++)
+                            {
+                                driver.SwitchTo().Window(windowHandles[i]);
+                                string title = driver.Title;
+                                Console.WriteLine($"{i}");
+                                Console.WriteLine($"{title}");
+                                RandomDelay(1000, 2000);
+                                // if(driver.Title == "Extensions - BetaCaptcha" || driver.Title == "BetaCaptcha Extension Settings")
+                                if(driver.Title == "Extensions - BetaCaptcha")
+                                {
+                                    driver.Close();
+                                }
+                            }
+                        }
+                        windowHandles = driver.WindowHandles;
+                        Console.WriteLine($"Số lượng cửa sổ đang mở: {windowHandles.Count}");
+
+                        WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
+                        IWebElement body = wait.Until(d => d.FindElement(By.TagName("body")));
+
+                        // Console.WriteLine(body.Text);
+                        if (body.Text == proxyHost)
+                        {
+                            Console.WriteLine("Proxy đang hoạt động.");
+                            // RegisterAccount(driver, actions, user, mail, birthValues, password);
+                        }
+
+
+
+                        RegisterAccount(driver, actions, user, mail, birthValues, password);
                     }
                     catch (Exception ex)
                     {

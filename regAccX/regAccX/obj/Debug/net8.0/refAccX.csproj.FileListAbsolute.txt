@@ -126,14 +126,11 @@ C:\Users\vongu\OneDrive\Desktop\tool\refAccX\refAccX\obj\Debug\net8.0\ref\refAcc
 C:\Users\vongu\OneDrive\Desktop\tool\regAccX\regAccX\bin\Debug\net8.0\selenium-manager\linux\selenium-manager
 C:\Users\vongu\OneDrive\Desktop\tool\regAccX\regAccX\bin\Debug\net8.0\selenium-manager\macos\selenium-manager
 C:\Users\vongu\OneDrive\Desktop\tool\regAccX\regAccX\bin\Debug\net8.0\selenium-manager\windows\selenium-manager.exe
-C:\Users\vongu\OneDrive\Desktop\tool\regAccX\regAccX\bin\Debug\net8.0\AutoItX3.dll
-C:\Users\vongu\OneDrive\Desktop\tool\regAccX\regAccX\bin\Debug\net8.0\AutoItX3_x64.dll
 C:\Users\vongu\OneDrive\Desktop\tool\regAccX\regAccX\bin\Debug\net8.0\refAccX.exe
 C:\Users\vongu\OneDrive\Desktop\tool\regAccX\regAccX\bin\Debug\net8.0\refAccX.deps.json
 C:\Users\vongu\OneDrive\Desktop\tool\regAccX\regAccX\bin\Debug\net8.0\refAccX.runtimeconfig.json
 C:\Users\vongu\OneDrive\Desktop\tool\regAccX\regAccX\bin\Debug\net8.0\refAccX.dll
 C:\Users\vongu\OneDrive\Desktop\tool\regAccX\regAccX\bin\Debug\net8.0\refAccX.pdb
-C:\Users\vongu\OneDrive\Desktop\tool\regAccX\regAccX\bin\Debug\net8.0\AutoIt.dll
 C:\Users\vongu\OneDrive\Desktop\tool\regAccX\regAccX\bin\Debug\net8.0\WebDriver.Support.dll
 C:\Users\vongu\OneDrive\Desktop\tool\regAccX\regAccX\bin\Debug\net8.0\WebDriver.dll
 C:\Users\vongu\OneDrive\Desktop\tool\regAccX\regAccX\obj\Debug\net8.0\refAccX.csproj.AssemblyReference.cache

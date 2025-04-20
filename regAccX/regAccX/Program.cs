@@ -230,6 +230,8 @@ class Program
         options.AddArgument("--disable-notifications");
         options.AddArgument($"--load-extension={Path.GetFullPath(extensionFolderPath)},{Path.GetFullPath(extensionProxyPath)}");
         options.AddArgument($"--disable-extensions-except={Path.GetFullPath(extensionFolderPath)},{Path.GetFullPath(extensionProxyPath)}");
+        // options.AddArgument($"--load-extension={Path.GetFullPath(extensionProxyPath)}");
+        // options.AddArgument($"--disable-extensions-except={Path.GetFullPath(extensionProxyPath)}");
         options.AddArgument("--ignore-certificate-errors");
 
 
@@ -257,65 +259,7 @@ class Program
             Console.WriteLine($"Lỗi khi lưu thông tin: {ex.Message}");
         }
     }
-    static void AuthenticateProxy(IWebDriver driver, string proxyUser, string proxyPass, string proxyHost, Actions actions, string user, string mail, string[] birthValues, string password)
-    {
-        RandomDelay(500, 2000);
-        driver.Navigate().GoToUrl("https://api.ipify.org");
-        
-        // RandomDelay(1000, 2000);
-        var windowHandles = driver.WindowHandles;
-        // Console.WriteLine($"Số lượng cửa sổ đang mở: {windowHandles.Count}");
-        if (windowHandles.Count > 1)
-        {
-            for (int i = 0; i < windowHandles.Count - 1 ; i++)
-            {
-                driver.SwitchTo().Window(windowHandles[i]);
-                string title = driver.Title;
-                // Console.WriteLine($"{i}");
-                // Console.WriteLine($"{title}");
-                RandomDelay(500, 1000);
-                // if(driver.Title == "Extensions - BetaCaptcha" || driver.Title == "BetaCaptcha Extension Settings")
-                if(driver.Title == "Extensions - BetaCaptcha")
-                {
-                    driver.Close();
-                }
-            }
-        }
-        windowHandles = driver.WindowHandles;
-        Console.WriteLine($"Số lượng cửa sổ đang mở: {windowHandles.Count}");
-
-        WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
-        IWebElement body = wait.Until(d => d.FindElement(By.TagName("body")));
-
-        // Console.WriteLine(body.Text);
-        if (body.Text == proxyHost)
-        {
-            Console.WriteLine("Proxy đang hoạt động.");
-            // RegisterAccount(driver, actions, user, mail, birthValues, password);
-        }
-        
-    }
-
-    static bool WaitForElement(IWebDriver driver, By locator, int timeoutInSeconds)
-    {
-        int elapsed = 0;
-        while (elapsed < timeoutInSeconds * 1000)
-        {
-            try
-            {
-                driver.FindElement(locator);
-                return true;
-            }
-            catch (NoSuchElementException)
-            {
-                Thread.Sleep(500);
-                elapsed += 500;
-            }
-        }
-        return false;
-    }
-
-    static string GetVerificationCode(IWebDriver driver, string mail, string password)
+        static string GetVerificationCode(IWebDriver driver, string mail, string password)
     {
         try
         {
@@ -468,6 +412,65 @@ class Program
             driver.Close();
         }
     }
+    static void AuthenticateProxy(IWebDriver driver, string proxyUser, string proxyPass, string proxyHost, Actions actions, string user, string mail, string[] birthValues, string password)
+    {
+        RandomDelay(500, 2000);
+        driver.Navigate().GoToUrl("https://api.ipify.org");
+        
+        // RandomDelay(1000, 2000);
+        var windowHandles = driver.WindowHandles;
+        // Console.WriteLine($"Số lượng cửa sổ đang mở: {windowHandles.Count}");
+        if (windowHandles.Count > 1)
+        {
+            for (int i = 0; i < windowHandles.Count - 1 ; i++)
+            {
+                driver.SwitchTo().Window(windowHandles[i]);
+                string title = driver.Title;
+                // Console.WriteLine($"{i}");
+                // Console.WriteLine($"{title}");
+                RandomDelay(500, 1000);
+                // if(driver.Title == "Extensions - BetaCaptcha" || driver.Title == "BetaCaptcha Extension Settings")
+                if(driver.Title == "Extensions - BetaCaptcha")
+                {
+                    driver.Close();
+                }
+            }
+        }
+        windowHandles = driver.WindowHandles;
+        Console.WriteLine($"Số lượng cửa sổ đang mở: {windowHandles.Count}");
+
+        WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
+        IWebElement body = wait.Until(d => d.FindElement(By.TagName("body")));
+
+        // Console.WriteLine(body.Text);
+        if (body.Text == proxyHost)
+        {
+            Console.WriteLine("Proxy đang hoạt động.");
+            // RegisterAccount(driver, actions, user, mail, birthValues, password);
+        }
+        
+    }
+
+    static bool WaitForElement(IWebDriver driver, By locator, int timeoutInSeconds)
+    {
+        int elapsed = 0;
+        while (elapsed < timeoutInSeconds * 1000)
+        {
+            try
+            {
+                driver.FindElement(locator);
+                return true;
+            }
+            catch (NoSuchElementException)
+            {
+                Thread.Sleep(500);
+                elapsed += 500;
+            }
+        }
+        return false;
+    }
+
+
 
     static void RegisterAccount(IWebDriver driver, Actions actions, string user, string mail, string[] birthValues, string password)
     {
@@ -512,10 +515,12 @@ class Program
             select.SelectByValue(birthValues[i]);
             RandomDelay(10, 50);
         }
+
         RandomDelay(1000, 3000);
         IWebElement nextButton = driver.FindElement(By.XPath("//div[@class='css-175oi2r r-b9tw7p']/button"));
         actions.MoveToElement(nextButton).Pause(TimeSpan.FromMilliseconds(random.Next(100, 300))).Click().Perform();
-        RandomDelay(3000, 5000);
+        RandomDelay(4000, 5000);
+
         try{
             // Tìm tất cả các iframe trên trang
             var iframes = driver.FindElements(By.TagName("iframe"));
@@ -545,40 +550,127 @@ class Program
                 driver.SwitchTo().Frame(iframes[0]);
             }
             IWebElement auth = driver.FindElement(By.XPath("/html/body/div/div/div[1]/button"));
-            actions.MoveToElement(auth).Pause(TimeSpan.FromMilliseconds(random.Next(100, 300))).Click().Perform();
-            RandomDelay(1000, 3000);
+            actions.MoveToElement(auth).Pause(TimeSpan.FromMilliseconds(random.Next(10, 30))).Click().Perform();
+            RandomDelay(2000, 3000);
         }
         catch
         {
             Console.WriteLine("mail đã đăng kí");
             driver.Quit();
         }
+        
+
         bool check = false;
         Stopwatch stopwatch = Stopwatch.StartNew(); // Bắt đầu đếm thời gian
+        
+        // Lưu handle của tab hiện tại (tab cũ)
+        string originalWindow = driver.CurrentWindowHandle;
 
+        // Mở tab mới bằng JavaScript
+        ((IJavaScriptExecutor)driver).ExecuteScript("window.open('about:blank', '_blank');");
+
+        // Lấy danh sách tất cả các handle của cửa sổ/tab
+        var windowHandles = driver.WindowHandles;
+
+        // Chuyển sang tab mới (tab cuối cùng trong danh sách)
+        string newWindow = windowHandles.Last();
+        driver.SwitchTo().Window(newWindow);
+
+        // Thực hiện các thao tác trên tab mới (nếu cần)
+        // Ví dụ: điều hướng đến một URL
+        driver.Navigate().GoToUrl("https://api.ipify.org");
+        RandomDelay(1000, 2000); // Chờ một chút (tùy chọn)
+
+        // Đóng tab mới
+        driver.Close();
+
+        // Quay về tab cũ
+        driver.SwitchTo().Window(originalWindow);
         do
         {
             try
             {
                 
 
-                IWebElement checkMail = driver.FindElement(By.XPath("/html/body/div/div/div/div[1]/div[2]/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[1]/div/div[1]/div/div/div/div/span[2]/span[1]"));
-                if (checkMail.Text == mail)
-                {
-                    Console.WriteLine($"{checkMail.Text}");
-                    check = true;
-                }
-                else{
-                    // Kiểm tra nếu thời gian vượt quá 2 phút (120000ms)
-                    if (stopwatch.ElapsedMilliseconds > 120000)
+                try{
+                    IWebElement h1Element = driver.FindElement(By.CssSelector("h1#modal-header"));
+                    string text = h1Element.Text;
+                    // Console.WriteLine($"text : {text}");
+                    // Console.WriteLine("1");
+                    if (text == "We sent you a code")
                     {
-                        Console.WriteLine("Timeout after 2 minutes. Cancelling...");
-                        
-                        driver.Close();
-
-                        break;
+                        // Console.WriteLine($"{text}");
+                        check = true;
+                    }
+                    else{
+                        // Console.WriteLine("1");
                     }
                 }
+                catch{
+                    if (stopwatch.ElapsedMilliseconds % 20000 == 0)
+                    {
+                        // Lưu handle của tab hiện tại (tab cũ)
+                        originalWindow = driver.CurrentWindowHandle;
+
+                        // Mở tab mới bằng JavaScript
+                        ((IJavaScriptExecutor)driver).ExecuteScript("window.open('about:blank', '_blank');");
+
+                        // Lấy danh sách tất cả các handle của cửa sổ/tab
+                        windowHandles = driver.WindowHandles;
+
+                        // Chuyển sang tab mới (tab cuối cùng trong danh sách)
+                        newWindow = windowHandles.Last();
+                        driver.SwitchTo().Window(newWindow);
+
+                        // Thực hiện các thao tác trên tab mới (nếu cần)
+                        // Ví dụ: điều hướng đến một URL
+                        driver.Navigate().GoToUrl("https://api.ipify.org");
+                        RandomDelay(1000, 2000); // Chờ một chút (tùy chọn)
+
+                        // Đóng tab mới
+                        driver.Close();
+
+                        // Quay về tab cũ
+                        driver.SwitchTo().Window(originalWindow);
+
+                        IWebElement h1Element = driver.FindElement(By.CssSelector("h1#modal-header"));
+                        string text = h1Element.Text;
+                        // Console.WriteLine($"text : {text}");
+                        // Console.WriteLine("1");
+                        if (text == "We sent you a code")
+                        {
+                            // Console.WriteLine($"{text}");
+                            check = true;
+                        }
+                        else{
+                            // Console.WriteLine("1");
+                        }
+                    }
+                }
+
+
+
+
+
+
+
+                // IWebElement checkMail = driver.FindElement(By.XPath("/html/body/div/div/div/div[1]/div[2]/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[1]/div/div[1]/div/div/div/div/span[2]/span[1]"));
+                // if (checkMail.Text == mail)
+                // {
+                //     Console.WriteLine($"{checkMail.Text}");
+                //     check = true;
+                // }
+                // else{
+                //     // Kiểm tra nếu thời gian vượt quá 2 phút (120000ms)
+                //     if (stopwatch.ElapsedMilliseconds > 140000)
+                //     {
+                //         Console.WriteLine("Timeout. Cancelling...");
+                        
+                //         driver.Close();
+
+                //         break;
+                //     }
+                // }
 
             }
             catch (NoSuchElementException)
@@ -593,7 +685,7 @@ class Program
 
                     break;
                 }
-                // RandomDelay(3000, 5000);
+                // RandomDelay(10000, 15000);
             }
 
         } while (!check);

@@ -221,7 +221,7 @@ class Program
     {
         ChromeOptions options = new ChromeOptions();
         
-        // options.AddArgument("--headless"); // Tạm bỏ để debug
+        options.AddArgument("--headless"); // Tạm bỏ để debug
         options.AddArgument($"--user-agent={userAgent}");
         options.AddArgument("--disable-webrtc");
         options.AddArgument("--disable-features=WebRtcHideLocalIpsWithMdns");

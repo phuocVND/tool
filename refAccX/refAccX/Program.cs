@@ -193,28 +193,29 @@ class Program
         }
     }
 
-    static (string user, string mail, string password, string proxyUser, string proxyPass, string proxyAddress) LoadAccountInfo(int index)
+    static (string user, string mail, string password, string proxyUser, string proxyPass, string proxyAddress) LoadAccountInfo(int index, string[] mailPassLines, string[] proxyLines)
     {
-        string[] linesMailPass = File.ReadAllLines(MailPassFilePath);
-        string[] linesProxyfile = File.ReadAllLines(ProxyFilePath);
+        if (index >= mailPassLines.Length)
+            throw new IndexOutOfRangeException($"Chỉ số {index} vượt quá số dòng trong mailPass.txt ({mailPassLines.Length})");
 
-        string[] mailPassParts = linesMailPass[index].Split('|');
-        string[] proxyfileParts = linesProxyfile[index].Split(':');
+        int proxyIndex = index % proxyLines.Length;
+        if (proxyIndex >= proxyLines.Length)
+            throw new IndexOutOfRangeException($"Chỉ số proxy {proxyIndex} vượt quá số dòng trong proxyfile.txt ({proxyLines.Length})");
+
+        string[] mailPassParts = mailPassLines[index].Split('|');
+        if (mailPassParts.Length < 2)
+            throw new FormatException($"Dòng {index + 1} trong mailPass.txt không đúng định dạng: {mailPassLines[index]}");
+
+        string[] proxyParts = proxyLines[proxyIndex].Split(':');
+        if (proxyParts.Length < 4)
+            throw new FormatException($"Dòng proxy {proxyIndex + 1} không đúng định dạng: {proxyLines[proxyIndex]}");
 
         string user = GetRandomLastName() + "_" + GenerateRandomUsername();
         string mail = mailPassParts[0];
         string password = mailPassParts[1];
-        string proxyUser = proxyfileParts[2];
-        string proxyPass = proxyfileParts[3];
-        string proxyAddress = proxyfileParts[0] + ':' + proxyfileParts[1];
-
-        // Console.WriteLine("Thông tin tài khoản:");
-        // Console.WriteLine($"Username: {user}");
-        // Console.WriteLine($"Email: {mail}");
-        // Console.WriteLine($"Mật khẩu: {password}");
-        // Console.WriteLine($"Proxy: {proxyAddress}");
-        // Console.WriteLine($"Proxy User: {proxyUser}");
-        // Console.WriteLine($"Proxy Pass: {proxyPass}");
+        string proxyUser = proxyParts[2];
+        string proxyPass = proxyParts[3];
+        string proxyAddress = proxyParts[0] + ':' + proxyParts[1];
 
         return (user, mail, password, proxyUser, proxyPass, proxyAddress);
     }
@@ -560,7 +561,7 @@ class Program
         IWebElement auth = driver.FindElement(By.XPath("/html/body/div/div/div[1]/button"));
         actions.MoveToElement(auth).Pause(TimeSpan.FromMilliseconds(random.Next(100, 300))).Click().Perform();
         RandomDelay(1000, 3000);
-
+        haha:
         // Đường dẫn thư mục lưu ảnh
         string imageFolder = "image";
         if (!Directory.Exists(imageFolder))
@@ -644,27 +645,29 @@ class Program
     {   var iframes = driver.FindElements(By.TagName("iframe"));
         driver.SwitchTo().Frame(iframes[0]);
     }
-    try:
-        # Tìm phần tử circle bằng XPath
-        circle = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, '//circle[@r="17" and @fill="#fff" and @stroke="#000" and @stroke-width="2"]'))
-        )
-        
-        # Kiểm tra nếu phần tử tồn tại
-        if circle:
-            print("Nút circle được tìm thấy!")
-            # Click vào phần tử
-            circle.click()
-            print("Đã click vào nút circle.")
-        else:
-            print("Không tìm thấy nút circle.")
 
 
+    // IWebElement nextButton = driver.FindElement(By.XPath("/html/body/div/div/div[1]/div/div/div[2]/div[1]/a[2]"));
+    // actions.MoveToElement(nextButton).Pause(TimeSpan.FromMilliseconds(random.Next(10, 50))).Click().Perform();
+    
+    try{
+        for(int i =0;i<3;i++)
+        {   var iframes = driver.FindElements(By.TagName("iframe"));
+            driver.SwitchTo().Frame(iframes[0]);
+        }
+        IWebElement reset = driver.FindElement(By.XPath("/html/body/div/div/div[3]/button[2]"));
+        actions.MoveToElement(reset).Pause(TimeSpan.FromMilliseconds(random.Next(10, 50))).Click().Perform();
+        RandomDelay(2000, 3000);
+    }
+    catch{
 
+        IWebElement submit = driver.FindElement(By.XPath("/html/body/div/div/div[1]/div/button"));
+        actions.MoveToElement(submit).Pause(TimeSpan.FromMilliseconds(random.Next(10, 50))).Click().Perform();
+        RandomDelay(1000, 3000);
+    }
+    
 
-
-
-
+    goto haha;
 
 
 
@@ -825,7 +828,7 @@ class Program
     {
         try
         {
-            // Đọc tất cả các dòng từ proxyfile.txt và mailPass.txt
+            // Đọc các file một lần duy nhất
             string[] proxyLines = File.ReadAllLines(ProxyFilePath);
             string[] mailPassLines = File.ReadAllLines(MailPassFilePath);
 
@@ -842,8 +845,7 @@ class Program
             }
 
             // Kiểm tra accountX.txt để xác định điểm bắt đầu
-            int startIndex = 0; // Chỉ số bắt đầu cho vòng for
-            // string accountXFilePath = "accountX.txt"; // Đường dẫn đến file accountX.txt
+            int startIndex = 0;
             try
             {
                 if (File.Exists(AccountXFilePath))
@@ -851,18 +853,20 @@ class Program
                     string[] accountXLines = File.ReadAllLines(AccountXFilePath);
                     if (accountXLines.Length > 0)
                     {
-                        // Lấy dòng cuối cùng của accountX.txt
                         string lastAccountLine = accountXLines[accountXLines.Length - 1].Trim();
-                        string lastEmail = lastAccountLine.Split("|")[0];
-                        if (!string.IsNullOrEmpty(lastEmail))
+                        if (lastAccountLine.Contains("|"))
                         {
-                            for (int i = 0; i < mailPassLines.Length; i++)
+                            string lastEmail = lastAccountLine.Split("|")[0];
+                            if (!string.IsNullOrEmpty(lastEmail))
                             {
-                                var (user, mail, password, proxyUser, proxyPass, proxyAddress) = LoadAccountInfo(i);
-                                if (mail == lastEmail)
+                                for (int i = 0; i < mailPassLines.Length; i++)
                                 {
-                                    startIndex = i + 1; // Bắt đầu từ dòng tiếp theo
-                                    break;
+                                    var (user, mail, password, proxyUser, proxyPass, proxyAddress) = LoadAccountInfo(i, mailPassLines, proxyLines);
+                                    if (mail == lastEmail)
+                                    {
+                                        startIndex = i + 1;
+                                        break;
+                                    }
                                 }
                             }
                         }
@@ -878,23 +882,28 @@ class Program
             int n = mailPassLines.Length;
             Console.WriteLine($"Tổng số email: {n}, Tổng số proxy: {proxyLines.Length}");
             Console.WriteLine($"Bắt đầu xử lý từ email thứ {startIndex + 1}");
-            n = 1;
+
             // Lặp qua từng email, bắt đầu từ startIndex
             for (int index = startIndex; index < n; index++)
             {
-                // Chọn proxy theo chỉ số quay vòng: index % proxyLines.Length
+                // Chọn proxy theo chỉ số quay vòng
                 int proxyIndex = index % proxyLines.Length;
                 Console.WriteLine($"Đang xử lý email thứ {index + 1}/{n} với proxy thứ {proxyIndex + 1}/{proxyLines.Length}");
-
+                Console.WriteLine(mailPassLines[index]);
                 try
                 {
                     // Tải thông tin tài khoản và proxy
-                    var (user, mail, password, proxyUser, proxyPass, proxyAddress) = LoadAccountInfo(index);
+                    var (user, mail, password, proxyUser, proxyPass, proxyAddress) = LoadAccountInfo(index, mailPassLines, proxyLines);
                     string userAgent = GetRandomUserAgent();
 
                     // Tạo ngày sinh ngẫu nhiên
                     string[] birthValues = GenerateRandomBirthDate();
                     string[] proxyParts = proxyAddress.Split(':');
+                    if (proxyParts.Length < 2)
+                    {
+                        Console.WriteLine($"Proxy thứ {proxyIndex + 1} không đúng định dạng: {proxyAddress}");
+                        continue;
+                    }
                     string proxyHost = proxyParts[0];
                     string proxyPort = proxyParts[1];
 
@@ -908,52 +917,29 @@ class Program
                     {
                         // Xóa cookies và xác thực proxy
                         driver.Manage().Cookies.DeleteAllCookies();
-                        // AuthenticateProxy(driver, proxyUser, proxyPass, proxyHost);
+
                         driver.Navigate().GoToUrl("https://api.ipify.org");
-                        var windowHandles = driver.WindowHandles;
-                        // Console.WriteLine($"Số lượng cửa sổ đang mở: {windowHandles.Count}");
-                        if (windowHandles.Count > 1)
-                        {
-                            for (int i = 0; i < windowHandles.Count - 1 ; i++)
-                            {
-                                driver.SwitchTo().Window(windowHandles[i]);
-                                string title = driver.Title;
-                                Console.WriteLine($"{i}");
-                                Console.WriteLine($"{title}");
-                                RandomDelay(1000, 2000);
-                                // if(driver.Title == "Extensions - BetaCaptcha" || driver.Title == "BetaCaptcha Extension Settings")
-                                if(driver.Title == "Extensions - BetaCaptcha")
-                                {
-                                    driver.Close();
-                                }
-                            }
-                        }
-                        windowHandles = driver.WindowHandles;
-                        Console.WriteLine($"Số lượng cửa sổ đang mở: {windowHandles.Count}");
+                        RandomDelay(1000, 2000);
 
                         WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
                         IWebElement body = wait.Until(d => d.FindElement(By.TagName("body")));
 
-                        // Console.WriteLine(body.Text);
                         if (body.Text == proxyHost)
                         {
                             Console.WriteLine("Proxy đang hoạt động.");
-                            // RegisterAccount(driver, actions, user, mail, birthValues, password);
                         }
-                        // Đăng ký tài khoản
+
                         RegisterAccount(driver, actions, user, mail, birthValues, password);
                     }
                     catch (Exception ex)
                     {
                         Console.WriteLine($"Lỗi trong quá trình đăng ký với email {mail} và proxy {proxyAddress}: {ex.Message}");
-                        // Tiếp tục với email tiếp theo
                     }
                     finally
                     {
-                        // Đóng trình duyệt sau khi hoàn tất hoặc gặp lỗi
                         try
                         {
-                            // driver.Quit();
+                            driver.Quit();
                         }
                         catch (Exception ex)
                         {
@@ -964,11 +950,8 @@ class Program
                 catch (Exception ex)
                 {
                     Console.WriteLine($"Lỗi khi xử lý email thứ {index + 1}: {ex.Message}");
-                    // Tiếp tục với email tiếp theo
                 }
             }
-
-            Console.WriteLine("Hoàn tất xử lý tất cả các email.");
         }
         catch (Exception ex)
         {

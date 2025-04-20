@@ -408,23 +408,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\vongu\\.nuget\\packages\\": {},
+    "C:\\Users\\lit\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\vongu\\OneDrive\\Desktop\\tool\\refAccX\\refAccX\\refAccX.csproj",
+      "projectUniqueName": "C:\\Users\\lit\\Desktop\\tool\\refAccX\\refAccX\\refAccX.csproj",
       "projectName": "refAccX",
-      "projectPath": "C:\\Users\\vongu\\OneDrive\\Desktop\\tool\\refAccX\\refAccX\\refAccX.csproj",
-      "packagesPath": "C:\\Users\\vongu\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\vongu\\OneDrive\\Desktop\\tool\\refAccX\\refAccX\\obj\\",
+      "projectPath": "C:\\Users\\lit\\Desktop\\tool\\refAccX\\refAccX\\refAccX.csproj",
+      "packagesPath": "C:\\Users\\lit\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\lit\\Desktop\\tool\\refAccX\\refAccX\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\vongu\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\lit\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],

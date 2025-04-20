@@ -525,34 +525,37 @@ class Program
         actions.MoveToElement(nextButton).Pause(TimeSpan.FromMilliseconds(random.Next(100, 300))).Click().Perform();
         RandomDelay(3000, 6000);
 
-        // Tìm tất cả các iframe trên trang
-        var iframes = driver.FindElements(By.TagName("iframe"));
+        // // Tìm tất cả các iframe trên trang
+        // var iframes = driver.FindElements(By.TagName("iframe"));
 
-        // Kiểm tra nếu có ít nhất một iframe
-        if (iframes.Count > 0)
-        {
-            // Chuyển vào iframe đầu tiên
+        // // Kiểm tra nếu có ít nhất một iframe
+        // if (iframes.Count > 0)
+        // {
+        //     // Chuyển vào iframe đầu tiên
+        //     driver.SwitchTo().Frame(iframes[0]);
+        // }
+
+        // iframes = driver.FindElements(By.TagName("iframe"));
+
+        // // Kiểm tra nếu có ít nhất một iframe
+        // if (iframes.Count > 0)
+        // {
+        //     // Chuyển vào iframe đầu tiên
+        //     driver.SwitchTo().Frame(iframes[0]);
+        // }
+
+        // iframes = driver.FindElements(By.TagName("iframe"));
+
+        // // Kiểm tra nếu có ít nhất một iframe
+        // if (iframes.Count > 0)
+        // {
+        //     // Chuyển vào iframe đầu tiên
+        //     driver.SwitchTo().Frame(iframes[0]);
+        // }
+        for(int i =0;i<3;i++)
+        {   var iframes = driver.FindElements(By.TagName("iframe"));
             driver.SwitchTo().Frame(iframes[0]);
         }
-
-        iframes = driver.FindElements(By.TagName("iframe"));
-
-        // Kiểm tra nếu có ít nhất một iframe
-        if (iframes.Count > 0)
-        {
-            // Chuyển vào iframe đầu tiên
-            driver.SwitchTo().Frame(iframes[0]);
-        }
-
-        iframes = driver.FindElements(By.TagName("iframe"));
-
-        // Kiểm tra nếu có ít nhất một iframe
-        if (iframes.Count > 0)
-        {
-            // Chuyển vào iframe đầu tiên
-            driver.SwitchTo().Frame(iframes[0]);
-        }
-
 
         IWebElement auth = driver.FindElement(By.XPath("/html/body/div/div/div[1]/button"));
         actions.MoveToElement(auth).Pause(TimeSpan.FromMilliseconds(random.Next(100, 300))).Click().Perform();
@@ -636,6 +639,34 @@ class Program
     {
         Console.WriteLine($"Lỗi khi xử lý ảnh: {ex.Message}");
     }
+
+    for(int i =0;i<3;i++)
+    {   var iframes = driver.FindElements(By.TagName("iframe"));
+        driver.SwitchTo().Frame(iframes[0]);
+    }
+    try:
+        # Tìm phần tử circle bằng XPath
+        circle = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, '//circle[@r="17" and @fill="#fff" and @stroke="#000" and @stroke-width="2"]'))
+        )
+        
+        # Kiểm tra nếu phần tử tồn tại
+        if circle:
+            print("Nút circle được tìm thấy!")
+            # Click vào phần tử
+            circle.click()
+            print("Đã click vào nút circle.")
+        else:
+            print("Không tìm thấy nút circle.")
+
+
+
+
+
+
+
+
+
 
         // bool check = false;
         // Stopwatch stopwatch = Stopwatch.StartNew(); // Bắt đầu đếm thời gian

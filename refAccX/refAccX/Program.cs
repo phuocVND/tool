@@ -602,7 +602,7 @@ class Program
                 throw new Exception("Không mở được tab mới");
             }
             driver.SwitchTo().Window(newWindow);
-
+            driver.Manage().Window.Size = new System.Drawing.Size(1920, 1080);
             // Chờ ảnh tải trong tab mới
             RandomDelay(2000, 4000);
 

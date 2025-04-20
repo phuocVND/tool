@@ -216,7 +216,7 @@ static string GenerateRandomUsername()
         for (int i = 0; i < maxIterations; i++)
         {
             ChromeOptions options = new ChromeOptions();
-            // options.AddArgument("--headless"); // Tạm bỏ để debug
+            options.AddArgument("--headless"); // Tạm bỏ để debug
             options.AddArgument("--disable-webrtc");
             options.AddArgument("--disable-features=WebRtcHideLocalIpsWithMdns");
             options.AddArgument("--incognito");

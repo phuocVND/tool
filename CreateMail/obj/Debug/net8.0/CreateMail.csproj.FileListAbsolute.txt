@@ -65,3 +65,4 @@ C:\Users\lit\Desktop\tool\CreateMail\obj\Debug\net8.0\CreateMail.pdb
 C:\Users\lit\Desktop\tool\CreateMail\obj\Debug\net8.0\CreateMail.genruntimeconfig.cache
 C:\Users\lit\Desktop\tool\CreateMail\obj\Debug\net8.0\ref\CreateMail.dll
 C:\Users\vongu\OneDrive\Desktop\tool\CreateMail\bin\Debug\net8.0\SeleniumExtras.WaitHelpers.dll
+C:\Users\lit\Desktop\tool\CreateMail\bin\Debug\net8.0\SeleniumExtras.WaitHelpers.dll
